@@ -1,0 +1,2 @@
+## Nginx issues
+Awesome Nginx.

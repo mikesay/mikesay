@@ -1,0 +1,7 @@
+# 展望
+
+如果从静态的角度来看Kubernetes应用的部署，可以把Kubernetes的部署分为两个层面，数据层面和控制层面。数据层面就是包含应用代码的Docker镜像，而控制层面则是Kubernetes的资源文件，比如Deployment、Service和Ingress等，它们负责把Docker镜像安全、正确地安装在Kubernetes集群中，并打通从集群外到应用的网络流量。Kubernetes应用的持续交付流水线就是持续地将最新部署需求也就是部署资源文件同步到Kubernetes集群中，让应用按照规定的方式运行。 Kubernetes的Controller和Operator等扩展方法使得第三方组件能够提供越来越多的部署资源类型，让我们可以更好地控制应用的部署和运行。比如，如果想让 Istio服务网格来托管应用的流量管理，我们可以添加Istio组件提供的部署资源类型，通过持续交付流水线同步到Kubernetes集群中。
+
+如下图所示，通过使用不同类型的部署资源，未来我们可以把应用自动对接到不同的运维监控平台上，使得Kubernetes应用的持续交付流水线真正地成为一个从 Dev到Ops的端到端的完整交付链。 
+
+![logo](/_media/outlook.png)

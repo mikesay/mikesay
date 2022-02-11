@@ -1,0 +1,2 @@
+## Go issues
+Awesome Go.
