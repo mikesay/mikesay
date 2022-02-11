@@ -1,5 +1,5 @@
 # Introduction
-mikeblog is the source code of my blog which is based on Hexo. In order to setup the blog, install node and npm.
+mikesay is the source code of my blog which is based on Hexo. In order to setup the blog, install node and npm.
 
 > Do not run below hexo command to deploy the site, because it will always delete existing static site from git repo which 
 > will cause github page remove the configuration of custom domain, so that each deploy will have to re-enable the custom domain
