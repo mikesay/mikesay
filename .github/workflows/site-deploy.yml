@@ -54,4 +54,3 @@ jobs:
         add: '.'
         push: true
         cwd: './mikesay'
-        new_branch: main
