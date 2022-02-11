@@ -9,8 +9,6 @@ mikesay is the source code of my blog which is based on Hexo. In order to setup 
 > hexo deploy
 > ```
 
-Instead, the github action will be used to deploy the site.
-
 ## Deploy blog site
 
 + Clone blog source code
@@ -80,3 +78,5 @@ mkdocs build
 cd argo-cd
 rsync -a -P --delete --force site/ mikeblog/ebooks/argocd/
 ```
+
+> The github action will be used to deploy the site automatically.
