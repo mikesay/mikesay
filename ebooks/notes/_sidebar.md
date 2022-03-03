@@ -24,6 +24,7 @@
     - [Aliyun ACK](/kubernetes/aliyun_ack.md)
 - Monitoring
     - [Knowledge Base](/monitoring/kbs.md)
+    - [Monitoring Kubernetes](/monitoring/kubernetes.md)
 - Service Mesh
     - Istio
         - [Knowledge Base](/servicemesh/istio/kbs.md)
