@@ -150,7 +150,7 @@ minikube dashboard
 ## 用VirtualBox驱动创建集群
 
 ```bash
-minikube start --cpus=4 --memory='6g' --cni='flannel' --disk-size='60g' --driver='virtualbox' --kubernetes-version='v1.19.10' --extra-config=apiserver.service-node-port-range=1-65535 --extra-config=controller-manager.bind-address=0.0.0.0 --extra-config=scheduler.bind-address=0.0.0.0
+minikube start --cpus=4 --memory='6g' --cni='flannel' --disk-size='60g' --driver='virtualbox' --kubernetes-version='v1.23.5' --extra-config=apiserver.service-node-port-range=1-65535 --extra-config=controller-manager.bind-address=0.0.0.0 --extra-config=scheduler.bind-address=0.0.0.0
 ```
 创建了一个基于VirtualBox驱动的单节点集群。通过各个参数详细地配置了集群：
 
@@ -159,7 +159,7 @@ minikube start --cpus=4 --memory='6g' --cni='flannel' --disk-size='60g' --driver
 --cpus=4 | 指定了节点最大CPU数为4
 --memory='6g' | 指定了工作节点的最大内存数为6g
 --disk-size='60g' | 指定了节点的磁盘大小
--kubernetes-version='v1.19.10' | 指定创建的集群版本为v1.19.10
+-kubernetes-version='v1.23.5' | 指定创建的集群版本为v1.23.5
 -extra-config=apiserver.service-node-port-range=1-65535 | 通过--extra-config配置apiserver，使得运行NodePort类型的服务能够使用1-65535范围的端口
 --extra-config=controller-manager.bind-address=0.0.0.0 | 通过--extra-config配置controller-manager，使能够从外面访问controller-manager的API
 --extra-config=scheduler.bind-address=0.0.0.0 | 通过--extra-config配置scheduler，使能够从外面访问scheduler的API
@@ -170,30 +170,79 @@ minikube profile list
 ```
 ![](5.jpg)
 
-这个时候就可以通过命令安装ingress controller，从而支持通过ingress暴露内部服务：
+### 安装MetalLB支持LoadBalancer类型的服务
+> 参考[MetalLB官方安装和配置文档][4]
+
++ 设置kube-proxy使用ipvs模式：
+  ```yaml
+  kubectl edit configmap -n kube-system kube-proxy
+  ```
+  设置如下：
+  ```yaml
+  apiVersion: kubeproxy.config.k8s.io/v1alpha1
+  kind: KubeProxyConfiguration
+  mode: "ipvs"
+  ipvs:
+    strictARP: true
+  ```
+
++ 通过minikube的metallb插件安装metallb
+  ```bash
+  minikube addons enable metallb
+  ```
+
++ 修改MetalLB的配置添加IP地址池
+  参考[Proxies and VPNs][5]，使用VirtualBox驱动创建的基于VM的集群节点IP地址池为192.168.59.0/24。可以从中选取一段用作给Loadbalancer类型的服务分配IP地址。
+  ```bash
+  kubectl edit cm config  -n metallb-system
+  ```
+  设置如下：
+  ```bash
+  apiVersion: v1
+  data:
+    config: |
+      address-pools:
+      - name: default
+        protocol: layer2
+        addresses:
+        - 192.168.59.200 - 192.168.59.250
+  ```
+  重启metallb controller Pod。
+
+### 安装Nginx Ingress Controller：
+> minikube自带的Nginx Ingress Controller的服务类型是NodePort类型。
 ```bash
 minikube addons enable ingress
 ```
 
-也可以安装并打开dashboard：
+### 安装Kong Ingress Controller
+> minikube自带的Kong Ingress Controller的服务类型是LoadBalancer类型，MetalLB会分配对应的IP地址。
+```bash
+minikube addons enable kong
+```
+
+### 安装并dashboard：
 ```bash
 minikube addons enable metrics-server
 minikube addons enable dashboard
+```
+> Dashboard中的某些数据依赖于metrics-server。
+
+启动Dashboard
+```bash
 minikube dashboard
 ```
 
-通过以下命令，可以登录进工作节点：
-```bash
-minikube ssh
-```
+### 一些常用的命令
++ 登录进工作节点
+  ```bash
+  minikube ssh
+  ```
 
-还可以通过命令查询工作节点的IP地址：
-```bash
-minikube ip
-```
-
-### 部署NodePoart和Loadbalance类型的服务
-可以详细参考[访问应用][1]这篇文档，在这里就不赘述了。
++ 查询工作节点的IP地址
+  ```bash
+  minikube ip
+  ```
 
 # Minikbue的缺陷
 目前Minikube在VPN的情况下可能存在问题。如果你的公司支持VPN远程办公，在拨上VPN的情况下，可能无法访问Minikube的集群，因为VPN会强制修改本地路由，除非公司IT同意将你的Minikube用到的网段加入VPN的白名单（这往往不现实）。对于这个问题可以详细参考[Proxies和VPN][2]这篇文档。
@@ -204,3 +253,5 @@ minikube ip
 [1]: https://minikube.sigs.k8s.io/docs/handbook/accessing/
 [2]: https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#vpn
 [3]: https://minikube.sigs.k8s.io/docs/
+[4]: https://metallb.universe.tf/installation/
+[5]: https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/
