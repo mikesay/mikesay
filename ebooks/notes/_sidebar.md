@@ -14,6 +14,7 @@
     - Operator
         - [Concepts](/kubernetes/operator/concepts.md)
         - [OperatorSDK](/kubernetes/operator/operator_sdk.md)
+        - [Upgrading Operator](/kubernetes/operator/upgrading_operator.md)
     - Components
         - [Kube Proxy](/kubernetes/components/kube-proxy.md)
     - Kustomize
