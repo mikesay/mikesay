@@ -7,7 +7,7 @@ tags:
 date: 2021-10-06 18:40:49
 ---
 
-在学习和使用Kubernetes的过程中，都希望能够快速创建一个个人的Kubernetes集群用作测试之用。之前一直使用docker公司的docker for mac创建的Kubernetes集群，但是经常出现启动不起来的问题，又没有详细的日志定位问题，甚是苦恼。另外docker for mac创建的Kubernetes很难去改变系统组件的配置，比如修改API Server或Kubelet的参数，开启某些Alpaha版本的特性等。虽然Minikube已经存在很久，可能早于docker for mac创建的Kubernetes集群，但是由于种种原因没能尝试，后经同事强烈推荐，尝试了一下，确实蛮强大。本文将简单介绍下Minikube，以及在Mac主机上用Minikube创建一个测试集群。
+在学习和使用Kubernetes的过程中，都希望能够快速创建一个本地的Kubernetes集群用作测试之用。之前一直使用docker公司的docker for mac创建的Kubernetes集群，但是经常出现启动不起来的问题，也没有详细的日志来定位问题，另外docker for mac创建的集群不支持改变系统组件的配置，比如修改API Server或Kubelet的参数，开启某些Alpaha版本的特性等。虽然Minikube已经存在很久，而且早于docker for mac，但是由于种种原因没能尝试，后经同事推荐，尝试了一下，确实蛮强大。本文将简单介绍下Minikube，以及在Mac主机上用Minikube创建和配置一个本地集群。
 <!-- more -->
 
 # Minikube介绍
@@ -210,18 +210,18 @@ minikube profile list
   重启metallb controller Pod。
 
 ### 安装Nginx Ingress Controller：
-> minikube自带的Nginx Ingress Controller的服务类型是NodePort类型。
 ```bash
 minikube addons enable ingress
 ```
+> minikube自带的Nginx Ingress Controller插件的服务类型是NodePort，所以通过任何一个工作节点的IP就可以访问。
 
 ### 安装Kong Ingress Controller
-> minikube自带的Kong Ingress Controller的服务类型是LoadBalancer类型，MetalLB会分配对应的IP地址。
 ```bash
 minikube addons enable kong
 ```
+> minikube自带的Kong Ingress Controller的服务类型是LoadBalancer类型，MetalLB会分配对应的IP地址。
 
-### 安装并dashboard：
+### 安装dashboard
 ```bash
 minikube addons enable metrics-server
 minikube addons enable dashboard
@@ -244,8 +244,109 @@ minikube dashboard
   minikube ip
   ```
 
-# Minikbue的缺陷
-目前Minikube在VPN的情况下可能存在问题。如果你的公司支持VPN远程办公，在拨上VPN的情况下，可能无法访问Minikube的集群，因为VPN会强制修改本地路由，除非公司IT同意将你的Minikube用到的网段加入VPN的白名单（这往往不现实）。对于这个问题可以详细参考[Proxies和VPN][2]这篇文档。
++ 查看集群状态
+  ```
+  minikube status
+  ```
+
+# Minikbue在HTTP/HTTPS代理下的使用
+当要设置HTTP/HTTPS代理才能上网时，需要将工作节点的主机网络地址段设置到NO_PROXY中，否则Minikube会无法访问主机里的资源。
+> 详细参考[Proxies和VPN][5]中Proxy一节。
+
+# Minikbue在VPN下的使用
+使用VPN接入公司网络或者自己的私有网络时，VPN会截获Minikube访问主机的流量从而导致无法正常访问，因为VPN会强制修改本地路由，除非公司IT同意将你的Minikube用到的网段加入VPN的白名单（这往往不现实）。解决办法是通过端口转发的方法将对主机localhost或127.0.0.1的端口访问转发到集群工作节点的对应的端口上（前提是使用VM的驱动创建的集群）。以下是针对于VirtualBox驱动创建的集群添加的端口转发规则：
+
+```bash
+VBoxManage controlvm minikube natpf1 k8s-apiserver,tcp,127.0.0.1,8443,,8443
+VBoxManage controlvm minikube natpf1 k8s-ingress,tcp,127.0.0.1,9080,,80
+VBoxManage controlvm minikube natpf1 k8s-ingress-secure,tcp,127.0.0.1,9443,,443
+VBoxManage controlvm minikube natpf1 docker,tcp,127.0.0.1,2376,,2376
+```
+比如针对集群API Server，将VirtualBox在本机打开的8443端口转发到集群节点(VM)的8443端口(集群API Server对应的端口)。这样在kubeconfig的配置文件中就可以通过`https://127.0.0.1:8443`来访问集群API Server：
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/mike/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Sat, 09 Apr 2022 18:42:47 CST
+        provider: minikube.sigs.k8s.io
+        version: v1.25.2
+      name: cluster_info
+    server: https://127.0.0.1:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+```
+
+由于VirtualBox在Mac上是以非root账号运行的，所以只能打开本机1024以上的端口，但访问ingress暴露的HTTP/HTTPS服务时就需要加上端口号，使用起来并不友好。可以通过包过滤防火墙建立本机80，443端口到上面ingress的9080和9443端口的转发。Mac的配置参考如下：
+
+## macOS Yosemite及以上版本
+ipfw已经从macOS Yosemite和以上版本被移除了，所以需要通过以下方法使用pf。
+
++ 创建一个锚文件
+例如，/etc/pf.anchors/minikube.nginx-ingress-controller
+
++ 在/etc/pf.anchors/minikube.nginx-ingress-controller锚文件中, 输入:
+
+  ```bash
+  rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 9080
+  rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 9443
+
+  ```
+  确保在末尾加一行空白行，否则会报格式错误。
+
++ 测试这个锚文件：
+  ```bash
+  sudo pfctl -vnf /etc/pf.anchors/minikube.nginx-ingress-controller
+  ```
+
++ 将这个锚文件加到pf.conf文件中
+  ```bash
+  sudo vi /etc/pf.conf
+  ```
+
+  在对应的节下添加下面的配置：
+  ```bash
+  rdr-anchor "forwarding" 
+  load anchor "forwarding" from "/etc/pf.anchors/minikube.nginx-ingress-controller"
+```
+
++ 自动加载pf.conf文件
+  可以创建一个专用的启动守护进程以在启动时加载和启用配置，或者编辑当前的pf守护进程在启动时自动启用配置：
+  ```bash
+  sudo vi /System/Library/LaunchDaemons/com.apple.pfctl.plist
+  ```
+  然后在以下的节中
+  ```bash
+  <key>ProgramArguments</key>
+  ```
+  增加额外的一行字符串"-e"：
+  ```xml
+  <array>
+    <string>pfctl</string>
+    <string>-e</string>
+    <string>-f</string>
+    <string>/etc/pf.conf</string>
+  </array>
+  ```
+  保存后重启电脑。
+  > 可以使用命令```sudo pfctl -ef /etc/pf.conf```手动测试这个方法（不需要重启）。
+  > 另外，如果不想改动配置来测试这个方法，可以执行下面的命令：
+  > echo "
+    rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 9080
+    rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 9443
+    " | sudo pfctl -ef -
+
+## macOS 10.9和更早版本
+
+执行以下命令配置端口转发：
+```bash
+sudo /sbin/ipfw add 102 fwd 127.0.0.1,9080 tcp from any to any 80 in
+sudo /sbin/ipfw add 102 fwd 127.0.0.1,9443 tcp from any to any 443 in
+```
 
 # 结束语
 本文旨在简单介绍Minikube，它的架构以及使用，希望能够帮助读者对Minikube有个框架性的了解，从而决定是否需要深入使用。对于Minikube更详细的用法，可以参考[官方文档][3]。
