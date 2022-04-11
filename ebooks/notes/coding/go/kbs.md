@@ -48,14 +48,21 @@ https://marketplace.visualstudio.com/items?itemName=golang.go
 
 ### Setup Go development environment in vscode
 
-+ Enable debug for vscode go extension (Delve)  
-    https://github.com/golang/vscode-go/blob/master/docs/debugging.md
+#### Enable debug for vscode go extension (Delve)  
+https://github.com/golang/vscode-go/blob/master/docs/debugging.md
 
-+ Enable resolving private go modues(GOPRIVATE)  
-https://jfrog.com/blog/why-goproxy-matters-and-which-to-pick/
+```bash
+$ export GOPROXY=https://goproxy.cn,direct
+$ export GOPRIVATE=*.internal.mycompany.com
+```
 
-    + Use "GOPRVIATE" and JFrog GoCenter to resolve private modules from private git repository as well as public modules from GoCenter
-        ![go](../_media/go/1.png)
+#### Enable resolving private go modues(GOPRIVATE)  
+> https://jfrog.com/blog/why-goproxy-matters-and-which-to-pick/
+
+
+
+    + Use "GOPRVIATE" to resolve private modules from private git repository and use "GOPROXY" to resolve public modules from JFrog GoCenter
+        ![go](../../_media/go/1.png)
         ```bash
         $ export GOPROXY=https://gocenter.io,direct
         $ export GOPRIVATE=*.internal.mycompany.com
@@ -65,7 +72,7 @@ https://jfrog.com/blog/why-goproxy-matters-and-which-to-pick/
         > (3) GOPRIVATE serves as the default value for the lower-level GONOPROXY and GONOSUMDB variables, which provide finer-grained control over which modules are fetched via proxy and verified using the checksum database.
 
     + Use "GOPROXY" and Artifactory to delegate both public and private repositories
-        ![go](../_media/go/2.png)
+        ![go](../../_media/go/2.png)
         ```bash
         $ export GOPROXY="https://:@my.artifactory.server/artifactory/api/go/go
         $ export GONOSUMDB="github.com/mycompany/*,github.com/mypersonal/*"
@@ -79,11 +86,11 @@ Beego is a RESTful HTTP framework for the rapid development of Go applications i
 
 **The architecture of Beego**  
 Beego is built upon 8 loosely linked modules that can be used independently or as part of Beego’s HTTP logic. This high level of modularity gives Beego an unprecedented level of flexibility to meet developer needs.  
-![go](../_media/go/3.png)
+![go](../../_media/go/3.png)
 
 **The execution logic of Beego**  
 Beego uses a standard Model-View-Controller (MVC) architecture for logic execution.  
-![go](../_media/go/4.png)
+![go](../../_media/go/4.png)
 
 **The project structure of Beego**  
 Here is the typical folder structure of a Beego project:  
