@@ -7,19 +7,19 @@ tags:
   - Kind
 ---
 
-在[Minikube创建本地Kubernetes集群][1]一文中提到过用Docker驱动创建的Kubernetes集群既不支持ingress，也不支持LoadBalancer类型的服务，所以基本上不可用。通过Hypervisor驱动创建的Kubernetes集群在VPN的情况下也无法访问。正好同事又在尝试一款新的工具Kind（论有一个不断进取的同事的重要性{% emoji smile %}），而且还解决了Minikube中遇到的问题。本文将简单介绍下Kind，并在Mac主机上用Kind创建一个Kubernetes集群。
+在[Minikube创建本地Kubernetes集群][1]一文中提到过用Docker驱动创建的Kubernetes集群既不支持ingress，也不支持LoadBalancer类型的服务，所以基本上不可用，而通过Hypervisor驱动创建的Kubernetes集群也需要一些额外的配置(端口转发)才能在VPN的情况下使用。Kind是另一款在Docker容器中创建并运行本地Kubernetes集群的工具，比Minikube的Docker驱动更全面，同时也无需额外的配置就可以在VPN的情况下使用。本文将简单介绍下Kind，并在Mac主机上用Kind创建一个本地Kubernetes集群。
 <!-- more -->
 
 # Kind介绍
-Kind(Kubernetes In Docker)也是一个创建本地Kubernetes集群的工具，类似于Minikube通过Docker驱动创建Kubernetes集群，即在容器中创建并运行Kubernetes集群。通过Kind创建出来的集群支持Ingress和LoadBalancer类型的服务，也能和VPN很好的共存。
+Kind(Kubernetes In Docker)是一个使用Docker容器“节点”运行本地Kubernetes集群的工具。kind 主要是为测试Kubernetes本身而设计的，但也可以用于本地开发或CI。
 
 ## 集群组件配置能力
-Kind也提供了丰富的集群配置选项，有集群级别的，也有节点级别的。Kind缺省也是使用kubeadm创建和配置Kubernetes集群，通过Kubeadm Config Patches机制提供了针对Kubeadm的各种配置。详细可参考Kind[配置][3]这一节。
+Kind提供了丰富的配置选项，有集群级别的，也有节点级别的。Kind缺省也是使用kubeadm创建和配置Kubernetes集群，通过Kubeadm Config Patches机制提供了针对Kubeadm的各种配置。详细可参考Kind[配置][3]这一节。
 
 # Kind架构
 ![](1.png)
 
-工作节点就是一个Docker容器，所有的Kubernetes集群的组件以及用户Pod都运行在这个容器中。
+图中的节点就是一个Docker容器，所有Kubernetes集群的组件(Kube API Server，Kube Scheduler，Kube Controller Manager，Kube Proxy，CoreDNS，ETCD)以及用户Pod都以容器的方式运行在这个节点容器中。
 
 # 创建Kubernetes集群
 通过以下命令和配置文件创建一个包含一个主节点和三个工作节点的Kubernetes集群。
@@ -78,14 +78,45 @@ nodes:
 ```
 
 一些配置参数说明：
-+ 不安装Kind的缺省网络实现（"kindnetd"），否则在创建出来的Kubernetes集群无法解析外网域名，仅管CoreDNS看起来没有任何异常。
-```yaml
-networking:
-  # the default CNI will not be installed
-  disableDefaultCNI: true
-```
++ 禁用默认CNI（"kindnetd"），否则在创建出来的Kubernetes集群无法解析外网域名。
+  ```yaml
+  networking:
+    # the default CNI will not be installed
+    disableDefaultCNI: true
+  ```
 
-+ control-plane中的配置用来将之后安装的ingress controller Pod调度到主节点上，并将NodePort类型的ingress controller服务的80和443端口映射到主机的80和443端口，这样用户可以通过主机IP访问Ingress服务。
++ 为主节点添加标签"ingress-ready:true"。Kind提供的Nginx Ingress Controller的部署资源中会通过这个标签选择运行在主节点上。
+  ```yaml
+    kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "ingress-ready=true"
+  ```
+
++ 将容器主节点的80，443端口映射到运行Kind的主机(这里是Mac主机)的80,443端口。Kind提供的Nginx Ingress Controller的服务资源会通过NodePort将服务通过容器主节点的80，443暴露出去，这样用户就可以通过访问本地主机的80，443端口访问运行在集群中的Nginx Ingress Controller。
+  ```yaml
+    # port forward 80 on the host to 80 on this node
+    extraPortMappings:
+    - containerPort: 80
+      hostPort: 80
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      # optional: set the bind address on the host
+      # 0.0.0.0 is the current default
+      listenAddress: "0.0.0.0"
+      # optional: set the protocol to one of TCP, UDP, SCTP.
+      # TCP is the default
+      protocol: TCP
+  ```
+  > 此处的hostPort指的是运行Kind的主机，也就是Mac主机。
 
 ## 配置Kubernetes集群
 
@@ -179,9 +210,9 @@ $ docker network inspect -f '{{.IPAM.Config}}' kind
 # Kind vs Minikube
 + Kind没有提供类似于Minikube的插件机制，方便用户快速地部署Kubernetes。
 
-+ Kind并没有提供停止一个集群的功能。
++ Kind并没有提供暂停一个集群的功能。
 
-+ 和Minikube相比，Kind比较轻量，就是使用Docker容器创建并运行Kubernetes集群的工具，但比Minikube的Docker驱动更全面。个人认为如果能够把Kind集成到Minikube中作为Docker驱动的实现，应该能更有助于两个项目的发展，用户也不需要学习两个工具了。
++ 和Minikube相比，Kind比较轻量，就是使用Docker容器创建并运行Kubernetes集群，但比Minikube的Docker驱动更全面。个人认为如果能够把Kind集成到Minikube中作为Docker驱动的实现，应该能更有助于两个项目的发展，用户也不需要学习两个工具了。
 
 # 结束语
 本文旨在简单介绍Kind，它的架构以及使用，希望能够帮助读者对Kind有个框架性的了解，从而决定是否需要深入使用。对于Kind更详细的用法，可以参考[官方文档][2]。
