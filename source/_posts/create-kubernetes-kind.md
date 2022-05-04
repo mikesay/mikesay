@@ -54,6 +54,18 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
+    kind: ClusterConfiguration
+    metadata:
+      name: config
+    apiServer:
+      certSANs:
+      - localhost
+      - 127.0.0.1
+      - kubernetes
+      - kubernetes.default.svc
+      - kubernetes.default.svc.cluster.local
+      - kind
+      - 0.0.0.0
   # port forward 80 on the host to 80 on this node
   extraPortMappings:
   - containerPort: 80
@@ -177,9 +189,10 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main
 ### 安装METALLB
 MetalLB是裸机Kubernetes集群的负载均衡实现，使用标准路由协议。
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/namespace.yaml
+export version=v0.12.1
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/${version}/manifests/namespace.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)" 
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/metallb.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/${version}/manifests/metallb.yaml
 kubectl apply -f metallb-configmap.yaml
 ```
 
