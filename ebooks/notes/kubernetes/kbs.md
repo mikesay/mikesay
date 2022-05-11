@@ -95,6 +95,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 + Use nodeAffinity to specify nodes
@@ -145,6 +152,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 > nodeSelector can also be used together with nodeAffinity.
@@ -187,6 +201,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 > nodeSelector can also be used together with toleration.
@@ -237,6 +258,13 @@ spec:
             - bash
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 > If the node has taints, also need to add tolerations
 
