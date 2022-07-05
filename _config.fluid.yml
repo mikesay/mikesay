@@ -892,6 +892,12 @@ links:
       image: "/img/prometheus.png"
     }
     - {
+      title: "Awesome Prometheus alerts",
+      intro: "How to set prometheus alert",
+      link: "https://awesome-prometheus-alerts.grep.to/",
+      image: "/img/prometheus.png"
+    }
+    - {
       title: "Jimmy Song",
       intro: "Cloud Native",
       link: "https://jimmysong.io/",
