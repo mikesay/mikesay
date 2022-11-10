@@ -720,3 +720,6 @@ https://www.threatstack.com/blog/diving-deeper-into-runtimes-kubernetes-cri-and-
 Kubernetes CA, VPA, HPA  
 https://dasydong.github.io/blog/2019/12/21/k8s-ca-code%E7%BB%BC%E5%90%88%E7%AF%87/  
 
+
+## Graceful shutdown
+https://github.com/mikesay/kubernetes-tests/tree/main/graceful-shutdown  
