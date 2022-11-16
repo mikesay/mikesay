@@ -723,3 +723,42 @@ https://dasydong.github.io/blog/2019/12/21/k8s-ca-code%E7%BB%BC%E5%90%88%E7%AF%8
 
 ## Graceful shutdown
 https://github.com/mikesay/kubernetes-tests/tree/main/graceful-shutdown  
+
+## kube-rbac-proxy
+https://github.com/brancz/kube-rbac-proxy  
+
+### Example for non resource url  
+https://github.com/brancz/kube-rbac-proxy/tree/master/examples/non-resource-url  
+
++ Create clusterrole and clusterrolebinding to grant default sa in default namespace
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metrics
+rules:
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metrics
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: metrics
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+```
+
++ Start a test pod
+
++ Run following command
+```sh
+curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/serviceaccount/token`" https://ccoecn-action-runners-actions-runner-controller-metrics-service.github-action-runner:8443/metrics
+```
+
+

@@ -5,6 +5,8 @@
         - [Issue and Solution](/cloud/gcp/issues.md)
     - Zure
         - [Knowledge Base](/cloud/azure/kbs.md)
+    - Generic
+        - [Knowledge Base](/cloud/kb.md)
 - Kubernetes
     - [Knowledge Base](/kubernetes/kbs.md)
     - [Issue and Solution](/kubernetes/issues.md)
