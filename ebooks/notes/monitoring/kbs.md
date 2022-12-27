@@ -141,3 +141,7 @@ https://github.com/grafana/helm-charts/tree/main/charts/grafana
 ### Grafana Operator
 https://operatorhub.io/operator/grafana-operator  
 https://github.com/grafana-operator/grafana-operator
+
+## Monitoring as Code
+https://thenewstack.io/monitoring-as-code-what-it-is-and-why-you-need-it/  
+https://www.atlassian.com/incident-management/kpis/common-metrics  
