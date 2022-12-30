@@ -709,4 +709,7 @@ subjects:
 curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/serviceaccount/token`" https://ccoecn-action-runners-actions-runner-controller-metrics-service.github-action-runner:8443/metrics
 ```
 
+## QoS
 
++ How does Kubernetes assign QoS class to pods through OOM score  
+https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled  
