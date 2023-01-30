@@ -724,6 +724,23 @@ https://dasydong.github.io/blog/2019/12/21/k8s-ca-code%E7%BB%BC%E5%90%88%E7%AF%8
 ## Graceful shutdown
 https://github.com/mikesay/kubernetes-tests/tree/main/graceful-shutdown  
 
+To avoid service outage during these periods, it's important that you've built your application to tolerate disruptions. This is, as mentioned, a non-trivial task, but there are multiple resources and blogs out there that describes how to do that. In essence it can be described as:
+
++ Run with multiple instances  
++ Avoid keeping state with your application  
++ Run with anti-affinity so that your pods are not running on the same nodes https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity  
++ Use PodDisruptionBudgets to ensure you have at least one up and ready replica https://kubernetes.io/docs/concepts/workloads/pods/disruptions/  
++ Set proper Liveness & Readiness Probes so that your application is really ready when it says it's ready  
++ Handle shutdowns gracefully, so that when the Pod is terminated it handles the SIGTERM gracefully.  
+https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-terminating-with-grace  
+https://medium.com/trendyol-tech/graceful-shutdown-of-spring-boot-applications-in-kubernetes-f80e0b3a30b0  
+https://stackoverflow.com/questions/57122081/kubernetes-sends-traffic-to-the-pod-even-after-sending-sigterm  
+
++ TEST DISRUPTION SCENARIOS! What happens to your service when you kubectl delete pod <your app replica>? Is it behaving as you are expecting it to? What kind of errors do you get? Are certain amount of failures acceptable?  
+Here is a very good checklist of things to consider when running Production workloads. Not all of the items will apply to you, but in any case it's good to go through and understand. See what items could be of use to your app. https://learnk8s.io/production-best-practices  
+
+https://blog.flant.com/best-practices-for-deploying-highly-available-apps-in-kubernetes-part-1/   
+
 ## kube-rbac-proxy
 https://github.com/brancz/kube-rbac-proxy  
 
@@ -761,4 +778,7 @@ subjects:
 curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/serviceaccount/token`" https://ccoecn-action-runners-actions-runner-controller-metrics-service.github-action-runner:8443/metrics
 ```
 
+## QoS
 
++ How does Kubernetes assign QoS class to pods through OOM score  
+https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled  

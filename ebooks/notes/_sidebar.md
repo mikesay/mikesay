@@ -21,6 +21,7 @@
         - [Upgrading Operator](/kubernetes/operator/upgrading_operator.md)
     - Components
         - [Kube Proxy](/kubernetes/components/kube-proxy.md)
+        - [Kube Scheduler](/kubernetes/components/kube-scheduler.md)
     - Kustomize
         - [Knowledge Base](/kubernetes/kustomize/kbs.md)
     - [GCP GKE](/kubernetes/gcp_gke.md)
