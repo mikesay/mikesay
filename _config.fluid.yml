@@ -404,7 +404,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/j10c_3.jpeg
+  banner_img: /img/home.png
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -480,7 +480,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/j10c_4.jpg
+  banner_img: /img/post.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -752,7 +752,7 @@ twikoo:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/archive.jpg
+  banner_img: /img/archive.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:
@@ -789,7 +789,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/tag.jpg
+  banner_img: /img/tag.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:
@@ -807,7 +807,7 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/aboutme.jpg
+  banner_img: /img/aboutme.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:  # 打字机内容
@@ -854,7 +854,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/friends.jpg
+  banner_img: /img/friends.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:

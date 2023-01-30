@@ -43,14 +43,16 @@ helm upgrade -i --namespace actions-runner-system --create-namespace\
   --version <VERSION>\
   -n actions-runner-system
 ```
-
-!!!note
-  可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本。
+{% note info %}
+可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本。
+{% endnote %}
 
 # 创建Runners
+## 配置Runner Group
 
 
-Create RunnerDeployment resource:
+## 创建orgnization级别的Runner
+
 ```yaml
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
