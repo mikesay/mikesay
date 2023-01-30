@@ -95,6 +95,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 + Use nodeAffinity to specify nodes
@@ -145,6 +152,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 > nodeSelector can also be used together with nodeAffinity.
@@ -187,6 +201,13 @@ spec:
             - sh
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 
 > nodeSelector can also be used together with toleration.
@@ -237,9 +258,57 @@ spec:
             - bash
             - -c
             - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
 ```
 > If the node has taints, also need to add tolerations
 
+
+
+### Start a pod including mtr command to do network probing
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: netutils
+  name: netutils
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netutils
+  template:
+    metadata:
+      labels:
+        app: netutils
+    spec:
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/os: linux
+        kubernetes.io/hostname: cn-shanghai.xxxxx
+      terminationGracePeriodSeconds: 300
+      containers:
+        - name: netutils
+          image: mikejianzhang/netutils:0.0.2
+          imagePullPolicy: IfNotPresent
+          args:
+            - sh
+            - -c
+            - "sleep 36000"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
+```
 ## Start testing NFS server
 
 ### deployment.yaml
