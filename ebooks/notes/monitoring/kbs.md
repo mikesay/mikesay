@@ -1,4 +1,14 @@
 ## Materials 
+### Concepts(What/Why)
++ Making the USE method of monitoring useful  
+https://www.infoworld.com/article/3638772/making-the-use-method-of-monitoring-useful.html  
+
++ The RED method: A new strategy for monitoring microservices  
+https://www.infoworld.com/article/3638693/the-red-method-a-new-strategy-for-monitoring-microservices.html
+
++ Monitoring Distributed Systems(The Four Golden Signals)  
+https://sre.google/sre-book/monitoring-distributed-systems/
+
 ### AlertManager
 + What’s the difference between group_interval, group_wait, and repeat_interval?
 
@@ -101,6 +111,10 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 
 
 ## Prometheus Stack
+### Concepts
++ Prometheus的四种指标类型，我终于搞懂了
+https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
+
 ### Doc and Code
 https://prometheus.io/docs/introduction/overview/
 https://github.com/prometheus
