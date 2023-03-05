@@ -10,46 +10,109 @@ tags:
 date: 2022-04-11 02:21:47
 ---
 
-GitHub Action是GitHub提供的CI/CD平台，用来自动化构建，测试和部署流水线。它缺省提供了基于虚拟机的多种类型的Runners供用户在自己的公有仓库中免费使用，而对于私有仓库的使用则需要收费（GitHub为付费用户提供了一定的免费使用额度，详细可以参考[GitHub Actions的计费][2]），如果不想付费使用GitHub提供的Runners，则需要自己部署自托管的Runner。本文将介绍利用开源项目[Actions Runner Controller][3]在Kubernetes中部署自托管的GitHub Action Runner。
+GitHub Actions 是一个持续集成和持续交付 (CI/CD) 平台，可让您自动化构建、测试和部署管道。 您可以创建工作流来构建和测试存储库中的每个拉取请求，或将合并的拉取请求部署到生产环境。GitHub Actions 不仅限于 DevOps，还允许您在存储库中发生其他事件时运行工作流。 例如，您可以运行一个工作流，以便在有人在您的存储库中创建新问题时自动添加适当的标签。本文介绍了利用开源项目[Actions Runner Controller][3]在Kubernetes中部署自托管的容器版本的GitHub Action Runner。
 <!-- more -->
 
+# GitHub Runner
+![](1.png)
+上图是GitHub Actions包含的组件。
++ Workflows（工作流）是一个可配置的自动化过程，它运行一个或多个Jobs（作业）。  
++ Events（事件）是代码仓库中触发工作流的特定活动。  
++ Jobs（作业）是在同一GitHub Runner上执行的工作流中的一组步骤。  
++ Actions（动作）是GitHub Actions平台的自定义应用程序，执行复杂但经常重复的任务。  
++ GitHub Runner是在工作流被触发时运行您的工作流的服务器。每个GitHub Runner一次可以运行一个作业。 GitHub Runner 可以在 GitHub 托管的云或自托管环境中运行。 自托管环境提供了对硬件、操作系统和软件工具的更多控制。 它们可以在物理机、虚拟机或容器中运行。 容器化环境轻量级、松散耦合、高效并且可以集中管理。 然而，它们并不易于使用。GitHub提供了虚拟机版本的Runner包括Ubuntu Linux、Microsoft Windows 和 macOS（私有仓库需要收费使用GitHub提供的Runner， GitHub为付费用户提供了一定的免费使用额度，详细可以参考[GitHub Actions的计费][2]）， 每个工作流运行都在一个全新的的虚拟机中执行。
+
 # Actions Runner Controller
-GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runner][1]，但是随着云原生技术和Kubernetes的发展，越来越多的CI/CD系统开始运行在Kubernetes中，比如Jenkins。而Actions Runner Controller则是以Kubernetes Operator方式实现，通过CRD资源来定义、创建和配置运行在Kubernetes中的Runner。
+GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runner][1]部署自托管Runner的方法，但是随着云原生技术和Kubernetes的发展，越来越多的CI/CD系统逐渐容器化并运行在Kubernetes平台中，从而使系统本身变得更具弹性和韧性，比如Jenkins的agent。GitHub Runner也可以通过容器运行在Kubernetes平台中，而Actions Runner Controller是一个自定义的Kubernetes Operator，通过声明式的方式来定义、创建、配置和管理运行在Kubernetes中的GitHub Runner。
 
-# Helm方式安装Actions Runner Controller
+# 安装GitHub Runner
+这里选择用Personal Access Token（PAT，个人访问令牌）的认证方式配置Actions Runner Controller访问GitHub。个人访问令牌能够被*actions-runner-controller*用来注册自托管的Runner。登录到对代码仓库具有“管理员”权限的账号，并[创建个人访问令牌](https://github.com/settings/tokens/new)，其权限范围如下：
 
-## 安装cert-manager
+**代码仓库级别的Runner需要的权限**
+
+* repo (Full control)
+
+**组织级别的Runner需要的权限**
+
+* repo (Full control)
+* admin:org (Full control)
+* admin:public_key (read:public_key)
+* admin:repo_hook (read:repo_hook)
+* admin:org_hook (Full control)
+* notifications (Full control)
+* workflow (Full control)
+
+**企业级别的Runners需要的权限**
+
+* admin:enterprise (manage_runners:enterprise)
+
+{% note info %}
+当您部署企业Runner时，它们将获得对组织的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个 GitHub 组织都必须允许在代码仓库中使用企业Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
+{% endnote %}
+
+{% note info %}
+另一种认证方式为GitHub App。两种认证方式的区别以及配置GitHub App认证可以参考 ```https://github.com/actions/actions-runner-controller/blob/master/docs/authenticating-to-the-github-api.md```
+{% endnote %}
+
+创建出个人访问令牌后，在目标Kuberentes集群中将其部署成secret资源供GitHub Runners使用。
+
+## Kubectl方式部署
++ 为GitHub个人访问令牌创建secret资源controller-manager
 ```bash
-helm repo add jetstack https://charts.jetstack.io
-helm upgrade -i cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.8.0 --set installCRDs=true
+kubectl create secret generic controller-manager \
+    -n actions-runner-system \
+    --from-literal=github_token=${GITHUB_TOKEN}
 ```
 
-## 添加helm chart仓库
++ 执行kubectl命令部署指定版本的action runner controller
+```bash
+kubectl create -f https://github.com/actions/actions-runner-controller/releases/download/${ACTION_RUNNER_CONTROLLER_VERSION}/actions-runner-controller.yaml \
+    -n actions-runner-system
+```
+{% note info %}
+用期望的版本替换变量${ACTION_RUNNER_CONTROLLER_VERSION}。
+{% endnote %}
+
+## Helm方式安装Actions Runner Controller
++ 安装cert-manager  
+```bash
+helm repo add jetstack https://charts.jetstack.io
+helm upgrade -i cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version ${CERT_MANAGER_VERSION} --set installCRDs=true
+```
+{% note info %}
+Actions Runner Controller中的admission webhook需要使用cert-manager创建一个自签名的ssl证书。
+{% endnote %}
+
++ 添加helm chart仓库  
 ```bash
 helm repo add actions-runner-controller  https://github.com/actions-runner-controller/actions-runner-controller
 ```
 
-## 更新本地的helm chart仓库
++ 更新本地的helm chart仓库  
 ```bash
 helm repo update
 ```
 
-## 安装Actions Runner Controller
++ 安装Actions Runner Controller  
 ```bash
 helm upgrade -i --namespace actions-runner-system --create-namespace\
   --set=authSecret.create=true\
-  --set=authSecret.github_token="REPLACE_YOUR_TOKEN_HERE"\
+  --set=authSecret.github_token=${GITHUB_TOKEN}\
   --wait actions-runner-controller actions-runner-controller/actions-runner-controller\
-  --version <VERSION>\
+  --version ${ACTION_RUNNER_CONTROLLER_VERSION}>\
   -n actions-runner-system
 ```
-{% note info %}
-可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本。
-{% endnote %}
 
-# 创建Runners
+  > 可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本：  
+  > ![](2.png)  
+
+  {% note info %}
+  helm方式的安装会为参数中提供的GitHub个人访问令牌自动创建一个名为controller-manager的secret资源。
+  {% endnote %}
+
+
+# 创建GitHub Runners
 ## 配置Runner Group
-
 
 ## 创建orgnization级别的Runner
 
@@ -69,7 +132,11 @@ spec:
         - mikesay
       env: []
 ```
+{% note info %}
+只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
+{% endnote %}
 
 [1]: https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
 [2]: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#about-spending-limits
 [3]: https://github.com/actions/actions-runner-controller
+[4]: https://github.com/actions/actions-runner-controller/blob/master/docs/authenticating-to-the-github-api.md
