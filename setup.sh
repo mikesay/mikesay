@@ -22,9 +22,13 @@ cp -f themes/fluid-dev/source/img/friends.png node_modules/hexo-theme-fluid/sour
 cp -f themes/fluid-dev/source/img/s57-10.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/f15e-1.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/home.png node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-dev/source/img/home.jpeg node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-dev/source/img/home_afg.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/post.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/archive.png node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-dev/source/img/archive.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/tag.png node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-dev/source/img/tag.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/wechatpay.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/wechat_mp.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-dev/source/img/gregg.jpeg node_modules/hexo-theme-fluid/source/img/

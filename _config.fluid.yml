@@ -404,7 +404,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/home.png
+  banner_img: /img/home_afg.jpeg
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -752,7 +752,7 @@ twikoo:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/archive.png
+  banner_img: /img/archive.jpeg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:
@@ -789,7 +789,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/tag.png
+  banner_img: /img/tag.jpeg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:
