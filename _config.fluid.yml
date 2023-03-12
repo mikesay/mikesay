@@ -807,7 +807,7 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/aboutme.png
+  banner_img: /img/aboutme.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:  # 打字机内容
@@ -854,7 +854,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/friends.png
+  banner_img: /img/friends.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.3
   subtitle:
