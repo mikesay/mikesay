@@ -7,9 +7,9 @@ npm install
 # Customize theme fluid
 echo "Customize theme fluid"
 cp -f themes/fluid-dev/layout/post.ejs node_modules/hexo-theme-fluid/layout/
-cp -f themes/fluid-dev/layout/_partial/nav.ejs node_modules/hexo-theme-fluid/layout/_partial/
-cp -f themes/fluid-dev/layout/_partial/comments/changyan-lite.ejs node_modules/hexo-theme-fluid/layout/_partial/comments/
-cp -f themes/fluid-dev/layout/_partial/donate.ejs node_modules/hexo-theme-fluid/layout/_partial/
+cp -f themes/fluid-dev/layout/_partial/nav.ejs node_modules/hexo-theme-fluid/layout/_partials/
+cp -f themes/fluid-dev/layout/_partial/comments/changyan-lite.ejs node_modules/hexo-theme-fluid/layout/_partials/comments/
+cp -f themes/fluid-dev/layout/_partial/donate.ejs node_modules/hexo-theme-fluid/layout/_partials/
 cp -r themes/fluid-dev/source/css/_changyan node_modules/hexo-theme-fluid/source/css/
 cp -r themes/fluid-dev/source/css/_donate node_modules/hexo-theme-fluid/source/css/
 cp -r themes/fluid-dev/source/css/_pages/_post/post.styl node_modules/hexo-theme-fluid/source/css/_pages/_post/
