@@ -6,10 +6,10 @@ npm install
 
 # Customize theme fluid
 echo "Customize theme fluid"
-cp -f themes/fluid-mikesay/layout/_partial/comments/changyan-lite.ejs node_modules/hexo-theme-fluid/layout/_partials/comments/
-cp -f themes/fluid-mikesay/layout/_partial/donate/donate.ejs node_modules/hexo-theme-fluid/layout/_partials/
-cp -r themes/fluid-mikesay/source/css/_changyan node_modules/hexo-theme-fluid/source/css/
-cp -r themes/fluid-mikesay/source/css/_donate node_modules/hexo-theme-fluid/source/css/
+cp -f themes/fluid-mikesay/layout/_partials/changyan/changyan-lite.ejs node_modules/hexo-theme-fluid/layout/_partials/comments/
+#cp -f themes/fluid-mikesay/layout/_partial/donate/donate.ejs node_modules/hexo-theme-fluid/layout/_partials/
+#cp -r themes/fluid-mikesay/source/css/_changyan node_modules/hexo-theme-fluid/source/css/
+#cp -r themes/fluid-mikesay/source/css/_donate node_modules/hexo-theme-fluid/source/css/
 cp -f themes/fluid-mikesay/source/img/default.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/aboutme.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/alipay.png node_modules/hexo-theme-fluid/source/img/
