@@ -21,6 +21,7 @@ cp -f themes/fluid-mikesay/source/img/home.png node_modules/hexo-theme-fluid/sou
 cp -f themes/fluid-mikesay/source/img/home_afg.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/post.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/archive.jpeg node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-mikesay/source/img/category.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/tag.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/wechatpay.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/wechatpay1.jpeg node_modules/hexo-theme-fluid/source/img/

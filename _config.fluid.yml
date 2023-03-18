@@ -83,7 +83,7 @@ fun_features:
   # 为 subtitle 添加打字机效果
   # Typing animation for subtitle
   typing:
-    enable: true
+    enable: false
 
     # 打印速度，数字越大越慢
     # Typing speed, the larger the number, the slower
@@ -340,15 +340,15 @@ navbar:
     # 不透明度，数字越大透明度越低，注意透明过度可能看不清菜单字体
     # Ratio of opacity, 1.0 is completely opaque
     # available: 0 - 1.0
-    alpha: 0
+    alpha: 0.5
 
   # 导航栏菜单，可自行增减，key 用来关联 languages/*.yml，如不存在关联则显示 key 本身的值；icon 是 css class，可以省略；增加 name 可以强制显示指定名称
   # Navigation bar menu. `key` is used to associate languages/*.yml. If there is no association, the value of `key` itself will be displayed; if `icon` is a css class, it can be omitted; adding `name` can force the display of the specified name
   menu:
     - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
-    #- { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - {
         key: '文档',
         icon: 'iconfont icon-books',
@@ -542,7 +542,7 @@ index:
 post:
   banner_img: /img/post.png
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0
 
   # 文章在首页的默认封面图，当没有指定 index_img 时会使用该图片，若两者都为空则不显示任何图片
   # Path of the default post cover when `index_img` is not set. If both are empty, no image will be displayed
@@ -910,7 +910,7 @@ giscus:
 archive:
   banner_img: /img/archive.jpeg
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0.2
 
 
 #---------------------------
@@ -918,10 +918,10 @@ archive:
 # Category Page
 #---------------------------
 category:
-  enable: false
-  banner_img: /img/default.png
+  enable: true
+  banner_img: /img/category.jpeg
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0
 
   # 分类的排序字段，前面带减号是倒序，不带减号是正序
   # Sort field for categories, with a minus sign is reverse order
@@ -950,7 +950,7 @@ tag:
   enable: true
   banner_img: /img/tag.jpeg
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0.2
   tagcloud:
     min_font: 15
     max_font: 30
@@ -967,7 +967,7 @@ about:
   enable: true
   banner_img: /img/aboutme.jpg
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0.2
   avatar: /img/avatar.png
   name: "云斋"
   introduce: "Cloud & DevOps"
@@ -990,7 +990,7 @@ about:
 page:
   banner_img: /img/default.png
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0
 
 
 #---------------------------
@@ -1001,7 +1001,7 @@ page404:
   enable: true
   banner_img: /img/coffee.jpeg
   banner_img_height: 100
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0
   # 重定向到首页的延迟(毫秒)
   # Delay in redirecting to home page (milliseconds)
   redirect_delay: 5000
@@ -1015,7 +1015,7 @@ links:
   enable: true
   banner_img: /img/friends.jpg
   banner_img_height: 60
-  banner_mask_alpha: 0.3
+  banner_mask_alpha: 0.2
   # 友链的成员项
   # Member item of page
   items:
