@@ -6,6 +6,10 @@ tags:
   - Jenkins
   - Git
   - Bitbucket
+category_bar: true
+categories:
+  - ["Jenkins"]
+order: 5
 date: 2020-02-23 18:46:00
 ---
 

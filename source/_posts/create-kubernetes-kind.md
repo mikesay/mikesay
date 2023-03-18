@@ -5,6 +5,10 @@ tags:
   - Kubernetes
   - K8s
   - Kind
+category_bar: true
+categories:
+  - ["Kubernetes"]
+order: 2
 ---
 
 在[Minikube创建本地Kubernetes集群][1]一文中提到过用Docker驱动创建的Kubernetes集群既不支持ingress，也不支持LoadBalancer类型的服务，所以基本上不可用，而通过Hypervisor驱动创建的Kubernetes集群也需要一些额外的配置(端口转发)才能在VPN的情况下使用。Kind是另一款在Docker容器中创建并运行本地Kubernetes集群的工具，比Minikube的Docker驱动更全面，同时也无需额外的配置就可以在VPN的情况下使用。本文将简单介绍下Kind，并在Mac主机上用Kind创建一个本地Kubernetes集群。

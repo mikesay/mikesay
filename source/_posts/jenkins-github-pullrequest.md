@@ -6,6 +6,10 @@ tags:
   - Jenkins
   - Git
   - Github
+category_bar: true
+categories:
+  - ["Jenkins"]
+order: 3
 date: 2020-01-30 22:17:00
 ---
 

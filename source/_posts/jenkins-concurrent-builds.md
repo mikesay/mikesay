@@ -4,6 +4,10 @@ tags:
   - DevOps
   - CI/CD
   - Jenkins
+category_bar: true
+categories:
+  - ["Jenkins"]
+order: 1
 date: 2019-07-08 17:15:01
 ---
 

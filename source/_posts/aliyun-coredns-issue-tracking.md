@@ -6,6 +6,10 @@ tags:
   - ACK
   - Kubernetes
   - K8s
+category_bar: true
+categories:
+  - ["Kubernetes"]
+order: 3
 date: 2021-09-06 09:28:00
 ---
 

@@ -6,6 +6,10 @@ tags:
   - Jenkins
   - Git
   - GitLab
+category_bar: true
+categories:
+  - ["Jenkins"]
+order: 4
 date: 2020-03-09 18:00:00
 ---
 
