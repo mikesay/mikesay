@@ -136,3 +136,8 @@ emoji:
   className: github-emoji
 
 all_minifier: true
+
+admin:
+  username: mikesay
+  password_hash: $2a$10$AGOQKyzmxMyEVx1kXGGE7.Vmjq5dcE89584rYruVhdR.kl/WpBxYK
+  secret: mikesayhelloworld
