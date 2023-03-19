@@ -29,7 +29,10 @@ GitHub Actions 是一个持续集成和持续交付 (CI/CD) 平台，利用工�
 GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runner][1]部署自托管Runner的方法，但是随着云原生技术和Kubernetes的发展，越来越多的CI/CD系统逐渐容器化并运行在Kubernetes平台中，从而使系统本身变得更具弹性和韧性，比如Jenkins的agent。GitHub Runner也可以通过容器运行在Kubernetes平台中，而Actions Runner Controller是一个自定义的Kubernetes Operator，通过声明式的方式来定义、创建、配置和管理运行在Kubernetes中的GitHub Runner。
 
 # 安装GitHub Runner
-这里选择用Personal Access Token（PAT，个人访问令牌）的认证方式配置Actions Runner Controller访问GitHub。个人访问令牌能够被*actions-runner-controller*用来注册自托管的Runner。登录到对代码仓库具有“管理员”权限的账号，并[创建个人访问令牌](https://github.com/settings/tokens/new)，其权限范围如下：
+## 设置GitHub API认证
+本文选择PAT（Personal Access Token，个人访问令牌）的方式认证GitHub API。另一种认证方式为GitHub App，两种认证方式的区别以及配置GitHub App认证可以参考[Authenticating to the GitHub API][4]。  
+
+使用以下权限范围点击[创建PAT](https://github.com/settings/tokens/new)：
 
 **代码仓库级别的Runner需要的权限**
 
@@ -48,26 +51,28 @@ GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runne
 **企业级别的Runners需要的权限**
 
 * admin:enterprise (manage_runners:enterprise)
-
 {% note info %}
 当您部署企业Runner时，它们将获得对组织的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个 GitHub 组织都必须允许在代码仓库中使用企业Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
 {% endnote %}
 
+## 安装cert-manager  
+```bash
+helm repo add jetstack https://charts.jetstack.io
+helm upgrade -i cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version ${CERT_MANAGER_VERSION} --set installCRDs=true
+```
 {% note info %}
-另一种认证方式为GitHub App。两种认证方式的区别以及配置GitHub App认证可以参考 ```https://github.com/actions/actions-runner-controller/blob/master/docs/authenticating-to-the-github-api.md```
+Actions Runner Controller中的admission webhook需要使用cert-manager创建一个自签名的ssl证书。
 {% endnote %}
 
-创建出个人访问令牌后，在目标Kuberentes集群中将其部署成secret资源供GitHub Runners使用。
-
 ## Kubectl方式部署
-+ 为GitHub个人访问令牌创建secret资源controller-manager
++ 用前面生成的PAT创建一个名为“controller-manager”的secret资源  
 ```bash
 kubectl create secret generic controller-manager \
     -n actions-runner-system \
     --from-literal=github_token=${GITHUB_TOKEN}
 ```
 
-+ 执行kubectl命令部署指定版本的action runner controller
++ 执行kubectl命令部署指定版本的action runner controller  
 ```bash
 kubectl create -f https://github.com/actions/actions-runner-controller/releases/download/${ACTION_RUNNER_CONTROLLER_VERSION}/actions-runner-controller.yaml \
     -n actions-runner-system
@@ -77,15 +82,6 @@ kubectl create -f https://github.com/actions/actions-runner-controller/releases/
 {% endnote %}
 
 ## Helm方式安装Actions Runner Controller
-+ 安装cert-manager  
-```bash
-helm repo add jetstack https://charts.jetstack.io
-helm upgrade -i cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version ${CERT_MANAGER_VERSION} --set installCRDs=true
-```
-{% note info %}
-Actions Runner Controller中的admission webhook需要使用cert-manager创建一个自签名的ssl证书。
-{% endnote %}
-
 + 添加helm chart仓库  
 ```bash
 helm repo add actions-runner-controller  https://github.com/actions-runner-controller/actions-runner-controller
@@ -110,15 +106,19 @@ helm upgrade -i --namespace actions-runner-system --create-namespace\
   > ![](2.png)  
 
   {% note info %}
-  helm方式的安装会为参数中提供的GitHub个人访问令牌自动创建一个名为controller-manager的secret资源。
+  helm方式的安装会为参数中提供的GitHub PAT自动生成一个名为“controller-manager”的secret资源。
   {% endnote %}
 
 
 # 创建GitHub Runners
+Action Runner Controller提供了两种CRD资源定义Runners：
++ RunnerDeployment (和k8s's Deployments类似, 基于Pods)  
++ RunnerSet (基于k8s's StatefulSets)  
+
 ## 配置Runner Group
+Runner Group用来限制GitHub组里的哪些代码仓库和工作流能够使用Runner Group中的Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
 
 ## 创建orgnization级别的Runner
-
 ```yaml
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
@@ -135,9 +135,6 @@ spec:
         - mikesay
       env: []
 ```
-{% note info %}
-只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
-{% endnote %}
 
 [1]: https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
 [2]: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#about-spending-limits
