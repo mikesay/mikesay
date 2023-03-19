@@ -160,12 +160,12 @@ color:
 
   # 全局字体色
   # Color of global text
-  text_color: "#3c4858"
+  text_color: "#000000"
   text_color_dark: "#c4c6c9"
 
   # 全局次级字体色（摘要、简介等位置）
   # Color of global secondary text (excerpt, introduction, etc.)
-  sec_text_color: "#718096"
+  sec_text_color: "#363e49"
   sec_text_color_dark: "#a7a9ad"
 
   # 主面板背景色
@@ -175,7 +175,7 @@ color:
 
   # 文章正文字体色
   # Color of post text
-  post_text_color: "#2c3e50"
+  post_text_color: "#000000"
   post_text_color_dark: "#c4c6c9"
 
   # 文章正文字体色（h1 h2 h3...）
@@ -224,8 +224,8 @@ color:
 # 主题字体配置
 # Font
 font:
-  font_size: 15px
-  font_family: sans-serif
+  font_size: 16px
+  font_family: sans, KaiTi,"Microsoft YaHei",Georgia, serif;
   letter_spacing: 0.01em
   code_font_size: 85%
 

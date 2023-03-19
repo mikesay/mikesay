@@ -134,3 +134,5 @@ search:
 emoji:
   enable: true
   className: github-emoji
+
+all_minifier: true
