@@ -94,16 +94,18 @@ helm repo update
 
 + 安装Actions Runner Controller  
 ```bash
-helm upgrade -i --namespace actions-runner-system --create-namespace\
-  --set=authSecret.create=true\
-  --set=authSecret.github_token=${GITHUB_TOKEN}\
-  --wait actions-runner-controller actions-runner-controller/actions-runner-controller\
-  --version ${ACTION_RUNNER_CONTROLLER_VERSION}>\
+helm upgrade  actions-runner-controller actions-runner-controller/actions-runner-controller \
+  -i --create-namespace \
+  --set=authSecret.create=true \
+  --set=authSecret.github_token=${GITHUB_TOKEN} \
+  --wait \
+  --version ${ACTION_RUNNER_CONTROLLER_VERSION}> \
   -n actions-runner-system
 ```
 
-  > 可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本：  
+  > + 可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本：  
   > ![](2.png)  
+  > + actions runner controller缺省会关注所有命名空间的runner资源。可以通过添加选项```--set=scope.singleNamespace=true```只关注actions runner controller所在的命名空间的runner资源。
 
   {% note info %}
   helm方式的安装会为参数中提供的GitHub PAT自动生成一个名为“controller-manager”的secret资源。
@@ -113,18 +115,33 @@ helm upgrade -i --namespace actions-runner-system --create-namespace\
 # 创建GitHub Runners
 Action Runner Controller提供了两种CRD资源定义Runners：
 + RunnerDeployment (和k8s's Deployments类似, 基于Pods)  
-+ RunnerSet (基于k8s's StatefulSets)  
++ RunnerSet (基于k8s's StatefulSets)
 
-## 配置Runner Group
-Runner Group用来限制GitHub组里的哪些代码仓库和工作流能够使用Runner Group中的Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
+## 创建repository级别的Runner
+```bash
+cat << EOF | kubectl apply -n ${NAMESPACE} -f -
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: mikesay-mikesay-spikes-runner
+spec:
+  replicas: 1
+  template:
+    spec:
+      repository: mikesay/mikesay-spikes
+      labels:
+        - mikesay
+        - mikesay-spikes
+EOF
+```
 
 ## 创建orgnization级别的Runner
-```yaml
+```bash
+cat << EOF | kubectl apply -n ${NAMESPACE} -f -
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
   name: mikesay-runner
-  namespace: actions-runner-system
 spec:
   replicas: 1
   template:
@@ -134,7 +151,12 @@ spec:
       labels:
         - mikesay
       env: []
+EOF
 ```
+
+{% note info %}
+Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
+{% endnote %}
 
 [1]: https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
 [2]: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#about-spending-limits
