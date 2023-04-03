@@ -32,13 +32,13 @@ GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runne
 ## 设置GitHub API认证
 本文选择PAT（Personal Access Token，个人访问令牌）的方式认证GitHub API。另一种认证方式为GitHub App，两种认证方式的区别以及配置GitHub App认证可以参考[Authenticating to the GitHub API][4]。  
 
-使用以下权限范围点击[创建PAT](https://github.com/settings/tokens/new)：
+点击[创建PAT](https://github.com/settings/tokens/new)，并参考以下不同级别的Runner所需要的权限创建PAT：
 
 **代码仓库级别的Runner需要的权限**
 
 * repo (Full control)
 
-**组织级别的Runner需要的权限**
+**组织(org)级别的Runner需要的权限**
 
 * repo (Full control)
 * admin:org (Full control)
@@ -51,9 +51,11 @@ GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runne
 **企业级别的Runners需要的权限**
 
 * admin:enterprise (manage_runners:enterprise)
-{% note info %}
-当您部署企业Runner时，它们将获得对组织的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个 GitHub 组织都必须允许在代码仓库中使用企业Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
-{% endnote %}
+
+  > 当您部署企业Runner时，它们将获得对GitHub组织（Org）的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个GitHub组织（Org）都必须允许在代码仓库中使用企业Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
+  > ![](3.jpg) 
+  > 组织和企业级别的Runner需要创建在Runner Group里，通过Runner Group对这些Runners分类和统一赋权，即哪些代码仓库和工作流可以使用这个Group里的Runners。
+  > ![](4.jpg)
 
 ## 安装cert-manager  
 ```bash
@@ -113,13 +115,18 @@ helm upgrade  actions-runner-controller actions-runner-controller/actions-runner
 
 
 # 创建GitHub Runners
+GitHub自托管Runners可以部署在管理层次结构的各个级别  
++ 代码仓库级别
++ 组织级别
++ 企业级别
+
 Action Runner Controller提供了两种CRD资源定义Runners：
 + RunnerDeployment (和k8s's Deployments类似, 基于Pods)  
 + RunnerSet (基于k8s's StatefulSets)
 
 ## 创建repository级别的Runner
 ```bash
-cat << EOF | kubectl apply -n ${NAMESPACE} -f -
+cat << EOF | kubectl apply -n actions-runner-system -f -
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
@@ -137,7 +144,7 @@ EOF
 
 ## 创建orgnization级别的Runner
 ```bash
-cat << EOF | kubectl apply -n ${NAMESPACE} -f -
+cat << EOF | kubectl apply -n actions-runner-system -f -
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
@@ -153,10 +160,54 @@ spec:
       env: []
 EOF
 ```
-
 {% note info %}
 Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
 {% endnote %}
+
+## 使用RunnerSet创建repository级别的Runner
+```bash
+cat << EOF | kubectl apply -n actions-runner-system -f -
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerSet
+metadata:
+  name: mikesay-mikesay-spikes-runnerset
+spec:
+  ephemeral: false
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  replicas: 2
+  repository: mikesay/mikesay-spikes
+  labels:
+    - mikesay
+    - mikesay-spikes
+  selector:
+    matchLabels:
+      app: mikesay
+  serviceName: mikesay
+  template:
+    metadata:
+      labels:
+        app: mikesay
+      name: mikerunner
+    spec:
+      containers:
+      - name: runner
+        volumeMounts:
+        - name: www
+          mountPath: /runner/data
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 200M
+EOF
+```
+
 
 [1]: https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
 [2]: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#about-spending-limits
