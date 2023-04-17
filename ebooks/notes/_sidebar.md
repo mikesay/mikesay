@@ -47,6 +47,9 @@
     - Python
         - [Knowledge Base](/coding/python/kbs.md)
         - [Issue and Solution](/coding/python/issues.md)
+- IAC
+    - Terraform
+        - [Terraform Base](/iac/terraform/kbs.md)
 - CI/CD
     - Artifactory
         - [Knowledge Base](/cicd/artifactory/kbs.md)
