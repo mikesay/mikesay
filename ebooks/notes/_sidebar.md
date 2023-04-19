@@ -5,8 +5,10 @@
     - GCP
         - [Knowledge Base](/cloud/gcp/kbs.md)
         - [Issue and Solution](/cloud/gcp/issues.md)
-    - Zure
+    - Azure
         - [Knowledge Base](/cloud/azure/kbs.md)
+    - AliCloud
+        - [Knowledge Base](/cloud/alicloud/kbs.md)
     - Generic
         - [Knowledge Base](/cloud/kb.md)
 - Kubernetes
