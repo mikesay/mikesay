@@ -782,3 +782,82 @@ curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/service
 
 + How does Kubernetes assign QoS class to pods through OOM score  
 https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled  
+
+
+## Configure Servie Accounts for Pods
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/  
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: sa-demo
+  name: sa-demo
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: xxxx
+kind: Secret
+metadata:
+  name: docker-pull-secret
+  namespace: sa-demo
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-demo-default
+  namespace: sa-demo
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: sa-demo
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        limits:
+          cpu: 100m
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 200Mi
+  serviceAccountName: sa-demo-default
+  imagePullSecrets:
+    - name: docker-pull-secret
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-customized
+  namespace: sa-demo
+spec:
+  containers:
+    - name: nginx-customized
+      image: nginx
+      volumeMounts:
+      - mountPath: /var/run/secrets/tokens
+        name: vault-token
+      resources:
+        limits:
+          cpu: 100m
+          memory: 256Mi
+        requests:
+          cpu: 50m
+          memory: 200Mi
+  serviceAccountName: sa-demo-default
+  imagePullSecrets:
+    - name: docker-pull-secret
+  volumes:
+  - name: vault-token
+    projected:
+      sources:
+      - serviceAccountToken:
+          path: token
+          expirationSeconds: 600
+          audience: vault
+```
