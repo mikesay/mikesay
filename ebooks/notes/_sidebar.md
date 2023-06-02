@@ -51,6 +51,8 @@
         - [Issue and Solution](/coding/python/issues.md)
     - Shell
         - [Knowledge Base](/coding/shell/kbs.md)
+    - Java
+        - [Knowledge Base](/coding/java/kbs.md)
 - IAC
     - Terraform
         - [Terraform Base](/iac/terraform/kbs.md)
