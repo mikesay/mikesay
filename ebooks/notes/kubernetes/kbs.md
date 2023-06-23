@@ -785,9 +785,13 @@ https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled
 
 
 ## Configure Servie Accounts for Pods
+Verify 
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/  
 
-```yaml
+
+```sh
+kubectl apply -f - << EOF
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -860,4 +864,8 @@ spec:
           path: token
           expirationSeconds: 600
           audience: vault
+EOF
 ```
+
+## Access Kubernetes pods from outside of the cluster
+https://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/  
