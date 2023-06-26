@@ -61,7 +61,7 @@ $ export GOPRIVATE=*.internal.mycompany.com
 
 
 + Use "GOPRVIATE" to resolve private modules from private git repository and use "GOPROXY" to resolve public modules from JFrog GoCenter  
-    ![go](../../_media/go/1.png':size=60%')
+    ![go](../../_media/go/1.png':size=50%')
     ```bash
     $ export GOPROXY=https://gocenter.io,direct
     $ export GOPRIVATE=*.internal.mycompany.com
@@ -71,7 +71,7 @@ $ export GOPRIVATE=*.internal.mycompany.com
     > (3) GOPRIVATE serves as the default value for the lower-level GONOPROXY and GONOSUMDB variables, which provide finer-grained control over which modules are fetched via proxy and verified using the checksum database.
 
 + Use "GOPROXY" and Artifactory to delegate both public and private repositories  
-    ![go](../../_media/go/2.png':size=60%')
+    ![go](../../_media/go/2.png':size=50%')
 
     ```bash
     $ export GOPROXY="https://:@my.artifactory.server/artifactory/api/go/go
@@ -200,3 +200,9 @@ https://blog.golang.org/context
 
 ### Learn Go And Plant Trees
 https://tutorialedge.net/
+
+### Golang Tuorial
+https://www.golangprograms.com/golang-package-examples.html
+
+### Golang入门教程
+http://c.biancheng.net/golang/
