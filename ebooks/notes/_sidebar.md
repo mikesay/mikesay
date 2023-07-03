@@ -46,6 +46,7 @@
         - [Go Concurrency Patterns: Pipelines and cancellation](/coding/go/go_cc1.md)
         - [Go Concurrency Patterns: Context](/coding/go/go_cc2.md)
         - [Error handling and Go](/coding/go/go_error.md)
+        - [Go OpenTelemetry](/coding/go/go_opentelemetry.md)
     - Python
         - [Knowledge Base](/coding/python/kbs.md)
         - [Issue and Solution](/coding/python/issues.md)

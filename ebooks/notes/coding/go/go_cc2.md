@@ -283,3 +283,8 @@ Other packages have provided cancelation support similar to Context. For example
 At Google, we require that Go programmers pass a Context parameter as the first argument to every function on the call path between incoming and outgoing requests. This allows Go code developed by many different teams to interoperate well. It provides simple control over timeouts and cancelation and ensures that critical values like security credentials transit Go programs properly.
 
 Server frameworks that want to build on Context should provide implementations of Context to bridge between their packages and those that expect a Context parameter. Their client libraries would then accept a Context from the calling code. By establishing a common interface for request-scoped data and cancelation, Context makes it easier for package developers to share code for creating scalable services.
+
+## Materials
+
+### How To Use Contexts in Go
+https://www.digitalocean.com/community/tutorials/how-to-use-contexts-in-go  
