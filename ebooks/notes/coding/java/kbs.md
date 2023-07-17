@@ -13,13 +13,16 @@ java -version
 
 ### Install
 ```bash
+export HOMEBREW_FORCE_BREWED_CURL=1
 sudo rm -fr /Users/yourUserName/Library/Java/JavaVirtualMachines/*
 sudo rm -fr /Library/Java/JavaVirtualMachines/*
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install openjdk@11
 sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
-
 ```
+
+> ```export HOMEBREW_FORCE_BREWED_CURL=1``` enable brew command to use brew installed curl.
+
 
 + Add bin folder of jdk in PATH
 ```bash
@@ -30,6 +33,22 @@ sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVir
 ```bash
 echo 'export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/openjdk@11/include"' >> /Users/mizha53/.bash_profile
 ```
+
+#### Issues met
+
+```
+configure: error: XCode tool 'metal' neither found in path nor with xcrun
+/private/tmp/openjdkA17-20230717-22770-1ftaff4/jdk17u-jdk-17.0.7-ga/build/.configure-support/generated-configure.sh: line 84: 5: Bad file descriptor
+configure exiting with result code 1
+```
+
+Solve:  
+```bash
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+```
+> Reference: https://github.com/gfx-rs/gfx/issues/2309
+
+
 
 ### Check
 + Java version
