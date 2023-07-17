@@ -74,7 +74,7 @@ Matching Java Virtual Machines (1):
 /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 ```
 
-+ Brew info of openjdk
++ Brew info of openjdk  
 ```bash
 brew info openjdk
 ```
