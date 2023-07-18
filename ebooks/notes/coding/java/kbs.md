@@ -68,10 +68,11 @@ OpenJDK 64-Bit Server VM Homebrew (build 11.0.19+0, mixed mode)
 ```
 output:  
 ```text
-Matching Java Virtual Machines (1):
+Matching Java Virtual Machines (2):
+    17.0.7, x86_64:	"OpenJDK 17.0.7"	/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home
     11.0.19, x86_64:	"OpenJDK 11.0.19"	/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 
-/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+/Library/Java/JavaVirtualMachines/openjdk-17.jdk/Contents/Home
 ```
 
 + Brew info of openjdk  
