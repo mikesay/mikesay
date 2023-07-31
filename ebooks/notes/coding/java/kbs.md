@@ -23,15 +23,19 @@ sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVir
 
 > ```export HOMEBREW_FORCE_BREWED_CURL=1``` enable brew command to use brew installed curl.
 
-
-+ Add bin folder of jdk in PATH
++ Add JAVA_HOME  
 ```bash
- echo 'export PATH="/usr/local/opt/openjdk@11/bin:$PATH"' >> /Users/mizha53/.bash_profile
+echo 'export JAVA_HOME="/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"' >> ~./bash_profile
 ```
 
-+ For compilers to find openjdk you may need to set
++ Add bin folder of jdk in PATH  
 ```bash
-echo 'export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/openjdk@11/include"' >> /Users/mizha53/.bash_profile
+echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~./bash_profile
+```
+
++ For compilers to find openjdk you may need to set  
+```bash
+echo 'export CPPFLAGS="$CPPFLAGS -I$JAVA_HOME/include"' >> ~./bash_profile
 ```
 
 #### Issues met
