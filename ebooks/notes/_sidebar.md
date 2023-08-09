@@ -14,6 +14,9 @@
 - Kubernetes
     - [Knowledge Base](/kubernetes/kbs.md)
     - [Issue and Solution](/kubernetes/issues.md)
+    - Helm
+        - [Knowledge Base](/kubernetes/helm/kbs.md)
+        - [Issue and Solution](/kubernetes/helm/issues.md)
     - Docker
         - [Knowledge Base](/kubernetes/docker/kbs.md)
         - [Issue and Solution](/kubernetes/docker/issues.md)
