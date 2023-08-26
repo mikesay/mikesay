@@ -387,7 +387,7 @@ search:
 banner:
   # 视差滚动，图片与板块会随着屏幕滚动产生视差效果
   # Scrolling parallax
-  parallax: true
+  parallax: false
 
   # 图片最小的宽高比，以免图片两边被过度裁剪，适用于移动端竖屏时，如需关闭设为 0
   # Minimum ratio of width to height, applicable to the vertical screen of mobile device, if you need to close it, set it to 0
@@ -468,7 +468,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/home_afg.jpeg
+  banner_img: /img/home_tj2.jpeg
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -908,7 +908,7 @@ giscus:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/archive.jpeg
+  banner_img: /img/archive.jpg
   banner_img_height: 60
   banner_mask_alpha: 0.2
 
@@ -919,7 +919,7 @@ archive:
 #---------------------------
 category:
   enable: true
-  banner_img: /img/category.jpeg
+  banner_img: /img/category.jpg
   banner_img_height: 60
   banner_mask_alpha: 0
 
@@ -948,9 +948,9 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/tag.jpeg
+  banner_img: /img/tag.jpg
   banner_img_height: 60
-  banner_mask_alpha: 0.2
+  banner_mask_alpha: 0
   tagcloud:
     min_font: 15
     max_font: 30
@@ -965,9 +965,9 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/aboutme.jpg
+  banner_img: /img/aboutme.jpeg
   banner_img_height: 60
-  banner_mask_alpha: 0.2
+  banner_mask_alpha: 0
   avatar: /img/avatar.png
   name: "云斋"
   introduce: "Cloud & DevOps"
