@@ -96,7 +96,7 @@ helm repo update
 
 + 安装Actions Runner Controller  
 ```bash
-helm upgrade  actions-runner-controller actions-runner-controller/actions-runner-controller \
+helm upgrade -i actions-runner-controller actions-runner-controller/actions-runner-controller \
   -i --create-namespace \
   --set=authSecret.create=true \
   --set=authSecret.github_token=${GITHUB_TOKEN} \
@@ -110,7 +110,7 @@ helm upgrade  actions-runner-controller actions-runner-controller/actions-runner
   > + actions runner controller缺省会关注所有命名空间的runner资源。可以通过添加选项```--set=scope.singleNamespace=true```只关注actions runner controller所在的命名空间的runner资源。
 
   {% note info %}
-  helm方式的安装会为参数中提供的GitHub PAT自动生成一个名为“controller-manager”的secret资源。
+  helm方式的安装会为参数中提供的GitHub PAT自动生成一个名为“controller-manager”的secret资源。也可以参考kubectl部署方式，提前创建好"controller-manager" secret，在执行helm命令时，就不需要设置authSecret.create和authSecret.github_token。
   {% endnote %}
 
 
