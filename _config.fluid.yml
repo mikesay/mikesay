@@ -340,7 +340,7 @@ navbar:
     # 不透明度，数字越大透明度越低，注意透明过度可能看不清菜单字体
     # Ratio of opacity, 1.0 is completely opaque
     # available: 0 - 1.0
-    alpha: 0.5
+    alpha: 1
 
   # 导航栏菜单，可自行增减，key 用来关联 languages/*.yml，如不存在关联则显示 key 本身的值；icon 是 css class，可以省略；增加 name 可以强制显示指定名称
   # Navigation bar menu. `key` is used to associate languages/*.yml. If there is no association, the value of `key` itself will be displayed; if `icon` is a css class, it can be omitted; adding `name` can force the display of the specified name
@@ -387,7 +387,7 @@ search:
 banner:
   # 视差滚动，图片与板块会随着屏幕滚动产生视差效果
   # Scrolling parallax
-  parallax: false
+  parallax: true
 
   # 图片最小的宽高比，以免图片两边被过度裁剪，适用于移动端竖屏时，如需关闭设为 0
   # Minimum ratio of width to height, applicable to the vertical screen of mobile device, if you need to close it, set it to 0
@@ -1013,7 +1013,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/friends.jpg
+  banner_img: /img/friends.jpeg
   banner_img_height: 60
   banner_mask_alpha: 0.2
   # 友链的成员项

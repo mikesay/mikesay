@@ -12,7 +12,7 @@ cp -f themes/fluid-mikesay/source/img/alipay.png node_modules/hexo-theme-fluid/s
 cp -f themes/fluid-mikesay/source/img/alipay1.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/avatar.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/favicon.png node_modules/hexo-theme-fluid/source/img/
-cp -f themes/fluid-mikesay/source/img/friends.jpg node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-mikesay/source/img/friends.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/home.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/home_afg.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/home_tj.jpg node_modules/hexo-theme-fluid/source/img/
