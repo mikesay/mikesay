@@ -55,11 +55,12 @@ GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runne
 
 **企业级别的Runners需要的权限**
 
-* admin:enterprise (manage_runners:enterprise)
-  > 当您部署企业Runner时，它们将获得对GitHub组织（Org）的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个GitHub组织（Org）都必须允许在代码仓库中使用企业> Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
-  > ![](3.jpg) 
-  > 组织和企业级别的Runner需要创建在Runner Group里，通过Runner Group对这些Runners分类和统一赋权，即哪些代码仓库和工作流可以使用这个Group里的Runners。
-  > ![](4.jpg)
+* admin:enterprise (manage_runners:enterprise)  
+
+> 当您部署企业Runner时，它们将获得对GitHub组织（Org）的访问权限，但是，默认情况下**不允许**访问代码仓库本身。 每个GitHub组织（Org）都必须允许在代码仓库中使用企业> Runner Group作为初始的一次性配置步骤，这只需要完成一次，之后对于该Runner Group来说是永久性的。
+> ![](3.jpg) 
+> 组织和企业级别的Runner需要创建在Runner Group里，通过Runner Group对这些Runners分类和统一赋权，即哪些代码仓库和工作流可以使用这个Group里的Runners。
+> ![](4.jpg)
 
 
 ## 安装cert-manager  
