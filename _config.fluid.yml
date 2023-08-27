@@ -910,7 +910,7 @@ giscus:
 archive:
   banner_img: /img/archive.jpg
   banner_img_height: 60
-  banner_mask_alpha: 0.2
+  banner_mask_alpha: 0
 
 
 #---------------------------
