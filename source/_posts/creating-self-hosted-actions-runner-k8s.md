@@ -33,9 +33,7 @@ GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runne
 ## 设置GitHub API认证
 本文选择PAT（Personal Access Token，个人访问令牌）的方式认证GitHub API。
 
-{% note info %}
-另一种认证方式为GitHub App，两种认证方式的区别以及配置GitHub App认证可以参考[Authenticating to the GitHub API][4]。
-{% endnote %}
+> 另一种认证方式为GitHub App，两种认证方式的区别以及配置GitHub App认证可以参考[Authenticating to the GitHub API][4]。
 
 点击[创建PAT](https://github.com/settings/tokens/new)，并参考以下不同级别的Runner所需要的权限创建PAT：
 
@@ -75,34 +73,90 @@ Actions Runner Controller中的admission webhook需要使用cert-manager创建�
 
 ## Helm方式安装Actions Runner Controller
 + 创建命名空间
-```bash
-kubectl create ns acr-system
-```
+  ```bash
+  kubectl create ns acr-system
+  ```
 
 + 用前面生成的PAT创建一个名为“controller-manager”的secret资源  
-```bash
-kubectl create secret generic controller-manager \
-    -n actions-runner-system \
-    --from-literal=github_token=${GITHUB_TOKEN}
-```
+  ```bash
+  kubectl create secret generic controller-manager \
+      -n actions-runner-system \
+      --from-literal=github_token=${GITHUB_TOKEN}
+  ```
 
 + 添加helm chart仓库并更新
-```bash
-helm repo add actions-runner-controller  https://github.com/actions-runner-controller/actions-runner-controller
-helm repo update
-```
+  ```bash
+  helm repo add actions-runner-controller  https://github.com/actions-runner-controller/actions-runner-controller
+  helm repo update
+  ```
 
 + 安装Actions Runner Controller  
-```bash
-helm upgrade -i actions-runner-controller actions-runner-controller/actions-runner-controller \
-  --version ${ACTION_RUNNER_CONTROLLER_VERSION}> \
-  -n actions-runner-system
-```
+  ```bash
+  helm upgrade -i actions-runner-controller actions-runner-controller/actions-runner-controller \
+    --version ${ACTION_RUNNER_CONTROLLER_VERSION} \
+    -n actions-runner-system
+  ```
 
   > + 可以执行命令 ```helm search repo actions-runner-controller``` 查询最新的helm chart版本：  
   > ![](2.png)  
   > + actions runner controller缺省会监听所有命名空间中的Runner CRD资源。可以通过添加选项```--set=scope.singleNamespace=true```只关注actions runner controller所在的命名空间的runner资源。
 
+## 降低Docker Hub限流的影响
+从2020年11月20日开始，Docker Hub对匿名和免费认证的使用开始了限流措施。匿名和免费Docker Hub 用户每六小时只能发出 100 和 200 个容器映像拉取请求。 您可以在[这里](5)获取更多详细信息。如果部署频率不是很高，比如个人测试用，直接用上面的命令部署应该不会有问题，但是如果部署频率比较高，或者在公司内网的环境中部署，而公司的公网出口IP往往是固定的，则很有可能会触发限流导致部署失败。其中一个解决办法就是使用免费账号来拉取镜像，这样可以享受每6个小时200个容器镜像拉取请求。具体的操作步骤为：
+
+1. 参考[创建Docker Hub账号](6)注册一个Docker Hub免费账号
+2. 参考[创建账号对应的PAT(个人访问凭证)][7]生成一个个人访问凭证（官方推荐用个人访问凭证的方式认证Docker Hub）
+3. 如果是使用docker命令行拉取镜像，先执行下面的命令登陆Docker Hub，并且在提示密码时输入个人访问凭证
+  ```bash
+  docker login --username ${DOCKER_HUB_USERNAME}
+  ```
+4. 如果是Kubernetes中的部署要拉取镜像，先执行下面的命令在对应的命名空间里创建docker pull secret，并且在Pod的部署yaml文件中显式添加这个secret
+  ```bash
+  kubectl create secret docker-registry image-pull-secret \
+      --docker-server=docker.io\
+      --docker-username=${DOCKER_HUB_USERNAME} \
+      --docker-password=${DOCKER_HUB_USER_PAT} \
+      -n ${NAMESPACE}
+  ```
+
+另一个解决办法就是部署一个带有proxy功能的私有镜像仓库，比如[Harbor](8)，[Nexus](9)，或者[Artifactory](10)或者，配置一个Docker Hub的代理（可以通过免费用户来认证），每次部署时通过代理来拉取docker镜像并缓存，这样可以降低因拉取重复镜像而消耗限流额度。随着时间的推移，常用的docker镜像基本上都能缓存到私有仓库里。
+
+以上两种方式都需要我们在部署actions runner controller时配置docker pull secret用来拉取镜像，且第二种方法还需要更改镜像地址。对于Helm chart的部署方式，基本上只需要定制它的values.yaml文件即可。具体步骤如下：
+1. 执行下面命令获取Helm chart缺省的values.yaml文件
+  ```bash
+  helm show values actions-runner-controller/actions-runner-controller --version ${ACTION_RUNNER_CONTROLLER_VERSION} > values.yaml
+  ```
+
+2. 修改缺省的values.yaml文件添加docker pull secret或者更改docker镜像地址
+  ```yaml
+  image:
+    repository: "${DOCKER_HUB_PROXY_SERVER}/summerwind/actions-runner-controller"
+    actionsRunnerRepositoryAndTag: "${${DOCKER_HUB_PROXY_SERVER}/summerwind/actions-runner:latest"
+    dindSidecarRepositoryAndTag: "${${DOCKER_HUB_PROXY_SERVER}}/docker:dind"
+    pullPolicy: IfNotPresent
+    # The default image-pull secrets name for self-hosted runner container.
+    # It's added to spec.ImagePullSecrets of self-hosted runner pods.
+    actionsRunnerImagePullSecrets:
+      - ${DOCKER_PULL_SECRET}
+
+  imagePullSecrets:
+    - name: ${DOCKER_PULL_SECRET}
+  ```
+  {% note info %}
+  + .image.repository是actions-runner-controller的镜像地址  
+  + .image.actionsRunnerRepositoryAndTag是连接GitHub的Action Runner镜像地址  
+  + .image.dindSidecarRepositoryAndTag是docker server的镜像地址（Action Runner是使用的dind的方式构建应用镜像的，所以一个Action Runner Pod会包含两个容器，一个是runner服务本身，另一个是docker服务，runner通过环境变量DOCKER_HOST引用docker服务。） 
+  + image.actionsRunnerImagePullSecrets是拉取Action Runnder镜像所需要的secret  
+  + .image.imagePullSecrets是拉取actions-runner-controller的镜像地址  
+  {% endnote %}
+
+3. 用定制的values.yaml文件安装actions-runner-controller
+  ```bash
+  helm upgrade -i actions-runner-controller actions-runner-controller/actions-runner-controller \
+    --version ${ACTION_RUNNER_CONTROLLER_VERSION} \
+    -f values.yaml \
+    -n actions-runner-system
+  ```
 
 # 创建GitHub Action Runners
 GitHub自托管Runners可以部署在管理层次结构的各个级别  
@@ -111,8 +165,8 @@ GitHub自托管Runners可以部署在管理层次结构的各个级别
 + 企业级别
 
 Action Runner Controller提供了两种CRD资源定义Runners：
-+ RunnerDeployment (和k8s's Deployments类似, 基于Pods)  
-+ RunnerSet (基于k8s's StatefulSets)
++ RunnerDeployment (类似于Kubernetes的Deployment资源，无状态)  
++ RunnerSet (类似于Kubernetes的StatefulSets资源，有状态)
 
 ## 创建repository级别的Runner
 ```bash
@@ -120,17 +174,30 @@ cat << EOF | kubectl apply -n actions-runner-system -f -
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: mikesay-mikesay-spikes-runner
+  name: mikesay-runner
 spec:
-  replicas: 1
+  replicas: 2
   template:
     spec:
+      volumeMounts:
+      - name: docker-config
+        mountPath: /home/runner/.docker
+      volumes:
+      - name: docker-config
+        secret:
+          secretName: ${DOCKER_PULL_SECRET}
+          items:
+          - key: .dockerconfigjson
+            path: config.json
       repository: mikesay/mikesay-spikes
       labels:
         - mikesay
         - mikesay-spikes
 EOF
 ```
+{% note info %}
+通过volumes和volumeMounts可以将docker镜像拉取的secret配置进Runner容器，这样Runner在执行Job时也可以从私有镜像仓库拉取和上传镜像了。如果不需要，也可以不添加。
+{% endnote %}
 
 ## 创建orgnization级别的Runner
 ```bash
@@ -143,6 +210,16 @@ spec:
   replicas: 1
   template:
     spec:
+      volumeMounts:
+      - name: docker-config
+        mountPath: /home/runner/.docker
+      volumes:
+      - name: docker-config
+        secret:
+          secretName: ${DOCKER_PULL_SECRET}
+          items:
+          - key: .dockerconfigjson
+            path: config.json
       organization: mikesay
       group: default
       labels:
@@ -151,7 +228,7 @@ spec:
 EOF
 ```
 {% note info %}
-Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用default组。
+Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用缺省的default组。
 {% endnote %}
 
 ## 使用RunnerSet创建repository级别的Runner
@@ -181,11 +258,18 @@ spec:
         app: mikesay
       name: mikerunner
     spec:
-      containers:
-      - name: runner
-        volumeMounts:
-        - name: www
-          mountPath: /runner/data
+      volumeMounts:
+      - name: www
+        mountPath: /runner/data
+      - name: docker-config
+        mountPath: /home/runner/.docker
+      volumes:
+      - name: docker-config
+        secret:
+          secretName: ${DOCKER_PULL_SECRET}
+          items:
+          - key: .dockerconfigjson
+            path: config.json
   volumeClaimTemplates:
   - metadata:
       name: www
@@ -198,8 +282,13 @@ spec:
 EOF
 ```
 
-
 [1]: https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/adding-self-hosted-runners
 [2]: https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions#about-spending-limits
 [3]: https://github.com/actions/actions-runner-controller
 [4]: https://github.com/actions/actions-runner-controller/blob/master/docs/authenticating-to-the-github-api.md
+[5]: https://docs.docker.com/docker-hub/download-rate-limit/?_gl=1*31w0cv*_ga*MTMzMzk4NTk4NC4xNjkyMjU4NjM4*_ga_XJWPQMJYHQ*MTY5MzI3NzE0NS44LjEuMTY5MzI3NzE0OC41Ny4wLjA.
+[6]: https://docs.docker.com/docker-id/
+[7]: https://docs.docker.com/docker-hub/access-tokens/
+[8]: https://goharbor.io/
+[9]: https://www.sonatype.com/products/sonatype-nexus-repository
+[10]: https://jfrog.com/artifactory
