@@ -10,22 +10,22 @@ tags:
 date: 2022-04-11 02:21:47
 ---
 
-GitHub Actions 是一个持续集成和持续交付 (CI/CD) 平台，利用工作流（Workflow）可以创建自动化构建、测试和部署管道。GitHub Actions 不仅限于 DevOps，还允许在代码仓库中发生其它事件时运行工作流， 例如，可以运行一个工作流，当代码仓库中有新的问题创建时自动添加适当的标签。GitHub Runner是执行工作流的服务器，本文介绍了利用开源项目[Actions Runner Controller][3]在Kubernetes中部署和管理自托管的容器版本的GitHub Action Runner。
+GitHub Actions 是一个持续集成和交付 (CI/CD) 平台，利用工作流（Workflow）可以创建自动化构建、测试和部署管道。GitHub Actions不仅限于构建CI/CD工作流，它可以定义任意的工作流完成某个自动化的功能， 例如，定义一个工作流，当代码仓库中有新的问题创建时自动添加适当的标签。GitHub Action Runner是执行工作流的组件。本文介绍了利用开源项目[Actions Runner Controller][3]在Kubernetes中部署和管理自托管的容器版本的GitHub Action Runner。
 
 <!-- more -->
 
 # GitHub Action
+下图是GitHub Actions概念或组件：
 ![](1.png)
-上图是GitHub Action包含的组件。
 
-+ Workflows（工作流）是一个可配置的自动化过程，它运行一个或多个Jobs（作业）。  
-+ Events（事件）是代码仓库中触发工作流的特定活动。  
-+ Jobs（作业）是在同一GitHub Runner上执行的工作流中的一组步骤。  
-+ Actions（动作）是GitHub Actions平台的自定义应用程序，执行复杂但经常重复的任务。  
-+ GitHub Action Runner是在工作流被触发时运行工作流的软件。一个GitHub Action Runner一次可以执行一个作业。 GitHub提供了一些缺省的Runners供公共仓库免费使用，但是私有仓库则需要付费使用（GitHub为付费用户提供了一定的免费使用额度，详细可以参考[GitHub Actions的计费][2]），另一种方法就是自己部署GitHub Action Runner。
++ Workflow（工作流）是一个可配置的自动化过程，它由一个或多个Job（作业）组成。  
++ Event（事件）是代码仓库中触发工作流的特定活动。  
++ Job（作业）是一组步骤的组合，运行在同一个GitHub Action Runner上。  
++ Action（动作）由Job中的步骤调用。GitHub Actions提供了很多开箱即用的Actions，用户也可以封装一些通用的actions供组织使用。  
++ GitHub Action Runner是在工作流被触发时执行工作流的组件。一个GitHub Action Runner一次可以执行一个作业，当Job结束后，Runner会重启恢复到干净的状态。GitHub提供了一些缺省的Runners供公共仓库免费使用，而私有仓库则需要付费使用（GitHub为付费用户提供了一定的免费使用额度，详细可以参考[GitHub Actions的计费][2]）。替代方案就是自己部署GitHub Action Runner。
 
 # Actions Runner Controller
-GitHub的官网只介绍了在虚拟机中[部署自托管的GitHub Action Runner][1]部署自托管Runner的方法，但是随着云原生技术和Kubernetes的发展，越来越多的CI/CD系统逐渐容器化并运行在Kubernetes平台中，从而使系统本身变得更具弹性和韧性，比如Jenkins的agent，GitHub Action Runner也可以通过容器运行在Kubernetes平台中。Actions Runner Controller是一个自定义的Kubernetes Operator，通过声明式的方式来定义、创建、配置和管理运行在Kubernetes中的GitHub Action Runner。具体架构如下图：
+GitHub的官网只提供了在虚拟机中[部署自托管的GitHub Action Runner][1]的文档，但是随着云原生技术和Kubernetes的发展，越来越多的CI/CD系统逐渐容器化并运行在Kubernetes平台中，从而使系统本身变得更具弹性和韧性，比如Jenkins的agent。GitHub Action Runner也支持通过容器运行在Kubernetes平台中，Actions Runner Controller是一个自定义的Kubernetes Operator，通过声明式的方式来定义、创建、配置和管理运行在Kubernetes中的GitHub Action Runner，具体架构如下图：
 ![](5.png)
 
 # 安装Actions Runner Controller
