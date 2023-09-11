@@ -780,6 +780,9 @@ curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/service
 
 ## QoS & OOMKilller
 
+In general, pod's QoS will determin the OOM score of its related processes in host.  
+![QoS & OOM Score](../_media/k8s/qos_oomscore_adj.png)  
+
 + What is OOMKiller(Linux system level): Surviving the Linux OOM Killer  
 https://dev.to/rrampage/surviving-the-linux-oom-killer-2ki9  
 
