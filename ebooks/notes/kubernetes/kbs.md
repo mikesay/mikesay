@@ -778,7 +778,13 @@ subjects:
 curl -s -k -H "Authorization: Bearer `cat /var/run/secrets/kubernetes.io/serviceaccount/token`" https://ccoecn-action-runners-actions-runner-controller-metrics-service.github-action-runner:8443/metrics
 ```
 
-## QoS
+## QoS & OOMKilller
+
++ What is OOMKiller(Linux system level): Surviving the Linux OOM Killer  
+https://dev.to/rrampage/surviving-the-linux-oom-killer-2ki9  
+
++ OOMKiller in Kubernetes(Kubernetes level): OOMKilled - troubleshooting Kubernetes memory requests and limits  
+https://www.airplane.dev/blog/oomkilled-troubleshooting-kubernetes-memory-requests-and-limits  
 
 + How does Kubernetes assign QoS class to pods through OOM score  
 https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled  
