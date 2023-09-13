@@ -798,10 +798,10 @@ https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled
 + Understanding resource limits in kubernetes: cpu time  
 https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b  
 
-+ CPU bandwidth control for CFS
++ CPU bandwidth control for CFS  
 https://research.google/pubs/pub36669/  
 
-+ Completely Fair Scheduler
++ Completely Fair Scheduler  
 https://www.linuxjournal.com/node/10267  
 
 So, if the total limit of CPU resources exceed the cluster's total amount very large, it will cause many pods throtteling, hence reduce the computing performance.  
