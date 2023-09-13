@@ -17,13 +17,13 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
     Ctrl+a, followed by pressing k and y.
 
 ### Option2
-+ Entering
++ Entering  
     ```bash
     docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
     ```
     > http://www.openkb.info/2021/03/docker-for-mac-could-not-find.html
 
-+ Quit
++ Quit  
     ```bash
     exit
     ```
