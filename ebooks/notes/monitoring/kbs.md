@@ -112,14 +112,48 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 
 ## Prometheus Stack
 ### Concepts
+#### Prometheus的四种指标类型
 + Prometheus的四种指标类型，我终于搞懂了
   https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
 
+#### PromQL Usage
 + PromQL rate() and irate()  
   https://mp.weixin.qq.com/s/lsZzq0QH7qvVACLC4c_YYg  
   https://mp.weixin.qq.com/s/nnXo5SyQ-v-rfYHwvPp9_Q  
 
+#### Exemplars(From Metric to Trace)
++ Introduction to exemplars  
+  Exemplars are a concept from OpenMetrics(https://github.com/OpenObservability/OpenMetrics/blob/main/specification/OpenMetrics.md#exemplars), implemented by Prometheus.  
 
+  https://grafana.com/docs/grafana/latest/fundamentals/exemplars/  
+
++ Span Metrics generated from Trace to support exemplars  
+  Span metrics lower the entry barrier for using exemplars. An exemplar is a specific trace representative of measurement taken in a given time interval. 
+  
+  + Supported by Metrics-generator component of Tempo from grafana  
+    Since traces and metrics co-exist in the metrics-generator(https://grafana.com/docs/tempo/latest/metrics-generator/span_metrics/), exemplars can be automatically added, providing additional value to these metrics.  
+
+  + Supported by Span Metrics Connector of open telemetry  
+    https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/connector/spanmetricsconnector/README.md  
+
++ Demo  
+  Linking metrics and traces with Exemplars(https://blog.lunatech.com/posts/2022-01-21-linking-metrics-and-traces-with-exemplars)  
+
+  + Download source code  
+    ```bash
+    git clone https://github.com/lunatech-labs/lunatech-traces-metrics-exemplars.git
+    ```
+
+  + Build docker image of sample applicaton in root folder  
+    ```bash
+    sbt docker
+    ```
+
+  + Start all the applications in folder "docker"  
+    ```bash
+    docker-compose up -d
+    ```
+  
 ### Doc and Code
 https://prometheus.io/docs/introduction/overview/
 https://github.com/prometheus
