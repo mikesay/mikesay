@@ -61,8 +61,8 @@ receivers:
     + scrape_interval  
     The time between each Prometheus scrape (i.e when Prometheus is pulling data from exporters etc.).
     
-    + evaluation_interval  T
-    he time between each evaluation of Prometheus' alerting rules.
+    + evaluation_interval  
+    The time between each evaluation of Prometheus' alerting rules.
 
 
 
@@ -113,7 +113,12 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 ## Prometheus Stack
 ### Concepts
 + Prometheus的四种指标类型，我终于搞懂了
-https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
+  https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
+
++ PromQL rate() and irate()  
+  https://mp.weixin.qq.com/s/lsZzq0QH7qvVACLC4c_YYg  
+  https://mp.weixin.qq.com/s/nnXo5SyQ-v-rfYHwvPp9_Q  
+
 
 ### Doc and Code
 https://prometheus.io/docs/introduction/overview/
