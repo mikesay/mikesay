@@ -137,7 +137,7 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
     https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/connector/spanmetricsconnector/README.md  
 
 + Demo  
-  Linking metrics and traces with Exemplars(https://blog.lunatech.com/posts/2022-01-21-linking-metrics-and-traces-with-exemplars)  
+  Linking metrics and traces with exemplars(https://blog.lunatech.com/posts/2022-01-21-linking-metrics-and-traces-with-exemplars). This demo add exemplars during exporting prometheus metrics directly from application code.  
 
   + Download source code  
     ```bash
@@ -152,6 +152,11 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
   + Start all the applications in folder "docker"  
     ```bash
     docker-compose up -d
+    ```
+
+  + Open the local grafana
+    ```bash
+    http://localhost:3000/d/HqWCSkb7k/lunatech-candy?orgId=1&from=now-15m&to=now
     ```
   
 ### Doc and Code
