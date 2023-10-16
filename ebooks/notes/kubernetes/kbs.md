@@ -798,13 +798,15 @@ https://cloudyuga.guru/hands_on_lab/k8s-qos-oomkilled
 + Understanding resource limits in kubernetes: cpu time  
 https://medium.com/@betz.mark/understanding-resource-limits-in-kubernetes-cpu-time-9eff74d3161b  
 
+  setting a cpu request in kubernetes ultimately sets the cpu.shares cgroup property, and setting cpu limits engages a different system through setting cpu.cfs_period_us and cpu.cfs_quota_us
+
 + CPU bandwidth control for CFS  
 https://research.google/pubs/pub36669/  
 
 + Completely Fair Scheduler  
 https://www.linuxjournal.com/node/10267  
 
-So, if the total limit of CPU resources exceed the cluster's total amount very large, it will cause many pods throtteling, hence reduce the computing performance.  
+  So, if the total limit of CPU resources exceed the cluster's total amount very large, it will cause many pods throtteling, hence reduce the computing performance.  
 
 ### Memory scheduling and consuming: Request & Limit
 + Understanding resource limits in kubernetes: memory  
