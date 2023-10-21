@@ -116,6 +116,19 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 + Prometheus的四种指标类型，我终于搞懂了
   https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
 
+#### Info Metric
++ Why info-style metrics have a value of 1  
+  https://www.robustperception.io/why-info-style-metrics-have-a-value-of-1/  
+
++ How to use PromQL joins for more effective queries of Prometheus metrics at scale  
+  https://grafana.com/blog/2021/08/04/how-to-use-promql-joins-for-more-effective-queries-of-prometheus-metrics-at-scale/  
+
++ Textfile exporter  
+  https://grafana.com/blog/2021/08/04/how-to-use-promql-joins-for-more-effective-queries-of-prometheus-metrics-at-scale/#textfile-exporter  
+
++ Textfile Collector  
+  https://github.com/prometheus/node_exporter#textfile-collector  
+
 #### PromQL Usage
 + PromQL rate() and irate()  
   https://mp.weixin.qq.com/s/lsZzq0QH7qvVACLC4c_YYg  
