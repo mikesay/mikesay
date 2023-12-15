@@ -29,6 +29,13 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
     ```
 
 ## Start a pod in Kubernetes
+### Start a pod with image pull secret
+```bash
+kubectl run -it rockylinux \
+--image=rockylinux:9.3.20231119 \
+--image-pull-policy="IfNotPresent" \
+--overrides='{ "apiVersion": "v1", "spec": { "imagePullSecrets": [{"name": "xxxx"}] } }' -- sh
+```
 
 ### Start busybox-curl
 ```bash
