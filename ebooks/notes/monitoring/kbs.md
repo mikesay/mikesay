@@ -1,5 +1,5 @@
 ## Materials 
-### Concepts(What/Why)
+### Monitoring theory(What/Why)
 + Making the USE method of monitoring useful  
 https://www.infoworld.com/article/3638772/making-the-use-method-of-monitoring-useful.html  
 
@@ -8,62 +8,6 @@ https://www.infoworld.com/article/3638693/the-red-method-a-new-strategy-for-moni
 
 + Monitoring Distributed Systems(The Four Golden Signals)  
 https://sre.google/sre-book/monitoring-distributed-systems/
-
-### AlertManager
-+ What’s the difference between group_interval, group_wait, and repeat_interval?
-
-    https://www.robustperception.io/whats-the-difference-between-group_interval-group_wait-and-repeat_interval
-
-    + group_wait  
-    How long to wait to buffer alerts of the same group before sending a notification initially.
-
-    + group_interval  
-    How long to wait before sending an alert that has been added to a group for which there has already been a notification.
-
-    
-    + repeat_interval  
-    How long to wait before re-sending a given alert that has already been sent in a notification.
-
-+ Silence alert in the config file of AlertManager  
-https://stackoverflow.com/questions/54806336/how-to-silence-prometheus-alertmanager-using-config-files
-
-```bash
-route:
-  # Other settings...
-  group_wait: 0s
-  group_interval: 1m
-  repeat_interval: 1h
-
-  # Default receiver.
-  receiver: "null"
-
-  routes:
-  # continue defaults to false, so the first match will end routing.
-  - match:
-      # This was previously named DeadMansSwitch
-      alertname: Watchdog
-    receiver: "null"
-  - match:
-      alertname: CPUThrottlingHigh
-    receiver: "null"
-  - receiver: "regular_alert_receiver"
-
-receivers:
-  - name: "null"
-  - name: regular_alert_receiver
-    <snip>
-```
-
-### Prometheus
-
-+ What's the difference between scrape_interval and evaluation_interval?
-
-    + scrape_interval  
-    The time between each Prometheus scrape (i.e when Prometheus is pulling data from exporters etc.).
-    
-    + evaluation_interval  
-    The time between each evaluation of Prometheus' alerting rules.
-
 
 
 ## Kubernetes Monitoring and Metrics
@@ -176,6 +120,60 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 https://prometheus.io/docs/introduction/overview/
 https://github.com/prometheus
 
+### Prometheus usage
++ What's the difference between scrape_interval and evaluation_interval?
+
+    + scrape_interval  
+    The time between each Prometheus scrape (i.e when Prometheus is pulling data from exporters etc.).
+    
+    + evaluation_interval  
+    The time between each evaluation of Prometheus' alerting rules.
+
+### AlertManager usage
++ What’s the difference between group_interval, group_wait, and repeat_interval?
+
+    https://www.robustperception.io/whats-the-difference-between-group_interval-group_wait-and-repeat_interval
+
+    + group_wait  
+    How long to wait to buffer alerts of the same group before sending a notification initially.
+
+    + group_interval  
+    How long to wait before sending an alert that has been added to a group for which there has already been a notification.
+
+    
+    + repeat_interval  
+    How long to wait before re-sending a given alert that has already been sent in a notification.
+
++ Silence alert in the config file of AlertManager  
+https://stackoverflow.com/questions/54806336/how-to-silence-prometheus-alertmanager-using-config-files
+
+```bash
+route:
+  # Other settings...
+  group_wait: 0s
+  group_interval: 1m
+  repeat_interval: 1h
+
+  # Default receiver.
+  receiver: "null"
+
+  routes:
+  # continue defaults to false, so the first match will end routing.
+  - match:
+      # This was previously named DeadMansSwitch
+      alertname: Watchdog
+    receiver: "null"
+  - match:
+      alertname: CPUThrottlingHigh
+    receiver: "null"
+  - receiver: "regular_alert_receiver"
+
+receivers:
+  - name: "null"
+  - name: regular_alert_receiver
+    <snip>
+```
+
 ### Prometheus Helm Chart
 https://artifacthub.io/packages/helm/prometheus-community/prometheus  
 https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus  
@@ -199,6 +197,15 @@ This repository collects Kubernetes manifests, Grafana dashboards, and Prometheu
 ### Prometheus Monitoring Community
 https://prometheus.io/community/
 https://github.com/prometheus-community
+
+### Prometheus operator development   
++ Exporter 开发  
+https://knowing-draw-62b.notion.site/Exporter-59777285f25847fd81eb05a5196f81d4  
+
++ Package promauto  
+https://github.com/prometheus/client_golang/blob/main/prometheus/promauto/auto.go  
+
+  Package promauto provides alternative constructors for the fundamental Prometheus metric types and their …Vec and …Func variants. The difference to their counterparts in the prometheus package is that the promauto constructors register the Collectors with a registry before returning them. There are two sets of constructors. The constructors in the first set are top-level functions, while the constructors in the other set are methods of the Factory type. The top-level functions return Collectors registered with the global registry (prometheus.DefaultRegisterer), while the methods return Collectors registered with the registry the Factory was constructed with. All constructors panic if the registration fails.
 
 ## Grafana Stack
 ### Doc and Code
