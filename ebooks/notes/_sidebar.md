@@ -1,6 +1,8 @@
 <!-- docs/_sidebar.md -->
 - Project Management
     - [SAFe&Scrum](/projectmanagement/SAFe&Scrum.md)
+- Networking
+    - [Knowledge Base](/networking/kbs.md)
 - Cloud
     - GCP
         - [Knowledge Base](/cloud/gcp/kbs.md)

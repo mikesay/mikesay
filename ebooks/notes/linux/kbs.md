@@ -163,3 +163,6 @@ iptables -t nat -D PREROUTING {rule-number-here}
 + redirect an incoming connection to a different IP address on a specific port using IPtables
 https://my.esecuredata.com/index.php?/knowledgebase/article/49/how-to-redirect-an-incoming-connection-to-a-different-ip-address-on-a-specific-port-using-iptables/
 
+
+## Linux中文件特殊权限suid、sgid、sticky  
+https://blog.csdn.net/MssGuo/article/details/120754324  
