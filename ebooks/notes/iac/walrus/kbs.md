@@ -14,6 +14,6 @@ If "cost management" was enabled during creating "Kubernetes" connector, a stand
     > During installing walrus, the walrus server will also launch the deployment walrus workflow component, so it will also met the rate limitting issue of docker hub.  
 
 
-
++ tf-job-apply pod's DNS server uses non coredns
 
 
