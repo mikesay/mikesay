@@ -1,7 +1,7 @@
 ## Walrus knowledge base
 TBD
 
-### Installation issue
+### Installation and usage issue
 
 If "cost management" was enabled during creating "Kubernetes" connector, a standalone prometheus server "walrus-prometheus-server" and two exporters "walrus-prometheus-prometheus-node-exporter", "walrus-prometheus-kube-state-metrics" will be deployed by walrus server, but two issues will be met:  
 
@@ -14,6 +14,17 @@ If "cost management" was enabled during creating "Kubernetes" connector, a stand
     > During installing walrus, the walrus server will also launch the deployment walrus workflow component, so it will also met the rate limitting issue of docker hub.  
 
 
-+ tf-job-apply pod's DNS server uses non coredns
++ tf-job-apply pod's DNS server uses non coredns  
+    The DNS policy of pod is "ClusterFirst" while the network is "HostNetwork" which caused the DNS policy of pod fallback to the "Default" policy(https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy)  
+
+    > Has been fixed in latest version
+
++ No upgrading support  
+
++ No support for private deployment like using private docker registry which needs docker pull secres
+
+### Doc
++ Seal Launches Walrus 0.5: Revamps Workflow for an Out-of-the-Box Deployment Experience  
+https://www.seal.io/resource/blog/walrus-05-release  
 
 

@@ -209,8 +209,9 @@ https://github.com/prometheus/client_golang/blob/main/prometheus/promauto/auto.g
 
 ## Grafana Stack
 ### Doc and Code
-https://grafana.com/docs/grafana/latest/
-https://github.com/grafana/grafana
+https://grafana.com/docs/grafana/latest/  
+https://github.com/grafana/grafana  
+https://github.com/aliyun/aliyun-cms-grafana  
 
 ### Grafana Helm Chart
 https://github.com/grafana/helm-charts  
