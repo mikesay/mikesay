@@ -1,7 +1,7 @@
 ## Literal
 Literal is a raw data given in a variable or constant.
 
-### Frontend development
+## Frontend development
 + Modern Front End: The tools and build process explained  
 https://medium.com/@trevorpoppen/modern-front-end-the-tools-and-build-process-explained-36641b5c1a53  
 
@@ -11,7 +11,7 @@ https://developer.mozilla.org/en-US/docs/Learn
 + Typescript  
 https://www.typescriptlang.org/  
 
-### React
+## React
 + Create React App  
 https://github.com/facebook/create-react-app  
 https://create-react-app.dev/  
@@ -19,7 +19,7 @@ https://create-react-app.dev/
 + React Tutorial  
 https://react-tutorial.app/  
 
-#### React Application Framework
+### React Application Framework
 + react-admin  
 https://marmelab.com/react-admin/  
 
@@ -29,13 +29,13 @@ https://nextjs.org/docs
 + umijs  
 https://umijs.org/  
 
-#### React UI library
+### React UI library
 + Ant Design  React
 https://ant.design/docs/spec/introduce  
 https://ant.design/docs/react/introduce  
 
 
-#### React admin template  
+### React admin template  
 + Ant Design Pro  
 Based on Umi.js and Ant Design React UI library.  
 https://pro.ant.design/docs/overview   
@@ -45,15 +45,15 @@ An excellent front-end solution for enterprise applications built upon Ant Desig
 https://github.com/zuiidea/antd-admin  
 
 
-### Angular
+## Angular
 Angular itself is a full Application Framework.  
 
-#### Angular UI Library
+### Angular UI Library
 + Ant Design Angular  
 An enterprise-class Angular UI component library based on Ant Design, all components are open source and free to use under MIT license.  
 https://ng.ant.design/docs/introduce/en(https://github.com/NG-ZORRO/ng-zorro-antd)  
 
-#### Angular admin template
+### Angular admin template
 + ng-antd-admin  
 Based on Angular and Ant Design Angular UI library, which refer to the "Ant Deesign Pro"   
 https://github.com/llkui/ng-antd-admin  
