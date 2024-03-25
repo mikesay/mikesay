@@ -1,4 +1,6 @@
 <!-- docs/_sidebar.md -->
+- Authentication
+    - [Knowledge Base](/authentication/kbs.md)
 - Project Management
     - [SAFe&Scrum](/projectmanagement/SAFe&Scrum.md)
 - Networking
