@@ -58,6 +58,7 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 ### Prometheus
 https://prometheus.io/docs/introduction/overview/
 https://github.com/prometheus  
+https://p8s.io/docs/  
 
 #### Limit of Promethues Operator
 + Do not support HA. Promethues Operator was developed earlier than operator-sdk, so it didn't enjoy the out-of-box HA ability of operator-sdk. It needs to use the LeaderElection mechanism of client-go explicitly, which has already been integrated by operator-sdk.  
