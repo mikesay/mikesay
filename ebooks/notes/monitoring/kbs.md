@@ -1,4 +1,4 @@
-## Materials 
+## Monitoring in generic
 ### Monitoring theory(What/Why)
 + Making the USE method of monitoring useful  
 https://www.infoworld.com/article/3638772/making-the-use-method-of-monitoring-useful.html  
@@ -10,7 +10,7 @@ https://www.infoworld.com/article/3638693/the-red-method-a-new-strategy-for-moni
 https://sre.google/sre-book/monitoring-distributed-systems/
 
 
-## Kubernetes Monitoring and Metrics
+## Kubernetes Monitoring
   
 ### Official materials
 + General  
@@ -55,7 +55,13 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 
 
 ## Prometheus Stack
-### Concepts
+### Prometheus
+https://prometheus.io/docs/introduction/overview/
+https://github.com/prometheus  
+
+#### Limit of Promethues Operator
++ Do not support HA. Promethues Operator was developed earlier than operator-sdk, so it didn't enjoy the out-of-box HA ability of operator-sdk. It needs to use the LeaderElection mechanism of client-go explicitly, which has already been integrated by operator-sdk.  
+
 #### Prometheus的四种指标类型
 + Prometheus的四种指标类型，我终于搞懂了
   https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
@@ -72,11 +78,6 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
 
 + Textfile Collector  
   https://github.com/prometheus/node_exporter#textfile-collector  
-
-#### PromQL Usage
-+ PromQL rate() and irate()  
-  https://mp.weixin.qq.com/s/lsZzq0QH7qvVACLC4c_YYg  
-  https://mp.weixin.qq.com/s/nnXo5SyQ-v-rfYHwvPp9_Q  
 
 #### Exemplars(From Metric to Trace)
 + Introduction to exemplars  
@@ -115,21 +116,54 @@ https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring
     ```bash
     http://localhost:3000/d/HqWCSkb7k/lunatech-candy?orgId=1&from=now-15m&to=now
     ```
-  
-### Doc and Code
-https://prometheus.io/docs/introduction/overview/
-https://github.com/prometheus
+#### Concepts and Usage
++ PromQL rate() and irate()  
+  https://mp.weixin.qq.com/s/lsZzq0QH7qvVACLC4c_YYg  
+  https://mp.weixin.qq.com/s/nnXo5SyQ-v-rfYHwvPp9_Q  
 
-### Prometheus usage
-+ What's the difference between scrape_interval and evaluation_interval?
++ What's the difference between scrape_interval and evaluation_interval?  
 
     + scrape_interval  
     The time between each Prometheus scrape (i.e when Prometheus is pulling data from exporters etc.).
     
     + evaluation_interval  
-    The time between each evaluation of Prometheus' alerting rules.
+    The time between each evaluation of Prometheus' alerting rules.  
 
-### AlertManager usage
++ How do I get a pod's (milli)core CPU usage with Prometheus in Kubernetes  
+  https://stackoverflow.com/questions/48872042/how-do-i-get-a-pods-millicore-cpu-usage-with-prometheus-in-kubernetes  
+  We're using the container_cpu_usage_seconds_total metric to calculate Pod CPU usage. This metrics contains the total amount of CPU seconds consumed by container by core (this is important, as a Pod may consist of multiple containers, each of which can be scheduled across multiple cores; however, the metric has a pod_name annotation that we can use for aggregation). Of special interest is the change rate of that metric (which can be calculated with PromQL's rate() function). If it increases by 1 within one second, the Pod consumes 1 CPU core (or 1000 milli-cores) in that second.  
+
+  The following PromQL query returns per-pod number of used CPU cores starting from Kubernetes v1.16 and newer versions:  
+  ```bash
+  sum(rate(container_cpu_usage_seconds_total{container!=""}[5m])) by (pod)
+  ```
+
+### Prometheus Helm Chart
+https://artifacthub.io/packages/helm/prometheus-community/prometheus  
+https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus  
+
+### Prometheus Operator
+https://prometheus-operator.dev/  
+https://github.com/prometheus-operator/prometheus-operator  
+
+### Prometheus Monitoring Community
+https://prometheus.io/community/
+https://github.com/prometheus-community
+
+### Prometheus operator development   
++ Exporter 开发  
+https://knowing-draw-62b.notion.site/Exporter-59777285f25847fd81eb05a5196f81d4  
+
++ Package promauto  
+https://github.com/prometheus/client_golang/blob/main/prometheus/promauto/auto.go  
+
+  Package promauto provides alternative constructors for the fundamental Prometheus metric types and their …Vec and …Func variants. The difference to their counterparts in the prometheus package is that the promauto constructors register the Collectors with a registry before returning them. There are two sets of constructors. The constructors in the first set are top-level functions, while the constructors in the other set are methods of the Factory type. The top-level functions return Collectors registered with the global registry (prometheus.DefaultRegisterer), while the methods return Collectors registered with the registry the Factory was constructed with. All constructors panic if the registration fails.
+
+### AlertManager
+https://prometheus.io/docs/introduction/overview/
+https://github.com/prometheus  
+
+### Concept and Usage
 + What’s the difference between group_interval, group_wait, and repeat_interval?
 
     https://www.robustperception.io/whats-the-difference-between-group_interval-group_wait-and-repeat_interval
@@ -174,38 +208,15 @@ receivers:
     <snip>
 ```
 
-### Prometheus Helm Chart
-https://artifacthub.io/packages/helm/prometheus-community/prometheus  
-https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus  
-
 ### AlertManager Helm Chart
 https://artifacthub.io/packages/helm/prometheus-community/alertmanager  
 https://github.com/prometheus-community/helm-charts/tree/main/charts/alertmanager  
 
-### Prometheus Operator
-https://prometheus-operator.dev/  
-https://github.com/prometheus-operator/prometheus-operator  
-
-#### Limit of Promethues Operator
-+ Do not support HA. Promethues Operator was developed earlier than operator-sdk, so it didn't enjoy the out-of-box HA ability of operator-sdk. It needs to use the LeaderElection mechanism of client-go explicitly, which has already been integrated by operator-sdk.
 
 ### kube-prometheus
 https://github.com/prometheus-operator/kube-prometheus  
 
 This repository collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.  
-
-### Prometheus Monitoring Community
-https://prometheus.io/community/
-https://github.com/prometheus-community
-
-### Prometheus operator development   
-+ Exporter 开发  
-https://knowing-draw-62b.notion.site/Exporter-59777285f25847fd81eb05a5196f81d4  
-
-+ Package promauto  
-https://github.com/prometheus/client_golang/blob/main/prometheus/promauto/auto.go  
-
-  Package promauto provides alternative constructors for the fundamental Prometheus metric types and their …Vec and …Func variants. The difference to their counterparts in the prometheus package is that the promauto constructors register the Collectors with a registry before returning them. There are two sets of constructors. The constructors in the first set are top-level functions, while the constructors in the other set are methods of the Factory type. The top-level functions return Collectors registered with the global registry (prometheus.DefaultRegisterer), while the methods return Collectors registered with the registry the Factory was constructed with. All constructors panic if the registration fails.
 
 ## Grafana Stack
 ### Doc and Code

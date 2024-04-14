@@ -20,3 +20,6 @@ https://developer.hashicorp.com/vault/docs/v1.15.x/auth/kubernetes
 
 + JWT/OIDC with Kubernetes  
 https://developer.hashicorp.com/vault/docs/v1.15.x/auth/jwt/oidc-providers/kubernetes  
+
++ Why a cluster role binding is needed in k8s-vault integration  
+https://wlwan.medium.com/why-a-cluster-role-binding-is-needed-in-k8s-vault-integration-82b5aefc4d81  
