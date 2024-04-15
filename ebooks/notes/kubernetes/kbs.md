@@ -928,3 +928,7 @@ https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#l
   + For container-level isolation, if a container's writable layer and log usage exceeds its storage limit, the kubelet marks the Pod for eviction.  
 
   + For pod-level isolation the kubelet works out an overall Pod storage limit by summing the limits for the containers in that Pod. In this case, if the sum of the local ephemeral storage usage from all containers and also the Pod's emptyDir volumes exceeds the overall Pod storage limit, then the kubelet also marks the Pod for eviction.  
+
+  > The kubelet tracks tmpfs emptyDir volumes as container memory use, rather than as local ephemeral storage.  
+
+  > To measure the total ephmeral storage of one node, the kubelet will only track the root filesystem for ephemeral storage. OS layouts that mount a separate disk to /var/lib/kubelet or /var/lib/containers will not report ephemeral storage correctly.
