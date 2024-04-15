@@ -907,3 +907,24 @@ EOF
 
 ## Access Kubernetes pods from outside of the cluster
 https://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/  
+
+## Ephemeral storage
+### Ephemeral volume
+https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/  
+
+### Local ephemeral storage
+https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#local-ephemeral-storage  
+
++ Ephemeral storage consumption management  
+
+  If the kubelet is managing local ephemeral storage as a resource, then the kubelet measures storage use in:  
+
+  + emptyDir volumes, except tmpfs emptyDir volumes  
+  + directories holding node-level logs  
+  + writeable container layers  
+  
+  If a Pod is using more ephemeral storage than you allow it to, the kubelet sets an eviction signal that triggers Pod eviction.
+
+  + For container-level isolation, if a container's writable layer and log usage exceeds its storage limit, the kubelet marks the Pod for eviction.  
+
+  + For pod-level isolation the kubelet works out an overall Pod storage limit by summing the limits for the containers in that Pod. In this case, if the sum of the local ephemeral storage usage from all containers and also the Pod's emptyDir volumes exceeds the overall Pod storage limit, then the kubelet also marks the Pod for eviction.  
