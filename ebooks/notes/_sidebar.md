@@ -45,6 +45,7 @@
         - [Knowledge Base](/servicemesh/istio/kbs.md)
         - [Issue and Solution](/servicemesh/istio/issues.md)
 - Coding
+    - [OpenSource System](/coding/opensource_system.md)
     - [Knowledge Base](/coding/kbs.md)
     - [Issue and Solution](/coding/issues.md)
     - Go
