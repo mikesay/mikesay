@@ -10,6 +10,10 @@ mall项目是一套电商系统，包括前台商城系统及后台管理系统�
 
 
 ### Micro-service
+#### 若依管理系统 (MIT license)
+https://www.ruoyi.vip/  
+基于SpringBoot的权限管理系统. 使用若依快速构建web应用程序.
+
 #### Cloud-Platform (Apache-2.0)
 https://gitee.com/geek_qi/cloud-platform  
 国内首个Spring Cloud微服务化RBAC的管理平台，核心采用Spring Boot 2.4、Spring Cloud 2020.0.0 & Alibaba，前端采用d2-admin中台框架。  
