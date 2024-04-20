@@ -152,23 +152,30 @@ minikube dashboard
 所以，需要通过某个Hypervisor驱动创建一个虚拟机作为Kubernetes集群的工作节点，这样既能支持ingress，又能支持Loadbalance类型的服务，同时还能打开dashboard。下面将通过VirtualBox驱动创建集群。
 
 ## 用VirtualBox驱动创建集群
+通过以下命令创建一个基于VirtualBox驱动的单节点集群。使用"--extra-config"可以配置Kubernetes系统组件，比如配置apiserver支持oidc认证等。  
 
 ```bash
-minikube start --cpus=4 --memory='6g' --cni='flannel' --disk-size='60g' --driver='virtualbox' --kubernetes-version='v1.23.5' --extra-config=apiserver.service-node-port-range=1-65535 --extra-config=controller-manager.bind-address=0.0.0.0 --extra-config=scheduler.bind-address=0.0.0.0
+minikube start --driver='virtualbox' --kubernetes-version='v1.28.0-rc.1' \
+        --cpus=4 --memory='6g' --disk-size='60g' --cni='flannel' \
+        --extra-config=apiserver.bind-address=0.0.0.0 \
+        --extra-config=apiserver.service-node-port-range=1-65535 \
+        --extra-config=apiserver.oidc-issuer-url=https://control-plane.minikube.internal:1443/auth/realms/minikube  \
+        --extra-config=apiserver.oidc-client-id=minikube \
+        --extra-config=apiserver.oidc-username-claim=name \
+        --extra-config=apiserver.oidc-username-prefix=- \
+        --extra-config=apiserver.oidc-ca-file=/var/lib/minikube/certs/ca.crt \
+        --extra-config=controller-manager.bind-address=0.0.0.0 \
+        --extra-config=scheduler.bind-address=0.0.0.0 \
+        --extra-config=kubelet.cgroup-driver=systemd
 ```
-创建了一个基于VirtualBox驱动的单节点集群。通过各个参数详细地配置了集群：
+可以通过命令```minikube config defaults kubernetes-version```列出minikube支持的所有Kubernetes版本。  
 
-参数 | 用途
----|---
---cpus=4 | 指定了节点最大CPU数为4
---memory='6g' | 指定了工作节点的最大内存数为6g
---disk-size='60g' | 指定了节点的磁盘大小
--kubernetes-version='v1.23.5' | 指定创建的集群版本为v1.23.5
--extra-config=apiserver.service-node-port-range=1-65535 | 通过--extra-config配置apiserver，使得运行NodePort类型的服务能够使用1-65535范围的端口
---extra-config=controller-manager.bind-address=0.0.0.0 | 通过--extra-config配置controller-manager，使能够从外面访问controller-manager的API
---extra-config=scheduler.bind-address=0.0.0.0 | 通过--extra-config配置scheduler，使能够从外面访问scheduler的API
+> 系统组件的详细配置文档：  
+> apiserver: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/  
+> controller-manager: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/  
+> scheduler: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/  
 
-同样，执行以下命令可以查看创建的集群：
+通过以下命令可以列出minikube创建的所有集群集群：
 ```bash
 minikube profile list
 ```
@@ -177,7 +184,7 @@ minikube profile list
 ### 安装MetalLB支持LoadBalancer类型的服务
 > 参考[MetalLB官方安装和配置文档][4]
 
-+ 设置kube-proxy使用ipvs模式：
++ 设置ipvs模式的strictARP为true
   ```yaml
   kubectl edit configmap -n kube-system kube-proxy
   ```
@@ -230,11 +237,34 @@ minikube addons enable kong
 minikube addons enable metrics-server
 minikube addons enable dashboard
 ```
-> Dashboard中的某些数据依赖于metrics-server。
+> Dashboard中有关系统资源(CPU, Memory)的使用状态依赖于metrics-server组件，所以先安装metrics-server组件。
 
-启动Dashboard
+可以通过下面命令临时打开Dashboard，  
 ```bash
 minikube dashboard
+```
+也可以为dashboard添加下面的Ingress资源将其通过测试域名(minikube.test)暴露出来：  
+```sh
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minikube-dashboard-ingress
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: minikube.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubernetes-dashboard
+                port:
+                  number: 80
+EOF
 ```
 
 ### 一些常用的命令
@@ -288,12 +318,12 @@ contexts:
 由于VirtualBox在Mac上是以非root账号运行的，所以只能打开本机1024以上的端口，但访问ingress暴露的HTTP/HTTPS服务时就需要加上端口号，使用起来并不友好。可以通过包过滤防火墙建立本机80，443端口到上面ingress的9080和9443端口的转发。Mac的配置参考如下：
 
 ## macOS Yosemite及以上版本
-ipfw已经从macOS Yosemite和以上版本被移除了，所以需要通过以下方法使用pf。
+由于MacOS上的包过滤防火墙工具ipfw已经从macOS Yosemite和以上版本被移除了，所以需要通过以下方法使用pf。  
 
 + 创建一个锚文件
-例如，/etc/pf.anchors/minikube.nginx-ingress-controller
+例如，/etc/pf.anchors/kubernetes.ingress-controller.forwarding
 
-+ 在/etc/pf.anchors/minikube.nginx-ingress-controller锚文件中, 输入:
++ 在/etc/pf.anchors/kubernetes.ingress-controller.forwarding锚文件中, 输入:
 
   ```bash
   rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 9080
@@ -302,47 +332,23 @@ ipfw已经从macOS Yosemite和以上版本被移除了，所以需要通过以�
   ```
   确保在末尾加一行空白行，否则会报格式错误。
 
-+ 测试这个锚文件：
++ 测试这个锚文件：  
   ```bash
-  sudo pfctl -vnf /etc/pf.anchors/minikube.nginx-ingress-controller
+  sudo pfctl -vnf /etc/pf.anchors/kubernetes.ingress-controller.forwarding
   ```
 
-+ 将这个锚文件加到pf.conf文件中
-  ```bash
-  sudo vi /etc/pf.conf
-  ```
-
-  在对应的节下添加下面的配置：
++ 创建/etc/pf-kubernetes-ingress-controller.conf文件  
+  添加下面的配置：  
   ```bash
   rdr-anchor "forwarding" 
-  load anchor "forwarding" from "/etc/pf.anchors/minikube.nginx-ingress-controller"
-```
+  load anchor "forwarding" from "/etc/pf.anchors/kubernetes.ingress-controller.forwarding"
+  ```  
 
-+ 自动加载pf.conf文件
-  可以创建一个专用的启动守护进程以在启动时加载和启用配置，或者编辑当前的pf守护进程在启动时自动启用配置：
++ 创建一个shell脚本，比如"./minikube-start/pf.sh"，配置在系统启动时执行  
   ```bash
-  sudo vi /System/Library/LaunchDaemons/com.apple.pfctl.plist
+  #!/bin/bash
+  sudo pfctl -ef /etc/pf-kubernetes-ingress-controller.conf
   ```
-  然后在以下的节中
-  ```bash
-  <key>ProgramArguments</key>
-  ```
-  增加额外的一行字符串"-e"：
-  ```xml
-  <array>
-    <string>pfctl</string>
-    <string>-e</string>
-    <string>-f</string>
-    <string>/etc/pf.conf</string>
-  </array>
-  ```
-  保存后重启电脑。
-  > 可以使用命令```sudo pfctl -ef /etc/pf.conf```手动测试这个方法（不需要重启）。
-  > 另外，如果不想改动配置来测试这个方法，可以执行下面的命令：
-  > echo "
-    rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 9080
-    rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 9443
-    " | sudo pfctl -ef -
 
 ## macOS 10.9和更早版本
 
