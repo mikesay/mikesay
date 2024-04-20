@@ -342,7 +342,7 @@ contexts:
   ```bash
   rdr-anchor "forwarding" 
   load anchor "forwarding" from "/etc/pf.anchors/kubernetes.ingress-controller.forwarding"
-  ```  
+  ```
 
 + 创建一个shell脚本，比如"./minikube-start/pf.sh"，配置在系统启动时执行  
   ```bash

@@ -1,16 +1,18 @@
 ## Minikube
 
 ### Start a Minikube kubernetes
-
 ```sh
+# Start a minikube cluster
+# yq usage: https://mikefarah.gitbook.io/yq
 # apiserver: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
 # controller-manager: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
 # scheduler: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
-minikube start --driver='virtualbox' --kubernetes-version='v1.28.0-rc.1' \
-        --cpus=4 --memory='6g' --disk-size='60g' --cni='flannel' \
+minikube start --driver='virtualbox' --kubernetes-version='v1.26.7' \
+        --cpus=4 --memory='6g' --disk-size='60g' --cni='calico' \
         --extra-config=apiserver.bind-address=0.0.0.0 \
+        --extra-config=apiserver.authorization-mode='Node,RBAC' \
         --extra-config=apiserver.service-node-port-range=1-65535 \
-        --extra-config=apiserver.oidc-issuer-url=https://control-plane.minikube.internal:1443/auth/realms/minikube  \
+        --extra-config=apiserver.oidc-issuer-url=https://192.168.59.115:1443/auth/realms/minikube  \
         --extra-config=apiserver.oidc-client-id=minikube \
         --extra-config=apiserver.oidc-username-claim=name \
         --extra-config=apiserver.oidc-username-prefix=- \
@@ -18,6 +20,63 @@ minikube start --driver='virtualbox' --kubernetes-version='v1.28.0-rc.1' \
         --extra-config=controller-manager.bind-address=0.0.0.0 \
         --extra-config=scheduler.bind-address=0.0.0.0 \
         --extra-config=kubelet.cgroup-driver=systemd
+
+VBoxManage controlvm minikube natpf1 k8s-apiserver,tcp,127.0.0.1,8443,,8443
+VBoxManage controlvm minikube natpf1 k8s-ingress,tcp,127.0.0.1,9080,,80
+VBoxManage controlvm minikube natpf1 k8s-ingress-secure,tcp,127.0.0.1,9443,,443
+VBoxManage controlvm minikube natpf1 docker,tcp,127.0.0.1,2376,,2376
+
+# Install MetalLB
+kubectl get cm kube-proxy -o json -n kube-system | jq -r '.data."config.conf"'  | yq  '.ipvs.strictARP=true' > config.conf
+kubectl create cm kube-proxy --from-file=config.conf=config.conf --dry-run=client -o yaml -n kube-system |\
+kubectl patch cm kube-proxy --type merge --patch-file /dev/stdin -n kube-system
+
+minikube addons enable metallb
+kubectl wait --for=condition=Available=True deployment/controller -n metallb-system
+
+kubectl get cm config -o json  -n metallb-system | jq -r '.data.config' | yq  '(.address-pools[] | select(.name == "default")).addresses[0] = "192.168.59.200 - 192.168.59.250"' > config
+kubectl create cm config --from-file=config=config --dry-run=client -o yaml -n metallb-system |\
+kubectl patch cm config --type merge --patch-file /dev/stdin -n metallb-system
+
+kubectl rollout restart deployment/controller -n metallb-system
+kubectl wait --for=condition=Available=True deployment/controller -n metallb-system
+
+rm config.conf
+rm config
+
+# Install Nginx Ingress Controller
+minikube addons enable ingress
+kubectl wait --for=condition=Available=True deployment/ingress-nginx-controller -n ingress-nginx
+
+# Install Kong Ingress Controller
+minikube addons enable kong
+
+# Install metrics-server
+minikube addons enable metrics-server
+
+# Install dashboard
+minikube addons enable dashboard
+
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minikube-dashboard-ingress
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: minikube.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubernetes-dashboard
+                port:
+                  number: 80
+EOF
 ```  
 
 If had proxy, set the proxy environment and the NO_PROXY especially https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/:  
