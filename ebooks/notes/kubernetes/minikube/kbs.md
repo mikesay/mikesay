@@ -2638,6 +2638,8 @@ EOF
 </details>
 <br/>
 
+> [Kubernetes Services without selectors](https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors)  
+
 + Step4 - Run the test  
 
 <details><summary markdown="span">code</summary>
@@ -2684,9 +2686,8 @@ curl -k https://127.0.0.1:8443/api/v1/namespaces -H "Authorization: Bearer ${idT
 <br/>
 
 > Replace the vaule of username, passoword, client_secret to corrent one.  
-> [Kubernetes Services without selectors](https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors)  
 
-+ Step4 - Use oidc-login plugin to enable oidc login dynamically  
++ Step5 - Use oidc-login plugin to enable oidc login dynamically  
 ```bash
 kubectl config set-credentials minikube-mike \
     --exec-api-version=client.authentication.k8s.io/v1beta1 \
