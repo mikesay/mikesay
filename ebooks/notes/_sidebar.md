@@ -19,7 +19,7 @@
     - [Knowledge Base](/kubernetes/kbs.md)
     - [Issue and Solution](/kubernetes/issues.md)
     - Minikube
-        - [Minikube](/kubernetes/minikube/kbs.md)
+        - [Knowledge Base](/kubernetes/minikube/kbs.md)
     - Helm
         - [Knowledge Base](/kubernetes/helm/kbs.md)
         - [Issue and Solution](/kubernetes/helm/issues.md)

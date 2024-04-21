@@ -278,6 +278,9 @@ openssl x509 -req -in ssl/tls.csr -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.k
 <br/>
 
 + Step2 - Install KeyCloak and import test realm configuration  
+
+<details><summary markdown="span">code</summary>
+
 ```sh
 #!/bin/sh
 
@@ -318,7 +321,8 @@ services:
       depends_on:
         - postgres
 ```
-
+</details>
+<br/>
 
 <details><summary markdown="span">realm-minikube.json</summary>
 
@@ -2581,6 +2585,9 @@ services:
 
 
 + Step3 - Enable access from container(Kubernetes API Server) in Minikube Kubernetes to KeyCloak  
+
+<details><summary markdown="span">code</summary>
+
 ```sh
 kubectl apply -f - <<EOF
 ---
@@ -2626,8 +2633,13 @@ ports:
   protocol: TCP
 EOF
 ```  
+</details>
+<br/>
 
 + Step4 - Run the test  
+
+<details><summary markdown="span">code</summary>
+
 ```sh
 #!/bin/sh
 echo "Add test ClusterRole and ClusterRoleBinding to test use..."
@@ -2666,6 +2678,9 @@ idToken=$(curl -ks -X POST https://keycolak.minikube:1443/realms/minikube/protoc
 
 curl -k https://127.0.0.1:8443/api/v1/namespaces -H "Authorization: Bearer ${idToken}"
 ```  
+</details>
+<br/>
+
 > Replace the vaule of username, passoword, client_secret to corrent one.  
 
 + Step4 - Use oidc-login plugin to enable oidc login dynamically  
