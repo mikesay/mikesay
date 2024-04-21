@@ -207,14 +207,15 @@ dockervpn images
 ```
 Finally, when not working on VPN, you can set kubectl to switch back to the old context:
 
-```bash
+```sh
 kubectl config use-context minikube
 ```
 
 ### Deploy KeyCloak to Minikube to act as OIDC provider configured in Minikube
 
 + Step0 - Create a minikube with oidc provider parameters  
-```bash
+
+```sh
 minikube start --driver='virtualbox' --kubernetes-version='v1.26.7' \
         --cpus=4 --memory='6g' --disk-size='60g' --cni='calico' \
         --extra-config=apiserver.bind-address=0.0.0.0 \
@@ -232,7 +233,10 @@ minikube start --driver='virtualbox' --kubernetes-version='v1.26.7' \
 > Steps below will install KeyCloak according to the configured oidc information.  
 
 + Step1 - Generate x509 certificates signed by CA of Minikube kubernetes  
-```bash
+
+<details><summary markdown="span">code</summary>
+
+```sh
 #!/bin/bash
 
 # 创建目录存放生成的证书
@@ -264,6 +268,8 @@ openssl req -new -key ssl/tls.key -out ssl/tls.csr -subj "/CN=Keycloak" -config 
 # 使用 CA 签发 Keycloak 服务器证书
 openssl x509 -req -in ssl/tls.csr -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.key -CAcreateserial -out ssl/tls.crt -days 365 -extensions v3_req -extfile ssl/req.cnf
 ```  
+</details>
+<br/>
 
 + Step2 - Install KeyCloak and import test realm configuration  
 ```sh
@@ -307,7 +313,6 @@ services:
         - postgres
 ```
 
-{::options parse_block_html="true" /}
 
 <details><summary markdown="span">realm-minikube.json</summary>
 
@@ -2567,7 +2572,7 @@ services:
 ```
 </details>
 <br/>
-{::options parse_block_html="false" /}
+
 
 + Step3 - Enable access from container(Kubernetes API Server) in Minikube Kubernetes to KeyCloak  
 ```sh
