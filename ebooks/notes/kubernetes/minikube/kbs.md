@@ -2583,6 +2583,8 @@ services:
 </details>
 <br/>
 
+> [Running Keycloak in a container](https://www.keycloak.org/server/containers)  
+> [KeyCloak All configuration](https://www.keycloak.org/server/all-config#category-hostname)
 
 + Step3 - Enable access from container(Kubernetes API Server) in Minikube Kubernetes to KeyCloak  
 
@@ -2682,6 +2684,7 @@ curl -k https://127.0.0.1:8443/api/v1/namespaces -H "Authorization: Bearer ${idT
 <br/>
 
 > Replace the vaule of username, passoword, client_secret to corrent one.  
+> [Kubernetes Services without selectors](https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors)  
 
 + Step4 - Use oidc-login plugin to enable oidc login dynamically  
 ```bash
