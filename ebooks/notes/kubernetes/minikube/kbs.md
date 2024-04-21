@@ -1,6 +1,7 @@
 ## Minikube
 
 ### Start a Minikube kubernetes in local Mac machine with OIDC authentication support
+
 ```sh
 # Start a minikube cluster
 # yq usage: https://mikefarah.gitbook.io/yq
@@ -103,7 +104,7 @@ export NO_PROXY=$no_proxy
 
 #### Make Minikube work in Corporate VPN
 
-##### Port forwarding localhost:xxx -> minikube_IP:xxx
+Port forwarding localhost:xxx -> minikube_IP:xxx  
 http://tdongsi.github.io/blog/2018/12/31/minikube-in-corporate-vpn/
 
 This approach is the more convenient and more reliable in my experience. All you need to do is to set up a list of port forwarding rules for minikube’s VirtualBox:
@@ -210,6 +211,11 @@ Finally, when not working on VPN, you can set kubectl to switch back to the old 
 ```sh
 kubectl config use-context minikube
 ```
+
+### Use minikube as docker daemon
+https://itnext.io/goodbye-docker-desktop-hello-minikube-3649f2a1c469  
+
+https://www.chevdor.com/post/2021/02/docker_to_k8s/
 
 ### Deploy KeyCloak to Minikube to act as OIDC provider configured in Minikube
 
@@ -2678,66 +2684,5 @@ kubectl config set-credentials minikube-mike \
 > Refer to https://www.modb.pro/db/436226  
 
 
-### Use minikube as docker daemon
-https://itnext.io/goodbye-docker-desktop-hello-minikube-3649f2a1c469  
 
-https://www.chevdor.com/post/2021/02/docker_to_k8s/
 
-## Kubernetes 配置管理最佳方法
-https://www.kubernetes.org.cn/3031.html
-
-## Change Kubernetes subdomains
-https://stackoverflow.com/questions/48326773/how-to-change-the-cluster-local-default-domain-on-kubernetes-1-9-deployed-with-k#:~:text=You%20can%20change%20the%20cluster,the%20clusterDomain%20during%20kubeadm%20init%20.&text=Then%20change-,kubernetes%20cluster.,.arpa%20%7B%20...%20%7D
-
-I assume you are using CoreDNS.  
-
-You can change the cluster base DNS by editing the kubelet config file on ALL Nodes, located here /var/lib/kubelet/config.yaml or set the clusterDomain during kubeadm init.  
-
-Change  
-
-```yaml
-clusterDomain: cluster.local
-```
-
-to:  
-
-```yaml
-clusterDomain: my.new.domain  
-```
-
-Now you also need to change the CoreDNS configuration. CoreDNS uses a ConfigMap for this. You can get your current CoreDNS ConfigMap by running  
-
-```yaml
-kubectl get -n kube-system cm/coredns -o yaml
-```
-
-Then change  
-
-```yaml
-kubernetes cluster.local in-addr.arpa ip6.arpa {
-    ...
-}
-to match your new domain like this:
-
-kubernetes my.new.domain in-addr.arpa ip6.arpa {
-    ...
-}
-```
-
-Now apply the changes to the CoreDNS ConfigMap. If you restart kubelet and your CoreDNS pods then your cluster should use the new domain.  
-
-If you have for example a service called grafana-service, this can now be accessed with this address: grafana-service.default.svc.my.new.domain  
-
-Test:  
-```yaml
-kubectl get service
-NAME              TYPE         CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-grafana-service   ClusterIP    <Internal-IP>   <none>        3000/TCP   100m
-
-# nslookup grafana-service.default.svc.my.new.domain
-Server:    <Internal-IP>
-Address 1: <Internal-IP> kube-dns.kube-system.svc.my.new.domain
-
-Name:      grafana-service.default.svc.my.new.domain
-Address 1: <Internal-IP> grafana-service.default.svc.my.new.domain
-```

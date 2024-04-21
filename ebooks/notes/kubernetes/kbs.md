@@ -730,3 +730,62 @@ https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#l
   > The kubelet tracks tmpfs emptyDir volumes as container memory use, rather than as local ephemeral storage.  
 
   > To measure the total ephmeral storage of one node, the kubelet will only track the root filesystem for ephemeral storage. OS layouts that mount a separate disk to /var/lib/kubelet or /var/lib/containers will not report ephemeral storage correctly.
+
+## Kubernetes 配置管理最佳方法
+https://www.kubernetes.org.cn/3031.html
+
+## Change Kubernetes subdomains
+https://stackoverflow.com/questions/48326773/how-to-change-the-cluster-local-default-domain-on-kubernetes-1-9-deployed-with-k#:~:text=You%20can%20change%20the%20cluster,the%20clusterDomain%20during%20kubeadm%20init%20.&text=Then%20change-,kubernetes%20cluster.,.arpa%20%7B%20...%20%7D
+
+I assume you are using CoreDNS.  
+
+You can change the cluster base DNS by editing the kubelet config file on ALL Nodes, located here /var/lib/kubelet/config.yaml or set the clusterDomain during kubeadm init.  
+
+Change  
+
+```yaml
+clusterDomain: cluster.local
+```
+
+to:  
+
+```yaml
+clusterDomain: my.new.domain  
+```
+
+Now you also need to change the CoreDNS configuration. CoreDNS uses a ConfigMap for this. You can get your current CoreDNS ConfigMap by running  
+
+```yaml
+kubectl get -n kube-system cm/coredns -o yaml
+```
+
+Then change  
+
+```yaml
+kubernetes cluster.local in-addr.arpa ip6.arpa {
+    ...
+}
+to match your new domain like this:
+
+kubernetes my.new.domain in-addr.arpa ip6.arpa {
+    ...
+}
+```
+
+Now apply the changes to the CoreDNS ConfigMap. If you restart kubelet and your CoreDNS pods then your cluster should use the new domain.  
+
+If you have for example a service called grafana-service, this can now be accessed with this address: grafana-service.default.svc.my.new.domain  
+
+Test:  
+```yaml
+kubectl get service
+NAME              TYPE         CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+grafana-service   ClusterIP    <Internal-IP>   <none>        3000/TCP   100m
+
+# nslookup grafana-service.default.svc.my.new.domain
+Server:    <Internal-IP>
+Address 1: <Internal-IP> kube-dns.kube-system.svc.my.new.domain
+
+Name:      grafana-service.default.svc.my.new.domain
+Address 1: <Internal-IP> grafana-service.default.svc.my.new.domain
+```
