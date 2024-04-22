@@ -7,7 +7,7 @@
 | http://myip.ipip.net                                         | Check current IP. ```curl http://myip.ipip.net```                           |
 | https://ipinfo.io                                            | Check IP information like location. ```curl https://ipinfo.io/$IP```        |
 
-
+  
 # Useful commands or scripts
 
 | Command or Script                      | Description |
