@@ -13,6 +13,15 @@ https://frontegg.com/guides/oidc-vs-oauth2
 + OIDC vs SAML: The Differences  
 https://frontegg.com/guides/oidc-vs-saml  
 
++ OAuth 2.0 and OpenID Connect overview  
+https://developer.okta.com/docs/concepts/oauth-openid/  
+
++ Validate ID tokens  
+https://developer.okta.com/docs/guides/validate-id-tokens/main/  
+
++ Validate Access Tokens  
+https://developer.okta.com/docs/guides/validate-access-tokens/dotnet/main/  
+
 ### Use case
 #### Vault authentication  
 + Kubernetes auth method  
