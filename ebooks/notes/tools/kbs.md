@@ -1,4 +1,6 @@
-# Useful tools
+# Useful tools & scripts
+
+## Useful tools
 
 | Tool                                                         | Description                                                                 |
 | -------------------------------------------------------------| --------------------------------------------------------------------------- |
@@ -8,7 +10,7 @@
 | https://ipinfo.io                                            | Check IP information like location. ```curl https://ipinfo.io/$IP```        |
 
   
-# Useful commands or scripts
+## Useful commands or scripts
 
 | Command or Script                      | Description |
 | --------------------------| ----------- |
