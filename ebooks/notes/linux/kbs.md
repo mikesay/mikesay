@@ -169,8 +169,3 @@ https://blog.csdn.net/MssGuo/article/details/120754324
 
 ## Compare: Firewalld / Iptables / Nftables / Netfilter  
 https://iceburn.medium.com/compare-firewalld-iptables-nftables-netfilter-de08a8d21b5b  
-
-# Istio
-+ Traffic types and iptables rules in Istio sidecar explained  
-    https://tetrate.io/blog/traffic-types-and-iptables-rules-in-istio-sidecar-explained/  
-
