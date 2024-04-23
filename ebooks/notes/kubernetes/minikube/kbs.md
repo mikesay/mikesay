@@ -2687,7 +2687,21 @@ curl -k https://127.0.0.1:8443/api/v1/namespaces -H "Authorization: Bearer ${idT
 
 > Replace the vaule of username, passoword, client_secret to corrent one.  
 
-+ Step5 - Use oidc-login plugin to enable oidc login dynamically  
++ Step5 - Use kubelogin plugin to enable oidc login dynamically  
+
+Install kubelogin plugin:  
+```bash
+# Homebrew (macOS and Linux)
+brew install int128/kubelogin/kubelogin
+
+# Krew (macOS, Linux, Windows and ARM)
+kubectl krew install oidc-login
+
+# Chocolatey (Windows)
+choco install kubelogin
+```
+
+Configure kubeconfig to use kubelogin plugin:  
 ```bash
 kubectl config set-credentials minikube-mike \
     --exec-api-version=client.authentication.k8s.io/v1beta1 \
@@ -2700,8 +2714,5 @@ kubectl config set-credentials minikube-mike \
     --exec-arg=--insecure-skip-tls-verify
 ```
 
+> kubelogin 的 id_token 和 refresh_token 缓存在 ~/.kube/cache/oidc-login/  
 > Refer to https://www.modb.pro/db/436226  
-
-
-
-
