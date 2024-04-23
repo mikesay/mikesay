@@ -166,3 +166,6 @@ https://my.esecuredata.com/index.php?/knowledgebase/article/49/how-to-redirect-a
 
 ## Linux中文件特殊权限suid、sgid、sticky  
 https://blog.csdn.net/MssGuo/article/details/120754324  
+
+## Compare: Firewalld / Iptables / Nftables / Netfilter  
+https://iceburn.medium.com/compare-firewalld-iptables-nftables-netfilter-de08a8d21b5b  
