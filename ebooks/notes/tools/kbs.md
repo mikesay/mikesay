@@ -21,3 +21,4 @@
 | ```crictl rmi --prune```  | Clear containerd images.        |
 | ```ctr images pull docker.io/library/alpine:latest```  | Pull images using ctr command line.        |
 | ```HOMEBREW_FORCE_BREWED_CURL=1 &&  brew install hashicorp/tap/vault```  | Use GNU curl in brew command, otherwize may met error "curl: (56) LibreSSL SSL_read: "<br/> SSL_ERROR_SYSCALL, errno 54 |
+| ```find . -name "xxxx.yaml" -exec yq '(.dependencies[] \| select(.xxxx == "xxxx")).xxxx = "replaced value"' {} -i \;```  | Edit one filed of yaml files in place in batches. |
