@@ -1,28 +1,30 @@
 ## Minikube
 
-### Start a Minikube kubernetes in local Mac machine with OIDC authentication support
+### Start a Minikube kubernetes in local Mac machine
 
 ```sh
 # Start a minikube cluster
-# yq usage: https://mikefarah.gitbook.io/yq
+#
+# List all supported kubernetes version: minikube config defaults kubernetes-version
+# Component configuration reference:
 # apiserver: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
 # controller-manager: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
 # scheduler: https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
+# yq usage: https://mikefarah.gitbook.io/yq
+#
 minikube start --driver='virtualbox' --kubernetes-version='v1.26.7' \
         --cpus=4 --memory='6g' --disk-size='60g' --cni='calico' \
         --extra-config=apiserver.bind-address=0.0.0.0 \
         --extra-config=apiserver.authorization-mode='Node,RBAC' \
         --extra-config=apiserver.service-node-port-range=1-65535 \
-        --extra-config=apiserver.oidc-issuer-url=https://keycolak.minikube:1443/realms/minikube \
-        --extra-config=apiserver.oidc-client-id=minikube \
-        --extra-config=apiserver.oidc-username-claim=minikube_user_name \
-        --extra-config=apiserver.oidc-username-prefix=- \
-        --extra-config=apiserver.oidc-ca-file=/var/lib/minikube/certs/ca.crt \
         --extra-config=controller-manager.bind-address=0.0.0.0 \
         --extra-config=scheduler.bind-address=0.0.0.0 \
         --extra-config=kubelet.cgroup-driver=systemd
 
-# Port-forward port from local host to port of minikube node(VirtualBox VM)
+# Make minikube work behind VPN
+#
+# Port-forward port from local host to port of minikube node(VirtualBox VM), so that can use localhost to 
+# access api-server, ingress controller, and docker server run in minikube node.
 #
 VBoxManage controlvm minikube natpf1 k8s-apiserver,tcp,127.0.0.1,8443,,8443
 VBoxManage controlvm minikube natpf1 k8s-ingress,tcp,127.0.0.1,9080,,80
@@ -88,7 +90,7 @@ EOF
 ```  
 
 #### Make Minikube work behind http proxy
-If had proxy, set the proxy environment and the NO_PROXY especially https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/:  
+If minikube run behind http proxy, set the proxy environment and NO_PROXY especially:  
 
 ```bash
 export https_proxy=http://192.168.0.208:7890
@@ -101,123 +103,82 @@ export HTTP_PROXY=$http_proxy
 export ALL_PROXY=$all_proxy
 export NO_PROXY=$no_proxy
 ```  
+> Refer to https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#proxy  
 
-#### Make Minikube work in Corporate VPN
+#### Make Minikube work behind Corporate VPN
 
-Port forwarding localhost:xxx -> minikube_IP:xxx  
-http://tdongsi.github.io/blog/2018/12/31/minikube-in-corporate-vpn/
+##### Port forwarding localhost:xxx -> minikube_IP:xxx  
+> http://tdongsi.github.io/blog/2018/12/31/minikube-in-corporate-vpn/  
 
-This approach is the more convenient and more reliable in my experience. All you need to do is to set up a list of port forwarding rules for minikube’s VirtualBox:
-
-```bash
-VBoxManage controlvm minikube natpf1 k8s-apiserver,tcp,127.0.0.1,8443,,8443
-VBoxManage controlvm minikube natpf1 k8s-dashboard,tcp,127.0.0.1,30000,,30000
-VBoxManage controlvm minikube natpf1 jenkins,tcp,127.0.0.1,30080,,30080
-VBoxManage controlvm minikube natpf1 docker,tcp,127.0.0.1,2376,,2376
-```
-
-In real setup, we could consider port forwarding from local to api server(8443), to docker(2376), to ingress controller(80, 443), and all the services will be exported by ingress:
 ```bash
 VBoxManage controlvm minikube natpf1 k8s-apiserver,tcp,127.0.0.1,8443,,8443
 VBoxManage controlvm minikube natpf1 k8s-ingress,tcp,127.0.0.1,9080,,80
 VBoxManage controlvm minikube natpf1 k8s-ingress-secure,tcp,127.0.0.1,9443,,443
 VBoxManage controlvm minikube natpf1 docker,tcp,127.0.0.1,2376,,2376
+```  
+
+Then, change the API server url from "https://${Minikube IP}:8443" to "https://127.0.0.1:8443", so that the access to Minikube API server will skip VPN.  
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/mizha53/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Sun, 21 Apr 2024 19:20:10 CST
+        provider: minikube.sigs.k8s.io
+        version: v1.31.2
+      name: cluster_info
+    server: https://127.0.0.1:8443
+  name: minikube
 ```
 
-Since Mac(Unix) can't listen at ports lower than 1024 with no-root user, we have to specify local port 9080 and 9443 to map 80 and 443. However, in order to let user use local 80 and 443, we can setup port-forwarding in local Mac by refering following articles:  
-https://www.zhiqiexing.com/2.html  
-https://www.zhiqiexing.com/128.html  
-https://www.zhiqiexing.com/127.html  
+Since VirtualBox run as non-root user by default, command "VBoxManage" can't open ports lower than 1024 in Mac host, then need to choose ports like 9080 and 9443 from localhost to map ports 80 and 443 in Minikube kubernetes node. It works, but it will need to add port 9080 or 9443 explicitly when accessing services exposed by Ingress in Minikube by http(s) protocol.  
 
-Steps:  
-+ Create /etc/pf.anchors/kubernetes.ingress-controller.forwarding with following content
+In order to use ports 80 and 443 from localhost, configure to redirect from 80 and 443 to 9080 and 9443:  
+> https://www.zhiqiexing.com/2.html  
+
++ Create /etc/pf.anchors/kubernetes.ingress-controller.forwarding with following content  
 ```bash
 rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 80 -> 127.0.0.1 port 9080
 rdr pass on lo0 inet proto tcp from any to 127.0.0.1 port 443 -> 127.0.0.1 port 9443
 ```
 
-+ Create /etc/pf-kubernetes-ingress-controller.conf with following content
++ Create /etc/pf-kubernetes-ingress-controller.conf with following content  
 ```bash
 load anchor "forwarding" from "/etc/pf.anchors/kubernetes.ingress-controller.forwarding"
-```
+```  
 
-+ Create a shell /Users/xxxx/.mikestart/pf.sh script which will be run during machine startup to enable port-forwarding
++ Create a shell /Users/xxxx/.mikestart/pf.sh script  
 ```bash
 #!/bin/bash
 sudo pfctl -ef /etc/pf-kubernetes-ingress-controller.conf
-```
-> Need to enable non password for sudo
+```  
+> Need to enable non password for sudo (https://www.zhiqiexing.com/128.html)  
 
 + Change the shell script to be executable
 ```bash
 sudo chmod a+x /Users/xxxx/.mikestart/pf.sh
 ```
 
-+ Register this script to be run during machine starup  
++ Register this script to be run during machine starup(https://www.zhiqiexing.com/127.html)  
 
-![Login Item](../../_media/k8s/minikube1.jpeg) 
+![Login Item](../../_media/k8s/minikube1.jpeg)  
 
-Then, you can set up a new Kubernetes context for working with VPN:
 
-```bash
-kubectl config set-cluster minikube-vpn --server=https://127.0.0.1:8443 --insecure-skip-tls-verify
-kubectl config set-context minikube-vpn --cluster=minikube-vpn --user=minikube
-```
-When working on VPN, you can set kubectl to switch to the new context:
+##### Other possible workarounds from official document  
+> https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#possible-workarounds  
 
-```bash
-kubectl config use-context minikube-vpn
-```
-
-All Minikube URLs now must be accessed through localhost in browser. For example, the standard Kubernetes dashboard URL such as:
-
-```bash
-minikube dashboard --url
-http://192.168.99.100:30000
-```
-
-must now be accessed via localhost:30000. Similar applies to other services that are deployed to minikube, such as jenkins shown above.
-
-In addition, the eval $(minikube docker-env) standard pattern to reuse minikube’s Docker deamon would not work anymore.
-
+### Configure docker client from localhost to connect docker server in Minikube
+Get docker related environments:  
 ```bash
 minikube docker-env
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="/Users/tdongsi/.minikube/certs"
-export DOCKER_API_VERSION="1.23"
-```
+```  
 
-Run this command to configure your shell:
-eval $(minikube docker-env)
+Change the Minikube IP in "DOCKER_HOST" to "127.0.0.1" which already enable port-forwarding to ${MinibeKube IP}:2376, and add all environments to bash profile file.  
 
-```bash
-echo $DOCKER_HOST
-tcp://192.168.99.100:2376
-docker images
-```
-
-Cannot connect to the Docker daemon at tcp://192.168.99.100:2376. Is the docker daemon running?
-Instead, you have to adjust DOCKER_HOST accordingly and use docker --tlsverify=false ....
-
-```bash
-export DOCKER_HOST="tcp://127.0.0.1:2376"
-alias dockervpn="docker --tlsverify=false"
-dockervpn images
-...
-```
-Finally, when not working on VPN, you can set kubectl to switch back to the old context:
-
-```sh
-kubectl config use-context minikube
-```
-
-### Use minikube as docker daemon
-https://itnext.io/goodbye-docker-desktop-hello-minikube-3649f2a1c469  
-
-https://www.chevdor.com/post/2021/02/docker_to_k8s/
-
-### Deploy KeyCloak to Minikube to act as OIDC provider configured in Minikube
+### Deploy KeyCloak  to Minikube to act as OIDC provider configured in Minikube
 
 + Step0 - Create a minikube with oidc provider parameters  
 
@@ -2687,7 +2648,35 @@ curl -k https://127.0.0.1:8443/api/v1/namespaces -H "Authorization: Bearer ${idT
 
 > Replace the vaule of username, passoword, client_secret to corrent one.  
 
-+ Step5 - Use kubelogin plugin to enable oidc login dynamically  
++ Step5 - Access Kubernetes   
+
+1. Configure user's static token in kubeconfig  
+
+```bash
+kubectl config set-credentials mike \
+   --auth-provider=oidc \
+   --auth-provider-arg=idp-issuer-url=https://keycolak.minikube:1443/realms/minikube \
+   --auth-provider-arg=client-id=minikube \
+   --auth-provider-arg=client-secret=xxxx \
+   --auth-provider-arg=refresh-token=xxxx \
+   --auth-provider-arg=id-token=xxxx \
+  --auth-provider-arg=idp-certificate-authority=/etc/kubernetes/pki/ca.crt
+```  
+
+> Get token:  
+> ```bash
+> curl -ks -X POST https://keycolak.minikube:1443/realms/minikube/protocol/openid-connect/token \
+>         -d grant_type=password -d client_id=minikube \
+>         -d username=mike -d password=xxxx -d scope=openid \
+>         -d client_secret=xxxx 
+> ```  
+
+2. Use "--token" option  
+```bash
+kubectl get namespace --user tom --token=<id_token>
+```  
+
+3. Use kubelogin plugin to enable oidc login dynamically  
 
 Install kubelogin plugin:  
 ```bash
