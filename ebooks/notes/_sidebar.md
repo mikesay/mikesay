@@ -1,6 +1,7 @@
 <!-- docs/_sidebar.md -->
 - Authentication
     - [Knowledge Base](/authentication/kbs.md)
+    - [Issue and Solution](/authentication/kbs.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
 - Project Management

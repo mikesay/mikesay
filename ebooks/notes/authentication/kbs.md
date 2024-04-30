@@ -1,4 +1,4 @@
-## Materials  
+## Authentication & Authorization  
 
 ### Generic
 + Authenticate doc by Auth0  
@@ -69,3 +69,17 @@ https://medium.com/@a.zagarella/microservices-architecture-a-real-business-world
 + Authentication in Microservices: Approaches and Techniques  
 https://frontegg.com/blog/authentication-in-microservices  
 
+
+## PKI
++ What is PKI? A Public Key Infrastructure Definitive Guide  
+Public key infrastructure (PKI) governs the issuance of digital certificates to protect sensitive data, provide unique digital identities for users, devices and applications and secure end-to-end communications.  
+
+https://www.keyfactor.com/education-center/what-is-pki/#:~:text=Public%20key%20infrastructure%20(PKI)%20governs,end%2Dto%2Dend%20communications.  
+
+PKI governs encryption keys by issuing and managing digital certificates. Digital certificates are also called X.509 certificates and PKI certificates.  
+
++ How Many Types of Digital Certificates Are There?  
+https://www.keyfactor.com/blog/types-of-digital-certificates/  
+
++ What is an X.509 Certificate? Understanding this Vital Safeguard  
+https://www.keyfactor.com/blog/what-is-x509-certificate/  
