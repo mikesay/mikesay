@@ -19,10 +19,37 @@
     keytool -import -alias example -keystore  /path/to/cacerts -file example.der
     ```  
 
-+ KeyCloak error - PKIX path building failed: SunCertPathBuilderException: unable to find valid certification path to requested target  
-    Import the CA to java keystore, and use java keystore in KeyCloak command line.  
++ KeyCloak CLI(kcadm.sh) error - PKIX path building failed: SunCertPathBuilderException: unable to find valid certification path to requested target  
+    Firstly, import the CA to java keystore, and use java keystore in KeyCloak command line.  
 
+    Secondly, set java keystore as the trust store for KeyCloak.  
     ```bash
-    kcadm.sh config credentials --truststore /jdk/lib/security/cacerts --server https://keycolak.minikube:1443 --realm master --user xxxx --password xxxx
+    kcadm.sh configure truststore /usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/lib/security/cacerts --trustpass xxxx
+    ```
+
+    Third, configure credentials of KeyCloak
+    ```bash
+    kcadm.sh config credentials --server https://keycolak.minikube:1443 --realm master --user xxxx --password xxxx
     ```  
 
+    Finally, the generated configure file is at "~/.keycloak/kcadm.config":  
+    ```json
+    {
+        "serverUrl" : "https://keycolak.minikube:1443",
+        "realm" : "master",
+        "truststore" : "/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/lib/security/cacerts",
+        "trustpass" : "xxxx",
+        "endpoints" : {
+                "https://keycolak.minikube:1443" : {
+                "master" : {
+                    "clientId" : "admin-cli",
+                    "token" : "xxxx",
+                    "refreshToken" : "xxxx",
+                    "grantTypeForAuthentication" : "password",
+                    "expiresAt" : 1714449549933,
+                    "refreshExpiresAt" : 1714451289933
+                }
+            }
+        }
+    }
+    ```  
