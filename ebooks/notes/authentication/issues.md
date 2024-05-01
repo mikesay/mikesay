@@ -53,3 +53,11 @@
         }
     }
     ```  
+
++ Java program error - sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target  
+    Firstly, get the SSL certificate from website.  
+
+    Secondly, import this SSL certificate.  
+    ```bash
+    keytool -import -alias keycloak -keystore $JAVA_HOME/lib/security/cacerts -file tls.crt
+    ```
