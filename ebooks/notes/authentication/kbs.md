@@ -22,6 +22,9 @@ https://developer.okta.com/docs/guides/validate-id-tokens/main/
 + Validate Access Tokens  
 https://developer.okta.com/docs/guides/validate-access-tokens/dotnet/main/  
 
++ Stateful vs Stateless Authentication  
+https://github.com/OpenIdentityPlatform/OpenAM/wiki/Stateful-vs-Stateless-Authentication  
+
 ### Vault authentication  
 + Kubernetes auth method  
 https://developer.hashicorp.com/vault/docs/v1.15.x/auth/kubernetes  
@@ -31,6 +34,9 @@ https://developer.hashicorp.com/vault/docs/v1.15.x/auth/jwt/oidc-providers/kuber
 
 + Why a cluster role binding is needed in k8s-vault integration  
 https://wlwan.medium.com/why-a-cluster-role-binding-is-needed-in-k8s-vault-integration-82b5aefc4d81  
+
+#### OAuth 2.0
+https://oauth.net/2/  
 
 #### PKCE
 + RFC 7636: Proof Key for Code Exchange  
