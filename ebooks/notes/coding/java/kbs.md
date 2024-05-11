@@ -12,31 +12,45 @@ java -version
 ```
 
 ### Install
+List availabe openjdk version:  
+```bash
+brew search openjdk  
+```
+
 ```bash
 export HOMEBREW_FORCE_BREWED_CURL=1
 sudo rm -fr /Users/yourUserName/Library/Java/JavaVirtualMachines/*
 sudo rm -fr /Library/Java/JavaVirtualMachines/*
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install openjdk@11
-sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+brew install openjdk@17
 ```
+Follow the instruction from the prompt after brew install:  
 
-> ```export HOMEBREW_FORCE_BREWED_CURL=1``` enable brew command to use brew installed curl.
-
-+ Add JAVA_HOME  
+For the system Java wrappers to find this JDK, symlink it with
 ```bash
-echo 'export JAVA_HOME="/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"' >> ~./bash_profile
+  sudo ln -sfn /usr/local/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+``` 
+
+openjdk@17 is keg-only, which means it was not symlinked into /usr/local,  
+because this is an alternate version of another formula.  
+
+If you need to have openjdk@17 first in your PATH, run:  
+```bash
+  echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.bash_profile
+```  
+> If this installed openjdk was the only one, this step can be skipped.  
+
+For compilers to find openjdk@17 you may need to set:  
+```bash
+echo 'export CPPFLAGS="-I/usr/local/opt/openjdk@17/include"'  >> ~/.bash_profile
 ```
 
-+ Add bin folder of jdk in PATH  
+Add JAVA_HOME in case any java program needs it:  
 ```bash
-echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~./bash_profile
+echo 'export JAVA_HOME="/usr/local/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"' >> ~/.bash_profile
 ```
 
-+ For compilers to find openjdk you may need to set  
-```bash
-echo 'export CPPFLAGS="$CPPFLAGS -I$JAVA_HOME/include"' >> ~./bash_profile
-```
+> ```export HOMEBREW_FORCE_BREWED_CURL=1``` enable brew command to use brew installed curl which is GNU curl.    
+> If brew[Homebrew](https://brew.sh/) was not installed, run ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"``` to install it firstly.  
 
 #### Issues met
 
