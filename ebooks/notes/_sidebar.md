@@ -45,6 +45,7 @@
 - Monitoring
     - [Knowledge Base](/monitoring/kbs.md)
     - [Monitoring Kubernetes](/monitoring/kubernetes.md)
+    - [Log collecting](/monitoring/logs.md)
 - Service Mesh
     - Istio
         - [Knowledge Base](/servicemesh/istio/kbs.md)
