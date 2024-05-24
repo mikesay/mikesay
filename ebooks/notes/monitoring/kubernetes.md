@@ -9,7 +9,9 @@ https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-ne
 ### Collect Kubernetes metrics
 #### For Alibaba Cloud ACK
 + Configuration from ARMS prometheus which can work with OpenTelemetry Collector's prometheus receiver  
+
 <details><summary markdown="span">prom.yaml</summary>
+
 ```yaml
         global:
           scrape_interval: 30s
@@ -526,13 +528,16 @@ https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-ne
                 - arms-prom
           - job_name: _arms/kube-event
 ```
+
 </details>
 <br/>
 
 > If arms prometheus was used, all configurtations are default.  
 
 +  Configuration to work for general Kubernetes  
+
 <details><summary markdown="span">prom.yaml</summary>
+
 ```yaml
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -736,6 +741,7 @@ prometheus:
             regex: "8080"
             action: keep
 ```
+
 </details>
 <br/>
 
