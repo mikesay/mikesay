@@ -1,10 +1,10 @@
-## Grafana Stack
+# Grafana Stack
 
-### Telemetry data correlation
+## Telemetry data correlation
 Grafana supports linking telemetry data among Metrics, Trace and Logs datasurces from virtualization layer.  
 ![Telemetry Data Correlation](_media/grafana_stack/grafana_stack_correlation.png)  
 
-#### Metrics to Trace  
+### Metrics to Trace  
 It was configured in prometheus type datasource like Mimir by using field "exemplarTraceIdDestinations" to pick up the trace datasource like Tempo.  
 
 ```yaml
@@ -77,7 +77,7 @@ For the trace id file name is "trace_id" by default in span metrics generated fr
 Usage of Metrics to Trace in Grafana Explore view:  
 ![Metrics to Trace](_media/grafana_stack/metrics_to_trace.png)  
 
-#### Trace to Logs  
+### Trace to Logs  
 It was configured in trace datasource like Tempo by using field "tracesToLogsV2" to pick up the log datasource Loki.  
 ```yaml
 # https://grafana.com/docs/grafana/latest/datasources/tempo/configure-tempo-data-source/
@@ -108,7 +108,7 @@ Filed "filterByTraceID", or "filterBySpanID" will pass trace id or span id to Lo
 Usage of Trace to Logs in Grafana Explore View:  
 ![Trace to Logs](_media/grafana_stack/trace_to_logs.png)  
 
-#### Logs to Trace  
+### Logs to Trace  
 It was configured in loki datasource by using [Derived Field](https://grafana.com/docs/grafana/latest/datasources/loki/#configure-derived-fields) feature. It will use regex string to match and extract the trace id information from log, and create a derived field in the log entry.  
 ```yaml
 # https://grafana.com/docs/grafana/latest/datasources/loki/configure-loki-data-source/
@@ -137,7 +137,7 @@ The "name" in "derivedFields" defines the filed name of extracted derived field 
 Usage of Logs to Trace in Grafana Explore View:  
 ![Logs to Trace](_media/grafana_stack/logs_to_trace.png)  
 
-#### Trace to Metrics  
+### Trace to Metrics  
 It was configured in trace datasource like Tempo by using field "tracesToMetrics" to pick up the prometheus type datasource like Mimir.  
 
 ```yaml
@@ -281,11 +281,11 @@ grafanaDatasources:
 > Grafana](https://grafana.com/docs/grafana/latest/administration/provisioning/).  
 
 
-### Grafana Helm Chart
+## Grafana Helm Chart
 https://github.com/grafana/helm-charts  
 https://github.com/grafana/helm-charts/tree/main/charts/grafana
 
-### Grafana Operator
+## Grafana Operator
 https://operatorhub.io/operator/grafana-operator  
 https://github.com/grafana-operator/grafana-operator
 

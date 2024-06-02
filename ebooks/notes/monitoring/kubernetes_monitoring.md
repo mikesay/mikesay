@@ -1,6 +1,6 @@
-## Kubernetes Monitoring
+# Kubernetes Monitoring
 
-### What to monitor for Kubernetes?
+## What to monitor for Kubernetes?
 
 + 12 Critical Kubernetes Health Conditions You Need to Monitor and Why  
   https://www.circonus.com/2020/12/12-critical-kubernetes-health-conditions-you-need-to-monitor-and-why/#:~:text=Disk%20pressure%20is%20a%20condition,set%20in%20your%20Kubernetes%20configuration.  
@@ -20,12 +20,12 @@
 + Effectively Managing Kubernetes Resources with Cost Monitoring  
   https://medium.com/kubecost/effectively-managing-kubernetes-with-cost-monitoring-96b54464e419  
 
-### Collect Kubernetes metrics
-#### Basic concepts
+## Collect Kubernetes metrics
+### Basic concepts
 + CAdvisor in Kubelet for container metrics  
   ![kubelet-cadvisor](_media/kubernetes_monitoring/kubelet-cadvisor.png)  
 
-#### For Alibaba Cloud ACK
+### For Alibaba Cloud ACK
 + Configuration from ARMS prometheus which can work with OpenTelemetry Collector's prometheus receiver  
 
     <details><summary markdown="span">prom.yaml</summary>
@@ -552,7 +552,7 @@
 
     > If arms prometheus was used, all configurtations are default.  
 
-#### For general Kubernetes
+### For general Kubernetes
 +  Configuration to work for general Kubernetes  
 
     <details><summary markdown="span">prom.yaml</summary>
@@ -768,8 +768,8 @@
     >   https://medium.com/hostspaceng/monitoring-kubernetes-metrics-collecting-them-using-open-telemetry-52bb3d35b148  
     >   https://docs.victoriametrics.com/scrape_config_examples/  
 
-### Collect container logs in Kubernetes
-#### Logs output to container stdout/stderr
+## Collect container logs in Kubernetes
+### Logs output to container stdout/stderr
 This is the suggested way for containers to ouput the log. Deploy daemonset log agent, collect container logs from the log file in host file system:  
 
 ![Log Monitoring](_media/kubernetes_monitoring/k8s-log-1.png)
@@ -930,7 +930,7 @@ This is the suggested way for containers to ouput the log. Deploy daemonset log 
 + Core monitoring pipeline:  
   ![core-monitoring-pipeline](_media/kubernetes_monitoring/core-monitoring-pipeline.jpeg)  
 
-### Official materials
+## Official materials
 + General  
     https://github.com/kubernetes/metrics  
 

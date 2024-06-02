@@ -1,6 +1,6 @@
-## Logs collecting and monitoring
+# Logs collecting and monitoring
 
-### Solutions to sync Alibaba Cloud SLS to OpenTelemetry
+## Solutions to sync Alibaba Cloud SLS to OpenTelemetry
 Leverage Logstash [SLS input plugin](https://help.aliyun.com/zh/sls/user-guide/use-logstash-to-consume-log-data?spm=a2c4g.11186623.0.0.7ac05d36tRoCPk) to consume SLS logstore in real-time, and [Logstash OpenTelemetry output plugin](https://github.com/paulgrav/logstash-output-opentelemetry) to send logs to OpenTelemetry Collector which will in turn export logs to log backend like Loki.  
 
 Logstash pipeline configuration:  
