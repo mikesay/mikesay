@@ -926,7 +926,7 @@ This is the suggested way for containers to ouput the log. Deploy daemonset log 
   Inject log collecting agent as sidecar into pod, mount and share the log folder using EmptyDir  
   ![monitoring](_media/kubernetes_monitoring/k8s-log-3.png)  
 
-### Kubernetes monitoring and HPA API
+## Kubernetes monitoring and HPA API
 + Core monitoring pipeline:  
   ![core-monitoring-pipeline](_media/kubernetes_monitoring/core-monitoring-pipeline.jpeg)  
 
