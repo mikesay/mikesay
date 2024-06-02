@@ -774,12 +774,12 @@ This is the suggested way for containers to ouput the log. Deploy daemonset log 
 
 ![Log Monitoring](_media/kubernetes_monitoring/k8s-log-1.png)
 
-#### Log files in container
+### Log files in container
 + Mount the log file to host filesystem by Hostpath volume  
     Mount the logdir(/log) to host's "/var/log/pods/<pod_name>" by HostPath Volume.After the configuration, log files in container can be accessed from local host, then daemonset log agent can be used to collect logs from local log files. Howerver, echo replica of pod will output logs to the same log file path, which will cause log overwriting conflict.  
     
 + Mount the log file to EmptyDir Volume  
-    Mount the logdir(/log) by EmptyDIr Volume, so from local host, the log file path will be at "/var/lib/kubelet/pods/<pod_id>/volumes/kubernetes.io~empty-dir/log-storage". The daemonset log agent can tail the logfiles in /var/lib/kubelet/pods/<pod_id>/volumes/kubernetes.io~empty-dir/log-storage. However, the path only includes pod_id instead of pod name and pod_id will change everytime pod restarted, which will make it hard to search all the logs of the same service.  
+    Mount the logdir(/log) by EmptyDIr Volume, so from local host, the log file path will be at "/var/lib/kubelet/pods/<pod_id>/volumes/kubernetes.io\~empty-dir/log-storage". The daemonset log agent can tail the logfiles in /var/lib/kubelet/pods/<pod_id>/volumes/kubernetes.io\~empty-dir/log-storage. However, the path only includes pod_id instead of pod name and pod_id will change everytime pod restarted, which will make it hard to search all the logs of the same service.  
 
 + Use a "streaming container" as sidecar containers to redirect log files to the stdout of each sidecar container  
     ![monitoring](_media/kubernetes_monitoring/k8s-log-2.png)
@@ -943,7 +943,7 @@ This is the suggested way for containers to ouput the log. Deploy daemonset log 
 + Base library used by Adapter  
     https://github.com/kubernetes-sigs/custom-metrics-apiserver  
 
-### Other materials
+## Other materials
 + Kubernetes Metrics  
     https://help.sumologic.com/Metrics/Kubernetes_Metrics  
 
