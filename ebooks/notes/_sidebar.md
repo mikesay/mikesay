@@ -43,9 +43,11 @@
     - [Azure AKS](/kubernetes/azure_aks.md)
     - [Aliyun ACK](/kubernetes/aliyun_ack.md)
 - Monitoring
-    - [Knowledge Base](/monitoring/kbs.md)
-    - [Monitoring Kubernetes](/monitoring/kubernetes.md)
-    - [Log collecting](/monitoring/logs.md)
+    - [Principle](/monitoring/principle.md)
+    - [kubernetes_monitoring](/monitoring/kubernetes_monitoring.md)
+    - [logs_monitoring](/monitoring/logs_monitoring.md)
+    - [prometheus_stack](/monitoring/prometheus_stack.md)
+    - [grafana_stack](/monitoring/grafana_stack.md)
 - Service Mesh
     - Istio
         - [Knowledge Base](/servicemesh/istio/kbs.md)

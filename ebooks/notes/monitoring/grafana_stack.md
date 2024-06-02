@@ -290,7 +290,6 @@ https://operatorhub.io/operator/grafana-operator
 https://github.com/grafana-operator/grafana-operator
 
 ## Reference
-
 ### Grafana
 https://grafana.com/docs/grafana/latest/  
 https://github.com/grafana/grafana  
