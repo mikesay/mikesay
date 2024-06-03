@@ -4,6 +4,9 @@ https://prometheus.io/docs/introduction/overview/
 https://github.com/prometheus  
 https://p8s.io/docs/  
 
++ Horizontally scalable, highly available, multi-tenant, long term storage for Prometheus
+    https://cortexmetrics.io/
+
 ### Concepts and Knowledge points
 #### Prometheus的四种指标类型  
     https://mp.weixin.qq.com/s/OqkGioTuDJdep5doCJb5ww  
