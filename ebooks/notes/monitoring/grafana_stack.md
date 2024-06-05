@@ -305,6 +305,9 @@ https://github.com/aliyun/aliyun-cms-grafana
 + Mimir HTTP API used to set ingress  
     https://grafana.com/docs/mimir/latest/references/http-api/  
 
++ Cortex Metrics  
+    https://cortexmetrics.io/docs/  
+
 ### Loki
 + Loki architecture  
     https://grafana.com/docs/loki/latest/get-started/architecture/  
