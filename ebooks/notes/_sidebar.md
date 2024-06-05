@@ -18,6 +18,8 @@
         - [Knowledge Base](/cloud/alicloud/kbs.md)
     - Generic
         - [Knowledge Base](/cloud/kb.md)
+    - Cloud Native
+        - [Cloud Native](/cloud/cloud_native.md)
 - Kubernetes
     - [Knowledge Base](/kubernetes/kbs.md)
     - [Issue and Solution](/kubernetes/issues.md)
