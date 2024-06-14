@@ -8,7 +8,7 @@
 
   <details><summary markdown="span">Nginx reverse proxy configuration supporing SNI</summary>
 
-  ```nginx
+  ```bash
   ##
   # You should look at the following URL's in order to grasp a solid understanding
   # of Nginx configuration files in order to fully unleash the power of Nginx.
@@ -165,7 +165,7 @@
 
 + HTTP Basic Authentication  
   https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/  
-  
+
   ```bash
   sudo htpasswd -c /etc/apache2/.htpasswd user1
   sudo htpasswd /etc/apache2/.htpasswd user2
