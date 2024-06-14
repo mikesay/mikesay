@@ -1,11 +1,11 @@
 <!-- docs/_sidebar.md -->
-- Authentication
-    - [Knowledge Base](/authentication/kbs.md)
-    - [Issue and Solution](/authentication/issues.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
 - Project Management
     - [SAFe&Scrum](/projectmanagement/SAFe&Scrum.md)
+- Identity & Access Management
+    - [Knowledge Base](/authentication/kbs.md)
+    - [Issue and Solution](/authentication/issues.md)
 - Networking
     - [Knowledge Base](/networking/kbs.md)
 - Cloud
@@ -50,10 +50,9 @@
     - [logs_monitoring](/monitoring/logs_monitoring.md)
     - [prometheus_stack](/monitoring/prometheus_stack.md)
     - [grafana_stack](/monitoring/grafana_stack.md)
-- Service Mesh
-    - Istio
-        - [Knowledge Base](/servicemesh/istio/kbs.md)
-        - [Issue and Solution](/servicemesh/istio/issues.md)
+- Traffic Management
+    - [Istio](/traffic_management/istio.md)
+    - [Nginx](/traffic_management/nginx.md)
 - Coding
     - [OpenSource System](/coding/opensource_system.md)
     - [Knowledge Base](/coding/kbs.md)
@@ -72,7 +71,7 @@
         - [Knowledge Base](/coding/shell/kbs.md)
     - Java
         - [Knowledge Base](/coding/java/kbs.md)
-- IAC
+- Iac
     - Terraform
         - [Terraform Base](/iac/terraform/kbs.md)
     - Walrus
@@ -102,9 +101,6 @@
     - Setup
         - [Samba](/linux/setup/samba.md)
         - [Bind9](/linux/setup/bind9.md)
-- Nginx
-    - [KnowledgeBase](/nginx/kbs.md)
-    - [Issue and Solution](/nginx/issues.md)
 - VirtualBox
     - [KnowledgeBase](/virtualbox/kbs.md)
     - [Issue and Solution](/virtualbox/issues.md)

@@ -48,6 +48,11 @@ kubectl run bcurl -it --image=yauritux/busybox-curl:latest  -- sh
 kubectl run curl -it --image=curlimages/curl:latest  -- sh
 ```
 
+### Start aliyun Linux3
+```bash
+kubectl run qcurl -it --image=quay.io/curl/curl:8.8.0 -- sh
+```
+
 ### Start busybox
 ```bash
 kubectl run busybox -it --privileged=true --image=busybox  -- sh
@@ -64,6 +69,8 @@ kubectl run kubectl -it --image=ubuntu:18.04 -- bash
 apt-get update
 apt-get install vim
 apt-get install curl
+apt install dnsutils
+apt-get install iputils-ping
 cd /usr/local/bin
 curl -LO https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl
 chmod a+x kubectl

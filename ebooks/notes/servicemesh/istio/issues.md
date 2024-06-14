@@ -1,2 +1,0 @@
-## Istio issues
-Awesome Istio.
