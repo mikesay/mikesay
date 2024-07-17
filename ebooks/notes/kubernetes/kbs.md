@@ -28,471 +28,482 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
     exit
     ```
 
-## Start a pod in Kubernetes
-### Start a pod with image pull secret
-```bash
-kubectl run -it rockylinux \
---image=rockylinux:9.3.20231119 \
---image-pull-policy="IfNotPresent" \
---overrides='{ "apiVersion": "v1", "spec": { "imagePullSecrets": [{"name": "xxxx"}] } }' -- sh
-```
+## Start various kind of pods in Kubernetes for test purpose
+### Start a pod using kubectl command
 
-### Start busybox-curl
-```bash
-kubectl run bcurl -it --image=yauritux/busybox-curl:latest  -- sh
-```
-> It is run as root user
++ RockyLinux  
+  ```bash
+  kubectl run rockylinux -it  \
+  --image=rockylinux:9.3.20231119 \
+  --image-pull-policy="IfNotPresent" \
+  --overrides='{ "apiVersion": "v1", "spec": { "imagePullSecrets": [{"name": "xxxx"}] } }' -- sh
+  ```  
 
-### Start from a curl image
-```bash
-kubectl run curl -it --image=curlimages/curl:latest  -- sh
-```
+  ```bash
+  kubectl run rockylinux -it --image=rockylinux:9.3.20231119 -- sh
+  ```  
 
-### Start aliyun Linux3
-```bash
-kubectl run qcurl -it --image=quay.io/curl/curl:8.8.0 -- sh
-```
++ Ubuntu  
+  ```bash
+  kubectl run ubuntu1804 -it \
+  --image=ubuntu:18.04 \
+  --image-pull-policy="IfNotPresent" \
+  --overrides='{ "apiVersion": "v1", "spec": { "imagePullSecrets": [{"name": "xxxx"}] } }' -- sh
+  ```  
 
-### Start busybox
-```bash
-kubectl run busybox -it --privileged=true --image=busybox  -- sh
-```
+  ```bash
+  kubectl run ubuntu1804 -it --image=ubuntu:18.04 -- sh
+  ```  
 
-### Start psql client
-```bash
-kubectl run psql -it --image=jbergknoff/postgresql-client  --command -- /bin/sh
-```
-
-### Start pod to run kubectl or helm
-```bash
-kubectl run kubectl -it --image=ubuntu:18.04 -- bash
-apt-get update
-apt-get install vim
-apt-get install curl
-apt install dnsutils
-apt-get install iputils-ping
-cd /usr/local/bin
-curl -LO https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl
-chmod a+x kubectl
-```
-
-### Start a pod on specific node
-
-+ Use nodeSelector to specify exact node
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: curl
-  name: curl
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: curl
-  template:
-    metadata:
-      labels:
-        app: curl
-    spec:
-      dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/os: linux
-        kubernetes.io/hostname: cn-shanghai.172.19.xxx.xxx
-      terminationGracePeriodSeconds: 300
-      containers:
-        - name: curl
-          image: curlimages/curl:latest
-          imagePullPolicy: IfNotPresent
-          args:
-            - sh
-            - -c
-            - "sleep 36000"
-          resources:
-            limits:
-              cpu: 300m
-              memory: 1000Mi
-            requests:
-              cpu: 100m
-              memory: 300Mi
-```
-
-+ Use nodeAffinity to specify nodes
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: curl
-  name: curl
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: curl
-  template:
-    metadata:
-      labels:
-        app: curl
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: type
-                operator: NotIn
-                values:
-                - virtual-kubelet
-              - key: k8s.aliyun.com
-                operator: NotIn
-                values:
-                - "true"
-              - key: usage
-                operator: In
-                values:
-                - nginx-ingress-reverse
-      dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/os: linux
-      terminationGracePeriodSeconds: 300
-      containers:
-        - name: curl
-          image: curlimages/curl:latest
-          imagePullPolicy: IfNotPresent
-          args:
-            - sh
-            - -c
-            - "sleep 36000"
-          resources:
-            limits:
-              cpu: 300m
-              memory: 1000Mi
-            requests:
-              cpu: 100m
-              memory: 300Mi
-```
-
-> nodeSelector can also be used together with nodeAffinity.
-
-### Tolerate a pod to a node with taints
-
-The node has a taint "usage: nginx-ingress-reverse".  
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: curl
-  name: curl
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: curl
-  template:
-    metadata:
-      labels:
-        app: curl
-    spec:
-      tolerations:
-      - key: "usage"
-        operator: "Equal"
-        value: "nginx-ingress-reverse"
-        effect: "NoSchedule"
-      dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/os: linux
-      terminationGracePeriodSeconds: 300
-      containers:
-        - name: curl
-          image: curlimages/curl:latest
-          imagePullPolicy: IfNotPresent
-          args:
-            - sh
-            - -c
-            - "sleep 36000"
-          resources:
-            limits:
-              cpu: 300m
-              memory: 1000Mi
-            requests:
-              cpu: 100m
-              memory: 300Mi
-```
-
-> nodeSelector can also be used together with toleration.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: dig
-  name: dig
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: dig
-  template:
-    metadata:
-      labels:
-        app: dig
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: type
-                operator: NotIn
-                values:
-                - virtual-kubelet
-              - key: k8s.aliyun.com
-                operator: NotIn
-                values:
-                - "true"
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - cn-shanghai.10.229.249.51
-      dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/os: linux
-      terminationGracePeriodSeconds: 300
-      containers:
-        - name: dig-51
-          image: azukiapp/dig
-          imagePullPolicy: IfNotPresent
-          args:
-            - bash
-            - -c
-            - "sleep 36000"
-          resources:
-            limits:
-              cpu: 300m
-              memory: 1000Mi
-            requests:
-              cpu: 100m
-              memory: 300Mi
-```
-> If the node has taints, also need to add tolerations
+  > Need to install necessary utilities:  
+    apt-get update  
+    apt-get install vim  
+    apt-get install curl  
+    apt install dnsutils  
+    apt-get install iputils-ping  
+    cd /usr/local/bin  
+    curl -LO https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl  
+    chmod a+x kubectl  
 
 
++ Start busybox-curl  
+  ```bash
+  kubectl run bcurl -it --image=yauritux/busybox-curl:latest  -- sh
+  ```
+  > It is run as root user
 
-### Start a pod including mtr command to do network probing
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: netutils
-  name: netutils
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: netutils
-  template:
-    metadata:
-      labels:
-        app: netutils
-    spec:
-      dnsPolicy: ClusterFirst
-      nodeSelector:
-        kubernetes.io/os: linux
-        kubernetes.io/hostname: cn-shanghai.xxxxx
-      terminationGracePeriodSeconds: 300
-      containers:
-        - name: netutils
-          image: mikejianzhang/netutils:0.0.2
-          imagePullPolicy: IfNotPresent
-          args:
-            - sh
-            - -c
-            - "sleep 36000"
-          resources:
-            limits:
-              cpu: 300m
-              memory: 1000Mi
-            requests:
-              cpu: 100m
-              memory: 300Mi
-```
-## Start testing NFS server
++ Start from a curl image
+  ```bash
+  kubectl run curl -it --image=curlimages/curl:latest  -- sh
+  ```
 
-### deployment.yaml
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  namespace: nfs
-  name: nfs-server
-  labels:
-    app: nfs-server
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nfs-server
-  template:
-    metadata:
-      labels:
-        app: nfs-server
-        name: nfs-server
-    spec:
-      containers:
-        - name: nfs-server
-          image: itsthenetwork/nfs-server-alpine:12
-          securityContext:
-            privileged: true
-          ports:
-            - name: nfs
-              containerPort: 2049
-            - name: mountd
-              containerPort: 20048
-            - name: rpcbind
-              containerPort: 111
-          env:
-            - name: SHARED_DIRECTORY
-              value: /nfsshare
-          volumeMounts:
-          - mountPath: /nfsshare
-            name: nfsshare
-          imagePullPolicy: IfNotPresent
-          resources:
-            limits:
-              cpu: 200m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
-      restartPolicy: Always
-      volumes:
-      - name: nfsshare
-        emptyDir: {}
-        # For hostPath, the client can mount but has no permission to write.
-        #hostPath:
-          # directory location on host
-        #  path: /Users/mizha53/Documents/MikeStorage/MikeNFS
-          # this field is optional
-        #  type: Directory
-```
++ Start busybox
+  ```bash
+  kubectl run busybox -it --privileged=true --image=busybox  -- sh
+  ```
 
-### service.yaml
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nfs-server
-  namespace: nfs
-spec:
-  selector:
-    app: nfs-server
-  ports:
-    - name: nfs
-      port: 2049
-    - name: mountd
-      port: 20048
-    - name: rpcbind
-      port: 111
-```
-### Mount to the testing NFS server by PV
-+ pv.yaml
-    ```yaml
-    apiVersion: v1
-    kind: PersistentVolume
-    metadata:
-    name: nfs-client
++ Start psql client
+  ```bash
+  kubectl run psql -it --image=jbergknoff/postgresql-client  --command -- /bin/sh
+  ```
+
+### Start a pod using manifests for advanced control  
+
++ Use nodeSelector to select exact node  
+
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
     labels:
-        app: nfs-client
-    spec:
-    capacity:
-        storage: 5Gi
-    accessModes:
-        - ReadWriteMany
-    nfs:
-        server: "10.101.253.230"
-        path: "/"
-    mountOptions:
-        - vers=4
-    ```
-+ pvc.yaml
-    ```yaml
-    apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-    namespace: nfs
-    name: nfs-client
-    labels:
-        app: nfs-client
-    spec:
-    accessModes:
-        - ReadWriteMany
-    storageClassName: ""
-    resources:
-        requests:
-        storage: 5Gi
-    selector:
-        matchLabels:
-        app: nfs-client
-    ```
-+ deployment.yaml
-    ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-    namespace: nfs
-    name: nfs-client
-    labels:
-        app: nfs-client
-    spec:
+      app: curl
+    name: curl
+  spec:
     replicas: 1
     selector:
-        matchLabels:
-        app: nfs-client
+      matchLabels:
+        app: curl
     template:
-        metadata:
-        name: nfs-client
+      metadata:
         labels:
-            app: nfs-client
-        spec:
+          app: curl
+      spec:
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          kubernetes.io/hostname: cn-shanghai.172.19.xxx.xxx
+        terminationGracePeriodSeconds: 300
         containers:
-            - name: nfs-client
-            image: busybox
+          - name: curl
+            image: curlimages/curl:latest
+            imagePullPolicy: IfNotPresent
+            args:
+              - sh
+              - -c
+              - "sleep 36000"
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1000Mi
+              requests:
+                cpu: 100m
+                memory: 300Mi
+  EOF
+  ```
+
++ Use nodeAffinity to select nodes  
+
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: curl
+    name: curl
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: curl
+    template:
+      metadata:
+        labels:
+          app: curl
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: type
+                  operator: NotIn
+                  values:
+                  - virtual-kubelet
+                - key: k8s.aliyun.com
+                  operator: NotIn
+                  values:
+                  - "true"
+                - key: usage
+                  operator: In
+                  values:
+                  - nginx-ingress-reverse
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        terminationGracePeriodSeconds: 300
+        containers:
+          - name: curl
+            image: curlimages/curl:latest
+            imagePullPolicy: IfNotPresent
+            args:
+              - sh
+              - -c
+              - "sleep 36000"
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1000Mi
+              requests:
+                cpu: 100m
+                memory: 300Mi
+  EOF
+  ```
+
+  > Docker image (based in alpine) for test dns configurations, include: dig, nslookup and nsupdate tools.  
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: dig
+    name: dig
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: dig
+    template:
+      metadata:
+        labels:
+          app: dig
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: type
+                  operator: NotIn
+                  values:
+                  - virtual-kubelet
+                - key: k8s.aliyun.com
+                  operator: NotIn
+                  values:
+                  - "true"
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                  - cn-shanghai.10.229.249.51
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        terminationGracePeriodSeconds: 300
+        containers:
+          - name: dig-51
+            image: azukiapp/dig
+            imagePullPolicy: IfNotPresent
+            args:
+              - bash
+              - -c
+              - "sleep 36000"
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1000Mi
+              requests:
+                cpu: 100m
+                memory: 300Mi
+  EOF
+  ```
+  > nodeSelector and nodeAffinity can be used at the same time.  
+
++ Tolerate pod to a node with taints  
+  > The node has a taint "usage: nginx-ingress-reverse".  
+
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: curl
+    name: curl
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: curl
+    template:
+      metadata:
+        labels:
+          app: curl
+      spec:
+        tolerations:
+        - key: "usage"
+          operator: "Equal"
+          value: "nginx-ingress-reverse"
+          effect: "NoSchedule"
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        terminationGracePeriodSeconds: 300
+        containers:
+          - name: curl
+            image: curlimages/curl:latest
+            imagePullPolicy: IfNotPresent
+            args:
+              - sh
+              - -c
+              - "sleep 36000"
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1000Mi
+              requests:
+                cpu: 100m
+                memory: 300Mi
+  EOF
+  ```
+  > nodeSelector and tolerations can be used at the same time.  
+
+### Start a pod for special testing purpose  
++ netutils including mtr command to do network probing  
+
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: netutils
+    name: netutils
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: netutils
+    template:
+      metadata:
+        labels:
+          app: netutils
+      spec:
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+          kubernetes.io/hostname: cn-shanghai.xxxxx
+        terminationGracePeriodSeconds: 300
+        containers:
+          - name: netutils
+            image: mikejianzhang/netutils:0.0.2
+            imagePullPolicy: IfNotPresent
+            args:
+              - sh
+              - -c
+              - "sleep 36000"
+            resources:
+              limits:
+                cpu: 300m
+                memory: 1000Mi
+              requests:
+                cpu: 100m
+                memory: 300Mi
+  EOF
+  ```  
+
++ Start a testing NFS server  
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    namespace: nfs
+    name: nfs-server
+    labels:
+      app: nfs-server
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: nfs-server
+    template:
+      metadata:
+        labels:
+          app: nfs-server
+          name: nfs-server
+      spec:
+        containers:
+          - name: nfs-server
+            image: itsthenetwork/nfs-server-alpine:12
             securityContext:
-                privileged: true
+              privileged: true
+            ports:
+              - name: nfs
+                containerPort: 2049
+              - name: mountd
+                containerPort: 20048
+              - name: rpcbind
+                containerPort: 111
+            env:
+              - name: SHARED_DIRECTORY
+                value: /nfsshare
             volumeMounts:
-            - mountPath: /var/nfs
-                name: nfsshare
+            - mountPath: /nfsshare
+              name: nfsshare
             imagePullPolicy: IfNotPresent
             resources:
-                limits:
+              limits:
                 cpu: 200m
                 memory: 512Mi
-                requests:
+              requests:
                 cpu: 100m
                 memory: 256Mi
-            command: ["/bin/sh"]
-            args: ["-c", "while true; do date >> /var/nfs/dates.txt; sleep 5; done"]
         restartPolicy: Always
         volumes:
         - name: nfsshare
-            persistentVolumeClaim:
-            claimName: nfs-client
-    ```
+          emptyDir: {}
+          # For hostPath, the client can mount but has no permission to write.
+          #hostPath:
+            # directory location on host
+          #  path: /Users/mizha53/Documents/MikeStorage/MikeNFS
+            # this field is optional
+          #  type: Directory
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: nfs-server
+    namespace: nfs
+  spec:
+    selector:
+      app: nfs-server
+    ports:
+      - name: nfs
+        port: 2049
+      - name: mountd
+        port: 20048
+      - name: rpcbind
+        port: 111
+  ```
 
-### Mount to the testing NFS server
++ Start a NFS client to connect the tesing NFS server  
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+  name: nfs-client
+  labels:
+      app: nfs-client
+  spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: "10.101.253.230"
+    path: "/"
+  mountOptions:
+    - vers=4
+  EOF
+  ---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+  namespace: nfs
+  name: nfs-client
+  labels:
+      app: nfs-client
+  spec:
+  accessModes:
+      - ReadWriteMany
+  storageClassName: ""
+  resources:
+      requests:
+      storage: 5Gi
+  selector:
+      matchLabels:
+      app: nfs-client
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+  namespace: nfs
+  name: nfs-client
+  labels:
+      app: nfs-client
+  spec:
+  replicas: 1
+  selector:
+      matchLabels:
+      app: nfs-client
+  template:
+      metadata:
+      name: nfs-client
+      labels:
+          app: nfs-client
+      spec:
+      containers:
+          - name: nfs-client
+          image: busybox
+          securityContext:
+              privileged: true
+          volumeMounts:
+          - mountPath: /var/nfs
+              name: nfsshare
+          imagePullPolicy: IfNotPresent
+          resources:
+              limits:
+              cpu: 200m
+              memory: 512Mi
+              requests:
+              cpu: 100m
+              memory: 256Mi
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do date >> /var/nfs/dates.txt; sleep 5; done"]
+      restartPolicy: Always
+      volumes:
+      - name: nfsshare
+          persistentVolumeClaim:
+          claimName: nfs-client
+  ```  
 
-+ Start a busybox pod
-+ Run mount command
-    ```bash
-    mount -v -o vers=4 nfs-server.nfs.svc.cluster.local:/ /tmp/test
-    ```
++ Mount to the testing NFS server using command mount  
+  ```bash
+  mount -v -o vers=4 nfs-server.nfs.svc.cluster.local:/ /tmp/test
+  ```
 
 ## Container runtime hierarchy
 ![containerd runtime hierarchy](../_media/k8s/container-runtime-hierarchy.jpg) 
