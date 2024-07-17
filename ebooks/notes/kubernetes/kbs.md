@@ -416,6 +416,7 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
         port: 20048
       - name: rpcbind
         port: 111
+  EOF
   ```
 
 + Start a NFS client to connect the tesing NFS server  
@@ -437,7 +438,6 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
     path: "/"
   mountOptions:
     - vers=4
-  EOF
   ---
   apiVersion: v1
   kind: PersistentVolumeClaim
@@ -498,6 +498,7 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
       - name: nfsshare
           persistentVolumeClaim:
           claimName: nfs-client
+  EOF
   ```  
 
 + Mount to the testing NFS server using command mount  
