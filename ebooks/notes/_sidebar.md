@@ -1,4 +1,6 @@
 <!-- docs/_sidebar.md -->
+- AI
+    - [Jupyter](/ai/jupyter.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
 - Project Management
