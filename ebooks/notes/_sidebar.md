@@ -1,5 +1,6 @@
 <!-- docs/_sidebar.md -->
 - AI
+    - [Generic](/ai/generic.md)
     - [Jupyter](/ai/jupyter.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
@@ -67,6 +68,7 @@
         - [Error handling and Go](/coding/go/go_error.md)
         - [Go OpenTelemetry](/coding/go/go_opentelemetry.md)
     - Python
+        - [Installation](/coding/python/install.md)
         - [Knowledge Base](/coding/python/kbs.md)
         - [Issue and Solution](/coding/python/issues.md)
     - Shell
