@@ -9,3 +9,10 @@
 
 + Understanding Deep Learning  
     [Understanding Deep Learning](https://udlbook.github.io/udlbook/)  
+
+### Prompt Engineering  
++ Prompt Engineering Guide  
+    [Prompt Engineering Guide](https://www.promptingguide.ai/)  
+
++ 一文带你速通RAG、知识库和LLM  
+    [Retrieval Augmented Generation，RAG](https://zhuanlan.zhihu.com/p/700166877)  
