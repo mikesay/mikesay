@@ -687,8 +687,8 @@ post:
 
   donate:
     enable: false
-    alipay: /img/pay_dzw3.jpg
-    wechatpay: /img/pay_dzw4.jpg
+    alipay: /img/pay_dzw5.jpg
+    wechatpay: /img/pay_dzw6.jpg
     donate_message: "原创技术分享，智慧愿成!"
 
   # 文章图片可点击放大

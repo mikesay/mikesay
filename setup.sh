@@ -25,6 +25,8 @@ cp -f themes/fluid-mikesay/source/img/pay_dzw1.jpg node_modules/hexo-theme-fluid
 cp -f themes/fluid-mikesay/source/img/pay_dzw2.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/pay_dzw3.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/pay_dzw4.jpg node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-mikesay/source/img/pay_dzw5.jpg node_modules/hexo-theme-fluid/source/img/
+cp -f themes/fluid-mikesay/source/img/pay_dzw6.jpg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/gregg.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/cloudnative.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/oam.png node_modules/hexo-theme-fluid/source/img/
