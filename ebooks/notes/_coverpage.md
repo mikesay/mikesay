@@ -2,6 +2,6 @@
 
 ![logo](/_media/site.png)
 
-# 云斋的笔记
+# 希言的日志
 Cloud, DevOps
-- 作者：云斋
+- 作者：希言
