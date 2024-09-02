@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 希言的日志
-subtitle: 希言自然，
+title: 守希的随笔
+subtitle: 守希的随笔，
 description:
 keywords: DevOps, Infrastructure As Code(IAC), CI/CD, Operation, Monitor, Python
-author: Mike
+author: 守希
 language: zh-CN
 timezone: Asia/Shanghai
 

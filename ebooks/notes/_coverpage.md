@@ -2,6 +2,6 @@
 
 ![logo](/_media/site.png)
 
-# 希言的日志
+# 守希的随笔
 Cloud, DevOps
-- 作者：希言
+- 作者：守希
