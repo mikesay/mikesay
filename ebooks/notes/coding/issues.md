@@ -1,2 +1,0 @@
-## Common issue
-Awesome programming.

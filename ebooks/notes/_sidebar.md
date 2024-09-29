@@ -59,23 +59,20 @@
     - [Nginx](/traffic_management/nginx.md)
 - Coding
     - [OpenSource System](/coding/opensource_system.md)
-    - [Knowledge Base](/coding/kbs.md)
-    - [Issue and Solution](/coding/issues.md)
+    - [Front End](/coding/front_end.md)
     - Go
-        - [Knowledge Base](/coding/go/kbs.md)
-        - [Issue and Solution](/coding/go/issues.md)
+        - [Go Basic](/coding/go/go_basic.md)
+        - [Go Web](/coding/go/go_web.md)
         - [Go Concurrency Patterns: Pipelines and cancellation](/coding/go/go_cc1.md)
         - [Go Concurrency Patterns: Context](/coding/go/go_cc2.md)
         - [Error handling and Go](/coding/go/go_error.md)
         - [Go OpenTelemetry](/coding/go/go_opentelemetry.md)
-    - Python
-        - [Installation](/coding/python/install.md)
-        - [Knowledge Base](/coding/python/kbs.md)
-        - [Issue and Solution](/coding/python/issues.md)
-    - Shell
-        - [Knowledge Base](/coding/shell/kbs.md)
     - Java
-        - [Knowledge Base](/coding/java/kbs.md)
+        - [Java Basic](/coding/java/java_basic.md)
+    - Python
+        - [Python Basic](/coding/python/python_basic.md)
+    - Shell
+        - [Shell Basic](/coding/shell/shell_basic.md)
 - Iac
     - Terraform
         - [Terraform Base](/iac/terraform/kbs.md)

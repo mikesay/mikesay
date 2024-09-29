@@ -1,7 +1,7 @@
-# Python Installation
-
-## Mac
-### Using brew
+# Python Basic
+## Python Installation
+### On Mac
+#### Using brew
 + Search latest python  
     ```bash
     brew search python
@@ -60,4 +60,35 @@
 + Check python paths  
     ```bash
     python -m site
+    ```  
+
+## Python Knowledge Points
++ Cross platform code to support getting home directory  
+    ```sh
+    from os.path import expanduser
+    home = expanduser(os.path.join("~", "myarchive")
+    ```  
+
++ Python clousure  
+    Inner method can read-access variable of outter method, but can't write-access it. If you want to write-access, you have to wrap the outter variable in a mutalbe object.  
+
++ Python global variable  
+    You have to use keyward global in your local scope to state that you are writing to global variable instead of local variable.  
+
+
+## Python Issue & Solution
++ SSLError: [Errno 8] _ssl.c:504: EOF occurred in violation of protocol  
+    > There was a problem confirming the ssl certificate: [SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version
+
+    **Fix in Max OSX**  
+    ```sh
+    brew install libffi
+    curl https://bootstrap.pypa.io/get-pip.py | python
+    pip install -U requests[security]
+    ```  
+
+    **Fix in Linux**  
+    ```sh
+    sudo apt-get install libffi-dev
+    sudo pip install -U requests[security]
     ```  
