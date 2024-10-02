@@ -101,17 +101,18 @@ CentOS 7自带的Git非常旧，还是1.x的版本，执行```rpm -qa | grep git
 
 <div class="justified-gallery">
 
-![](1.png)
-![](2.png)
-![](3.png)
-![](4.png)
-![](5.png)
-![](6.png)
-![](7.png)
-![](8.png)
+![1](1.png)
+![2](2.png)
+![3](3.png)
+![4](4.png)
+![5](5.png)
+![6](6.png)
+![7](7.png)
+![8](8.png)
 
-</div>
-
+</div>  
+  
+  
 > 尽量选择红色框里的选项，这样能最大限度地用Linux的方式使用Git命令。
 
 # 配置Git
