@@ -4,7 +4,6 @@ toc: true
 date: 2021-10-10 18:23:20
 tags:
   - Kubernetes
-  - K8s
   - Kind
 category_bar: true
 categories:

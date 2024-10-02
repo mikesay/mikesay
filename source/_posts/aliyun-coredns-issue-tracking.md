@@ -2,14 +2,11 @@
 title: 记一次阿里云Kubernetes集群内部服务域名解析不稳定的排查
 toc: true
 tags:
-  - AliCloud
   - Aliyun
-  - ACK
-  - Kubernetes
-  - K8s
+  - Kubernetess
 category_bar: true
 categories:
-  - ["Kubernetes"]
+  - ["Aliyun"]
 order: 3
 date: 2021-09-06 09:28:00
 ---
@@ -45,7 +42,7 @@ for i in {1..100};nslookup <service name>.<namespace>.svc.cluster.local;done
 + 系统组件CoreDNS目前有两个Pod，分别运行在两个工作节点上
 
 ## 检查前的准备
-分别在CoreDNS Pods所在的两个工作节点上各启动一个测试Pod：Pod(Busybox)，Service(Nginx) + Pod(Nginx)。
+分别在CoreDNS Pods所在的两个工作节点上各启动一个测试Pod：Pod(Busybox)，Service(Nginx) + Pod(Nginx)。  
 
 > 将测试Pods分散在不同的工作节点上，并调度到CoreDNS Pods所在的工作节点中，这样既能测试同一节点上的CoreDNS访问，也能测试跨节点的CoreDNS访问。
 
@@ -80,7 +77,8 @@ spec:
             - sh
             - -c
             - "sleep 36000"
-```
+```  
+  
 > 通过nodeSelector绑定到ECS-1主机（10.0.1.121）上。
 
 + 在ECS-2主机上启动Service(Nginx) + Pod(Nginx)

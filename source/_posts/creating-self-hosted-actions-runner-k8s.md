@@ -67,10 +67,8 @@ GitHub的官网只提供了在虚拟机中[部署自托管的GitHub Action Runne
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 helm upgrade -i cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version ${CERT_MANAGER_VERSION} --set installCRDs=true
-```
-{% note info %}
-Actions Runner Controller中的admission webhook需要使用cert-manager创建一个自签名的ssl证书。
-{% endnote %}
+```  
+> Actions Runner Controller中的admission webhook需要使用cert-manager创建一个自签名的ssl证书。
 
 ## Helm方式安装Actions Runner Controller
 + 创建命名空间
@@ -142,14 +140,12 @@ Actions Runner Controller中的admission webhook需要使用cert-manager创建�
 
   imagePullSecrets:
     - name: ${DOCKER_PULL_SECRET}
-  ```
-  {% note info %}
-  + .image.repository是actions-runner-controller的镜像地址  
-  + .image.actionsRunnerRepositoryAndTag是连接GitHub的Action Runner镜像地址  
-  + .image.dindSidecarRepositoryAndTag是docker server的镜像地址（Action Runner是使用的dind的方式构建应用镜像的，所以一个Action Runner Pod会包含两个容器，一个是runner服务本身，另一个是docker服务，runner通过环境变量DOCKER_HOST引用docker服务。） 
-  + image.actionsRunnerImagePullSecrets是拉取Action Runnder镜像所需要的secret  
-  + .image.imagePullSecrets是拉取actions-runner-controller的镜像地址  
-  {% endnote %}
+  ```  
+  > + .image.repository是actions-runner-controller的镜像地址  
+  > + .image.actionsRunnerRepositoryAndTag是连接GitHub的Action Runner镜像地址  
+  > + .image.dindSidecarRepositoryAndTag是docker server的镜像地址（Action Runner是使用的dind的方式构建应用镜像的，所以一个Action Runner Pod会包含两个容器，一个是runner服务本身，另一个是docker服务，runner通过环境变量DOCKER_HOST引用docker服务。） 
+  > + image.actionsRunnerImagePullSecrets是拉取Action Runnder镜像所需要的secret  
+  > + .image.imagePullSecrets是拉取actions-runner-controller的镜像地址  
 
 3. 用定制的values.yaml文件安装actions-runner-controller
   ```bash
@@ -195,10 +191,9 @@ spec:
         - mikesay
         - mikesay-spikes
 EOF
-```
-{% note info %}
-通过volumes和volumeMounts可以将docker镜像拉取的secret配置进Runner容器，这样Runner在执行Job时也可以从私有镜像仓库拉取和上传镜像了。如果不需要，也可以不添加。
-{% endnote %}
+```  
+
+> 通过volumes和volumeMounts可以将docker镜像拉取的secret配置进Runner容器，这样Runner在执行Job时也可以从私有镜像仓库拉取和上传镜像了。如果不需要，也可以不添加。
 
 ## 创建orgnization级别的Runner
 ```bash
@@ -227,10 +222,8 @@ spec:
         - mikesay
       env: []
 EOF
-```
-{% note info %}
-Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用缺省的default组。
-{% endnote %}
+```  
+> Runner Group用来限制对应GitHub组织里的哪些代码仓库和工作流能够使用GitHub Runners。只有升级到GitHub企业版，才能创建自定义的group，否则只能用缺省的default组。
 
 ## 使用RunnerSet创建repository级别的Runner
 ```bash

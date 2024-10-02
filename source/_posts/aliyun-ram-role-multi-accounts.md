@@ -2,9 +2,11 @@
 title: 阿里云通过RAM角色管理多云账号下的资源
 toc: true
 tags:
-  - AliCloud
   - Aliyun
   - RAM
+category_bar: true
+categories:
+  - ["Aliyun", "RAM"]
 date: 2021-01-05 22:45:00
 ---
 
@@ -114,10 +116,12 @@ RAM角色是一种虚拟用户，与实体用户（云账号、RAM用户和云�
 + 云团队在自己的云账号里为RAM用户授予角色扮演权限"AliyunSTSAssumeRoleAccess"。
 
 + 云团队的某个RAM用户首先登录云团队的账号，然后通过切换角色并输入业务部门云账号或者别名，以及对应的角色"CloudAdmin"就能切换进业务部门云账号里。
-  {% gi 2 2-0 %}
+  <div class="justified-gallery">
+
   ![](4.png)
   ![输入业务部门云账号ID或别名](5.png)
-  {% endgi %}
+
+  </div>
 
 + 完成管理任务后点击“返回登录身份”退回到自己的账号。
   ![](8.png)
