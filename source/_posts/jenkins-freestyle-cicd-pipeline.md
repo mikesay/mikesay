@@ -1,5 +1,6 @@
 ---
 title: 基于Jenkins Freestyle Job构建CI/CD流水线
+toc: true
 tags:
   - DevOps
   - CI/CD

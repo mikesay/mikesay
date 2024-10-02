@@ -1,5 +1,6 @@
 ---
 title: 浅析SonarQube插件的运行原理
+toc: true
 tags:
   - SonarQube
   - Code Quality

@@ -1,5 +1,6 @@
 ---
 title: Jenkins构建GitLab合并请求(Merge Request)
+toc: true
 tags:
   - DevOps
   - CI/CD

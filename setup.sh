@@ -35,3 +35,7 @@ cp -f themes/fluid-mikesay/source/img/opa.png node_modules/hexo-theme-fluid/sour
 cp -f themes/fluid-mikesay/source/img/coffee.jpeg node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/yuan1.png node_modules/hexo-theme-fluid/source/img/
 cp -f themes/fluid-mikesay/source/img/yuan2.png node_modules/hexo-theme-fluid/source/img/
+
+# Customize theme fluid
+echo "Customize theme fluid"
+cp -f themes/icarus-mikesay/source/img/*.* node_modules/hexo-theme-icarus/source/img/

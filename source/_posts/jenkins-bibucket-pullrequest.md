@@ -1,5 +1,6 @@
 ---
 title: Jenkins构建Bitbucket合并请求(Pull Request)
+toc: true
 tags:
   - DevOps
   - CI/CD
