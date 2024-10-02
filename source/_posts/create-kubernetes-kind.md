@@ -1,5 +1,6 @@
 ---
 title: Kind创建本地Kubernetes集群
+toc: true
 date: 2021-10-10 18:23:20
 tags:
   - Kubernetes

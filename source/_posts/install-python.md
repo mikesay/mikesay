@@ -1,5 +1,6 @@
 ---
 title: 安装Python并搭建Python的虚拟开发环境
+toc: true
 tags:
   - Python
 date: 2020-01-31 21:48:00

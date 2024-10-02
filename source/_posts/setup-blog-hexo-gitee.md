@@ -1,5 +1,6 @@
 ---
 title: Hexo+Gitee(码云)搭建静态博客网站
+toc: true
 date: 2018-08-17 21:06:58
 comments: true
 tags:

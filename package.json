@@ -22,10 +22,12 @@
     "hexo-generator-searchdb": "^1.4.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-inferno": "^1.0.2",
     "hexo-renderer-marked": "^v6.0.0",
     "hexo-renderer-stylus": "^2.1.0",
     "hexo-server": "^3.0.0",
     "hexo-symbols-count-time": "^0.7.1",
-    "hexo-theme-fluid": "1.9.4"
+    "hexo-theme-fluid": "1.9.4",
+    "hexo-theme-icarus": "^6.1.0"
   }
 }

@@ -1,5 +1,6 @@
 ---
 title: Terraform如何调用Ansible配置虚拟机资源
+toc: true
 tags:
   - DevOps
   - Infrastructure As Code

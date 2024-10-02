@@ -1,5 +1,6 @@
 ---
 title: Minikube创建本地Kubernetes集群
+toc: true
 tags:
   - Kubernetes
   - K8s

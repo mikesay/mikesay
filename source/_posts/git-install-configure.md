@@ -1,5 +1,6 @@
 ---
 title: Git安装与配置
+toc: true
 tags:
   - Git
 date: 2020-12-31 08:22:00
