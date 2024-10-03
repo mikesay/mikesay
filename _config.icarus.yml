@@ -130,6 +130,9 @@ footer:
         Download on GitHub:
             icon: fab fa-github
             url: https://github.com/ppoffice/hexo-theme-icarus
+        Awesome Hexo Themes:
+            icon: fa fa-mask
+            url: https://github.com/FoxerLee/awesome-hexo-themes
 # Article related configurations
 article:
     # Code highlight settings
@@ -144,7 +147,7 @@ article:
     # Whether to show estimated article reading time
     readtime: true
     # Whether to show updated time. For "auto", shows article update time only when page.updated is set and it is different from page.date
-    update_time: true
+    update_time: false
     # Article licensing block
     licenses:
         Creative Commons:
@@ -238,12 +241,12 @@ widgets:
         # Email address for the Gravatar
         gravatar: 
         # URL or path for the follow button
-        follow_link: https://github.com/ppoffice
+        follow_link: https://www.mikesay.com/
         # Links to be shown on the bottom of the profile widget
         social_links: 
             Github:
                 icon: fab fa-github
-                url: https://github.com/ppoffice
+                url: https://github.com/mikesay
             Facebook:
                 icon: fab fa-facebook
                 url: https://facebook.com
