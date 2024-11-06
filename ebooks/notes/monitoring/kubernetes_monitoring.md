@@ -949,3 +949,24 @@ This is the suggested way for containers to ouput the log. Deploy daemonset log 
 
 + Introduction to Kubernetes Monitoring Architecture  
     https://medium.com/kubernetes-tutorials/introduction-to-kubernetes-monitoring-architecture-98a265e0917d  
+
+
+# OpenTelemetry
+
+## Materials
++ A practical guide to data collection with OpenTelemetry and Prometheus  
+  https://grafana.com/blog/2023/07/20/a-practical-guide-to-data-collection-with-opentelemetry-and-prometheus/#2-copy-common-resource-attributes  
+
+  + Copy common resource attributes  
+    Copy the most common resource attributes into metric labels. You can do this through the transform processor:
+    ```yaml
+    processor:
+      transform:
+        metric_statements:
+          - context: datapoint
+              statements:
+                - set(attributes["k8s_namespace_name"], resource.attributes["k8s_namespace_name"])
+                - set(attributes["k8s_container_name"], resource.attributes["k8s.container.name"])
+                - set(attributes["k8s_pod_name"], resource.attributes["k8s.pod.name"])
+                - set(attributes["k8s_cluster_name"], resource.attributes["k8s.cluster.name"])
+    ```
