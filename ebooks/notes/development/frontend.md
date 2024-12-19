@@ -1,36 +1,5 @@
 # Frontend Development
 
-## Frontend development materials
-+ Modern Front End: The tools and build process explained  
-    https://medium.com/@trevorpoppen/modern-front-end-the-tools-and-build-process-explained-36641b5c1a53  
-
-+ Learn web development technology  
-    https://developer.mozilla.org/en-US/docs/Learn  
-
-+ Typescript  
-    https://www.typescriptlang.org/
-
-## vscode
-+ Debug server side  
-    https://code.visualstudio.com/docs/languages/javascript#_debug-server-side   
-    https://code.visualstudio.com/docs/nodejs/nodejs-tutorial#_debug-your-express-app  
-    ```js
-    {
-        // Use IntelliSense to learn about possible attributes.
-        // Hover to view descriptions of existing attributes.
-        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Launch Program",
-                "program": "jsclass.js"
-            }
-        ]
-    }
-    ```
-
 ## React
 + Create React App  
     https://github.com/facebook/create-react-app  
@@ -64,9 +33,8 @@
     https://github.com/zuiidea/antd-admin  
 
 
-## Vaue
-+ 若依
-    http://ruoyi.vip/  
+## Vue
+TBD  
 
 ## Angular
     Angular itself is a full Application Framework.  
@@ -86,3 +54,34 @@
 
 + ng-ant-admin  
     https://github.com/robinv8/ng-ant-admin  
+
+## Frontend development materials
++ Modern Front End: The tools and build process explained  
+    https://medium.com/@trevorpoppen/modern-front-end-the-tools-and-build-process-explained-36641b5c1a53  
+
++ Learn web development technology  
+    https://developer.mozilla.org/en-US/docs/Learn  
+
++ Typescript  
+    https://www.typescriptlang.org/
+
+## vscode
++ Debug server side  
+    https://code.visualstudio.com/docs/languages/javascript#_debug-server-side   
+    https://code.visualstudio.com/docs/nodejs/nodejs-tutorial#_debug-your-express-app  
+    ```js
+    {
+        // Use IntelliSense to learn about possible attributes.
+        // Hover to view descriptions of existing attributes.
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "jsclass.js"
+            }
+        ]
+    }
+    ```
