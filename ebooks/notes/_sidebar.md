@@ -61,18 +61,18 @@
     - [OpenSource System](/development/opensource.md)
     - [Front End](/development/frontend.md)
     - Go
-        - [Go Basic](/coding/go/go_basic.md)
-        - [Go Web](/coding/go/go_web.md)
-        - [Go Concurrency Patterns: Pipelines and cancellation](/coding/go/go_cc1.md)
-        - [Go Concurrency Patterns: Context](/coding/go/go_cc2.md)
-        - [Error handling and Go](/coding/go/go_error.md)
-        - [Go OpenTelemetry](/coding/go/go_opentelemetry.md)
+        - [Go Basic](/development/go/go_basic.md)
+        - [Go Web](/development/go/go_web.md)
+        - [Go Concurrency Patterns: Pipelines and cancellation](/development/go/go_cc1.md)
+        - [Go Concurrency Patterns: Context](/development/go/go_cc2.md)
+        - [Error handling and Go](/development/go/go_error.md)
+        - [Go OpenTelemetry](/development/go/go_opentelemetry.md)
     - Java
-        - [Java Basic](/coding/java/java_basic.md)
+        - [Java Basic](/development/java/java_basic.md)
     - Python
-        - [Python Basic](/coding/python/python_basic.md)
+        - [Python Basic](/development/python/python_basic.md)
     - Shell
-        - [Shell Basic](/coding/shell/shell_basic.md)
+        - [Shell Basic](/development/shell/shell_basic.md)
 - Iac
     - Terraform
         - [Terraform Base](/iac/terraform/kbs.md)
