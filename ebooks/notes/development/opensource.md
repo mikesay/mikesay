@@ -86,3 +86,23 @@ https://github.com/flipped-aurora/gin-vue-admin
 从2.4.5（含）版本开始，个人自用项目，公司内部自用项目【不接入公网】不受影响，外包项目，或公司对外开放后台的项目，需保留页面最下方的版权声明或联系作者授权。如果项目产生商业行为，则必须进行授权。  
 前端：用基于vue3的Element-Plus构建基础页面 。  
 后端：用Gin快速搭建基础API，Gin是一个go语言编写的Web框架。  
+
+### React admin template  
++ Ant Design Pro  
+    Based on Umi.js and Ant Design React UI library.  
+    https://pro.ant.design/docs/overview   
+
++ AntD Admin  
+    An excellent front-end solution for enterprise applications built upon Ant Design and UmiJS.  
+    https://github.com/zuiidea/antd-admin  
+
+### Angular admin template
++ ng-antd-admin  
+    Based on Angular and Ant Design Angular UI library, which refer to the "Ant Deesign Pro"   
+    https://github.com/llkui/ng-antd-admin  
+
+    > Please note that, need to add NODE_OPTIONS environment variable to start the server, because new node compatible issue with old version(https://www.raulmelo.me/en/til/how-to-fix-digital-envelope-routines-unsupported-error-in-node), because webpack is using old version of node:   
+    > NODE_OPTIONS=--openssl-legacy-provider ng serve --open  
+
++ ng-ant-admin  
+    https://github.com/robinv8/ng-ant-admin  

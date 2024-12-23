@@ -1,5 +1,9 @@
 # Frontend Development
 
+## Vue
++ Vue Instroduction  
+    https://vuejs.org/guide/introduction.html  
+
 ## React
 + Create React App  
     https://github.com/facebook/create-react-app  
@@ -23,19 +27,6 @@
     https://ant.design/docs/spec/introduce  
     https://ant.design/docs/react/introduce  
 
-### React admin template  
-+ Ant Design Pro  
-    Based on Umi.js and Ant Design React UI library.  
-    https://pro.ant.design/docs/overview   
-
-+ AntD Admin  
-    An excellent front-end solution for enterprise applications built upon Ant Design and UmiJS.  
-    https://github.com/zuiidea/antd-admin  
-
-
-## Vue
-TBD  
-
 ## Angular
     Angular itself is a full Application Framework.  
 
@@ -43,17 +34,6 @@ TBD
 + Ant Design Angular  
     An enterprise-class Angular UI component library based on Ant Design, all components are open source and free to use under MIT license.  
     https://ng.ant.design/docs/introduce/en(https://github.com/NG-ZORRO/ng-zorro-antd)  
-
-### Angular admin template
-+ ng-antd-admin  
-    Based on Angular and Ant Design Angular UI library, which refer to the "Ant Deesign Pro"   
-    https://github.com/llkui/ng-antd-admin  
-
-    > Please note that, need to add NODE_OPTIONS environment variable to start the server, because new node compatible issue with old version(https://www.raulmelo.me/en/til/how-to-fix-digital-envelope-routines-unsupported-error-in-node), because webpack is using old version of node:   
-    > NODE_OPTIONS=--openssl-legacy-provider ng serve --open  
-
-+ ng-ant-admin  
-    https://github.com/robinv8/ng-ant-admin  
 
 ## Frontend development materials
 + Modern Front End: The tools and build process explained  

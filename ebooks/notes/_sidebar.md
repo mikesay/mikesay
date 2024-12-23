@@ -12,6 +12,7 @@
     - [Issue and Solution](/authentication/issues.md)
 - Networking
     - [Knowledge Base](/networking/kbs.md)
+    - [CDN](/networking/cdn.md)
 - Cloud
     - GCP
         - [Knowledge Base](/cloud/gcp/kbs.md)
