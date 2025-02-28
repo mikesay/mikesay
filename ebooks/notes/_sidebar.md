@@ -2,6 +2,7 @@
 - AI
     - [Generic](/ai/generic.md)
     - [Jupyter](/ai/jupyter.md)
+    - [Learn From AI](/ai/learn_from_ai.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
 - Project Management
@@ -13,6 +14,7 @@
 - Networking
     - [Knowledge Base](/networking/kbs.md)
     - [CDN](/networking/cdn.md)
+    - [Tools](/networking/tools.md)
 - Cloud
     - GCP
         - [Knowledge Base](/cloud/gcp/kbs.md)

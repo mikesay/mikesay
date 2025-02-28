@@ -1,5 +1,9 @@
 # CDN
 
+## Cloudflare
++ Upgrading the Cloudflare China Network: better performance and security through product innovation and partnership  
+    https://blog.cloudflare.com/upgrading-the-cloudflare-china-network/  
+
 ## Materials
 + Top CDN Providers in China to Accelerate Your Website Speed  
     https://www.chinafy.com/blog/top-cdn-providers-in-china-to-accelerate-your-website-speed  
