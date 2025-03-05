@@ -2,7 +2,8 @@
 - AI
     - [Generic](/ai/generic.md)
     - [Jupyter](/ai/jupyter.md)
-    - [Learn From AI](/ai/learn_from_ai.md)
+    - [LLM](/ai/llm.md)
+    - [Expert System](/ai/expert_system.md)
 - Tools
     - [Useful tools](/tools/kbs.md)
 - Project Management
@@ -27,6 +28,8 @@
         - [Knowledge Base](/cloud/kb.md)
     - Cloud Native
         - [Cloud Native](/cloud/cloud_native.md)
+    - FinOps
+        - [FinOps](/cloud/finops/finops.md)
 - Kubernetes
     - [Knowledge Base](/kubernetes/kbs.md)
     - [Issue and Solution](/kubernetes/issues.md)

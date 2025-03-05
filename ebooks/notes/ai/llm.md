@@ -1,6 +1,6 @@
-# Learn from LLM
+# LLM
 
-## Generic
+## From AI
 + 大语言模型为什么要推理引擎  
 
     大语言模型（LLM）需要推理引擎的原因在于，推理引擎是将模型的能力与实际应用场景连接起来的关键组件。推理引擎不仅负责执行模型的预测和生成任务，还为模型提供了一个高效、灵活、可控的运行环境。以下是详细的原因和背景：1. 推理引擎的核心作用(1) 模型执行的桥梁
@@ -102,9 +102,27 @@
     总结上述提到的各种架构并非完全独立存在，很多现代 LLM 都会融合多种技术的优点以提升性能。例如，最新的预训练模型可能会同时包含 Transformer 的核心组件以及一些专门针对特定任务优化的设计元素。如果你对某个具体的架构感兴趣或者想要了解更多细节，请随时提问！内容由AI生成
 
 
-## LLM Inference Engine
+## LLM Inference Engine and Service
 + llama.cpp  
     https://github.com/ggml-org/llama.cpp  
 
 + llama-cpp-python  
     https://github.com/abetlen/llama-cpp-python  
+
+
+### Prompt Engineering  
++ Prompt Engineering Guide  
+    [Prompt Engineering Guide](https://www.promptingguide.ai/)  
+
++ 一文带你速通RAG、知识库和LLM  
+    [Retrieval Augmented Generation，RAG](https://zhuanlan.zhihu.com/p/700166877)  
+
+## Reference
++ Kaggle  
+    [Kaggle](https://www.kaggle.com/) is the place to learn data science and build a portfolio.  
+
++ GPUStack  
+    [GPUStack](https://docs.gpustack.ai/overview/). GPUStack is an open-source GPU cluster manager for running large language models(LLMs).  
+
++ Understanding Deep Learning  
+    [Understanding Deep Learning](https://udlbook.github.io/udlbook/)  
