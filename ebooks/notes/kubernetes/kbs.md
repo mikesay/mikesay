@@ -323,8 +323,9 @@ kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name,KIND:.
         dnsPolicy: ClusterFirst
         nodeSelector:
           kubernetes.io/os: linux
-          kubernetes.io/hostname: cn-shanghai.xxxxx
         terminationGracePeriodSeconds: 300
+        imagePullSecrets:
+          - name: docker-pull-secret
         containers:
           - name: netutils
             image: mikejianzhang/netutils:0.0.2

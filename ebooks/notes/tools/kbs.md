@@ -23,3 +23,4 @@
 | ```HOMEBREW_FORCE_BREWED_CURL=1 &&  brew install hashicorp/tap/vault```  | Use GNU curl in brew command, otherwize may met error "curl: (56) LibreSSL SSL_read: "<br/> SSL_ERROR_SYSCALL, errno 54 |
 | ```find . -name "xxxx.yaml" -exec yq '(.dependencies[] \| select(.xxxx == "xxxx")).xxxx = "replaced value"' {} -i \;```  | Edit one filed of yaml files in place in batches. |
 | ```jq '(..\|select(has("datasource"))?) += {datasource: "${datasource}"}' CS_Cost_Application.json```  | jq command searches all "datasource" key and replace their value. |
+| ```curl --resolve accounts.google.com:443:64.233.189.84 https://accounts.google.com/.well-known/openid-configuration``` | Test url by ignoring DNS parsing. |
