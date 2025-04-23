@@ -50,6 +50,8 @@
     - Components
         - [Kube Proxy](/kubernetes/components/kube-proxy.md)
         - [Kube Scheduler](/kubernetes/components/kube-scheduler.md)
+        - Nginx Ingress Controller
+            - [Debug the code](/kubernetes/components/nginx-ingress-controller/debug-the-code.md)
     - Kustomize
         - [Knowledge Base](/kubernetes/kustomize/kbs.md)
     - [GCP GKE](/kubernetes/gcp_gke.md)
