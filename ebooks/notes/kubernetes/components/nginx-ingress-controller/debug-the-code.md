@@ -108,7 +108,7 @@ This guide provides step-by-step instructions for debugging the Nginx Ingress Co
 3. Test the Webhook  
     Send a test request to trigger the webhook from root folder:  
     ```bash
-    curl -d @test/adminssion-review-request.json -k -v -X POST https://localhost:8888/networking/v1/ingresse
+    curl -d @test/adminssion-review-request.json -k -v -X POST https://localhost:8888/networking/v1/ingresses
     ```  
 
     > 
