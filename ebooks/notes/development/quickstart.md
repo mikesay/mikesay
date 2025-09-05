@@ -31,3 +31,23 @@
 
 + Better way to Dockerize a Jar  
     https://medium.com/@manishbansal8843/perfect-way-to-dockerize-a-jar-23496385272d  
+
+## Mobile Development
+### React Native
+#### Bundler  
+    https://bundler.io/  
+
+#### Rubygems  
+    https://rubygems.org/  
+
+#### Cocoapods  `
++ Getting Started  
+    https://guides.cocoapods.org/using/getting-started.html  
+
++ Using CocoaPods  
+    https://guides.cocoapods.org/using/using-cocoapods.html  
+
++ Using a Gemfile(RubyGems + Bundler)   
+    https://guides.cocoapods.org/using/a-gemfile.html 
+
+

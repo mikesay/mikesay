@@ -8,6 +8,9 @@
 | https://8gwifi.org/jwkconvertfunctions.jsp#google_vignette   | JWK to/from PEM Converter online.                                           |
 | http://myip.ipip.net                                         | Check current IP. ```curl http://myip.ipip.net```                           |
 | https://ipinfo.io                                            | Check IP information like location. ```curl https://ipinfo.io/$IP```        |
+| https://dnsviz.net/                                          | DNSViz is a tool for visualizing the status of a DNS zone.                  |
+| https://currentmillis.com/                                   | Datetime & Unix timestamp convertion.                                       |
+| https://jubianchi.github.io/semver-check/#/                  | Semver check.                                                               |
 
   
 ## Useful commands or scripts
@@ -24,3 +27,6 @@
 | ```find . -name "xxxx.yaml" -exec yq '(.dependencies[] \| select(.xxxx == "xxxx")).xxxx = "replaced value"' {} -i \;```  | Edit one filed of yaml files in place in batches. |
 | ```jq '(..\|select(has("datasource"))?) += {datasource: "${datasource}"}' CS_Cost_Application.json```  | jq command searches all "datasource" key and replace their value. |
 | ```curl --resolve accounts.google.com:443:64.233.189.84 https://accounts.google.com/.well-known/openid-configuration``` | Test url by ignoring DNS parsing. |
+| ```cat xxxx.txt``` \| pbcopy | copy file content to system copy&paste board | |
+| ```docker images \| grep nginx/nginx \| awk '{print $1":"$2}'``` | xargs -I{} docker rmi {}| awk and xargs usage | |
+| ```curl --location 'https://grafana/api/users?perpage=1000&page=1' --header 'Authorization: Basic xxxx' \| jq 'map(select((.lastSeenAtAge \| test("^([3-9]\|10\|11) months\|.*years\|.*year")) and .login != "admin") \| .)'``` | advanced usage of jq | |
