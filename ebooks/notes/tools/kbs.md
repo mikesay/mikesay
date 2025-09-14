@@ -30,3 +30,4 @@
 | ```cat xxxx.txt``` \| pbcopy | copy file content to system copy&paste board | |
 | ```docker images \| grep nginx/nginx \| awk '{print $1":"$2}'``` | xargs -I{} docker rmi {}| awk and xargs usage | |
 | ```curl --location 'https://grafana/api/users?perpage=1000&page=1' --header 'Authorization: Basic xxxx' \| jq 'map(select((.lastSeenAtAge \| test("^([3-9]\|10\|11) months\|.*years\|.*year")) and .login != "admin") \| .)'``` | advanced usage of jq | |
+| ```find . -type f -print0 \| xargs -0 dos2unix``` | Change all files to unix format in one folder recusively |
