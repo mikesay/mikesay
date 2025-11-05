@@ -67,6 +67,7 @@
     - [logs_monitoring](/monitoring/logs_monitoring.md)
     - [prometheus_stack](/monitoring/prometheus_stack.md)
     - [grafana_stack](/monitoring/grafana_stack.md)
+    - [Adhoc](/monitoring/adhoc.md)
 - Traffic Management
     - [Istio](/traffic_management/istio.md)
     - [Nginx](/traffic_management/nginx.md)
