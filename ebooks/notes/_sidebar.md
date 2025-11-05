@@ -61,6 +61,8 @@
     - [Aliyun ACK](/kubernetes/aliyun_ack.md)
 - Monitoring
     - [Principle](/monitoring/principle.md)
+    - [OpenTelemetry](/monitoring/opentelemetry.md)
+    - [Application Monitoring](/monitoring/application_monitoring.md)
     - [kubernetes_monitoring](/monitoring/kubernetes_monitoring.md)
     - [logs_monitoring](/monitoring/logs_monitoring.md)
     - [prometheus_stack](/monitoring/prometheus_stack.md)
