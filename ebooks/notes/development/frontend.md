@@ -27,6 +27,16 @@
     https://ant.design/docs/spec/introduce  
     https://ant.design/docs/react/introduce  
 
+### Cross platform  
++ Taro  
+    https://docs.taro.zone/docs/  
+
+### Online Materials
++ Learn React
+    https://scrimba.com/learn-react-c0e  
++ Create React App  
+    https://create-react-app.dev/  
+
 ## Angular
     Angular itself is a full Application Framework.  
 
