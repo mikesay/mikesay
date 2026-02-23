@@ -75,6 +75,7 @@
     - [OpenSource System](/development/opensource.md)
     - [Front End](/development/frontend.md)
     - [Quick Start](/development/quickstart.md)
+    - [Quick Setup](/development/quicksetup.md)
     - Go
         - [Go Basic](/development/go/go_basic.md)
         - [Go Web](/development/go/go_web.md)
