@@ -1,15 +1,16 @@
 ---
 title: AI 辅助开发：从“复制粘贴”到“氛围编程 (Vibe Coding)”
-toc: true
 tags:
   - LLM
   - AI Coding Agent
+toc: true
 category_bar: true
 categories:
-  - ["AICoding"]
+  - - AICoding
 order: 1
 date: 2026-04-08 21:53:00
 ---
+
 
 大语言模型 (LLM) 的迅速崛起从根本上改变了软件工程的格局。随着这些模型变得越来越强大（特别是针对大规模代码库进行的微调），它们已从简单的聊天机器人转变为强大的**编程助手**。如今，AI 不再仅仅是一个参考工具，它已成为 IDE 中不可或缺的参与者。
 
