@@ -63,7 +63,13 @@
     '/opt/homebrew/opt/molten-vk-krunkit/lib/libMoltenVK.dylib' (no such file)  
 
 + Solution  
-    upgrade krunkit:  
+    Install krunkit:  
+    ```sh
+    brew tap slp/krunkit
+    brew install krunkit
+    ```  
+    or  
+    upgrade krunkit if it existed:  
     ```sh
     brew upgrade krunkit
     ```  
