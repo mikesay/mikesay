@@ -74,7 +74,7 @@ date: 2026-04-09 21:53:00
 ## (1) 安装 Ollama 与模型准备
 首先，通过 Homebrew 安装 Ollama 并将其设为后台服务。  
 
-```bash
+```sh
 # 安装 Ollama
 brew install ollama
 
