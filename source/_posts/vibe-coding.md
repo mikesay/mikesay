@@ -1,5 +1,5 @@
 ---
-title: AI 辅助开发：从“复制粘贴”到“氛围编程 (Vibe Coding)”
+title: AI辅助编程：从“复制粘贴”到“氛围编程 (Vibe Coding)”
 tags:
   - LLM
   - AI Coding Agent
