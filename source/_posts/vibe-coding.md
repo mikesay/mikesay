@@ -6,7 +6,7 @@ tags:
 toc: true
 category_bar: true
 categories:
-  - - AICoding
+  - AICoding
 order: 1
 date: 2026-04-08 21:53:00
 ---
