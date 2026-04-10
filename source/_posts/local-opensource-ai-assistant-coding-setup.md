@@ -87,7 +87,6 @@ ollama run qwen3-coder:30b
 # 下载备用模型及向量索引模型
 ollama pull deepseek-coder-v2:16b
 ollama pull nomic-embed-text  
-
 ```  
   
 ## (2) 安装 VS Code Continue 插件并配置
