@@ -74,7 +74,7 @@ date: 2026-04-09 21:53:00
 ## (1) 安装 Ollama 与模型准备
 首先，通过 Homebrew 安装 Ollama 并将其设为后台服务。  
 
-```sh
+```bash
 # 安装 Ollama
 brew install ollama
 
@@ -141,7 +141,7 @@ context:
       onlyPinned: false
   - provider: code        
   - provider: terminal    
-```
+```  
 
 ## (3) 开启 Vibe Coding：实战演练
 配置完成后，你可以通过Continue的侧边栏或快捷键进入“氛围编程”模式。核心技巧在于利用 **@ 符号** 精确喂给 AI 上下文，以及让它跨越当前文件去创造新内容。  
