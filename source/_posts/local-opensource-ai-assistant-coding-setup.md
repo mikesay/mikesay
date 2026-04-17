@@ -7,13 +7,13 @@ toc: true
 category_bar: true
 categories:
   - AICoding
-order: 1
 date: 2026-04-09 21:53:00
 ---
 
 # 引言：从“复制粘贴”到“氛围编程 (Vibe Coding)”
 
 在上一篇文章[《AI辅助编程：从“复制粘贴”到“氛围编程 (Vibe Coding)”》](https://www.mikesay.com/2026/04/08/vibe-coding/#more?t=1775724599864)中，我们探讨了AI如何改变开发者的心智模型。所谓的 **氛围编程 (Vibe Coding)**，本质上是让开发者从繁琐的语法细节中抽离，通过自然语言驱动 AI 完成复杂的逻辑构建。  
+<!-- more -->
 
 要实现这种“行云流水”的体验，一个成熟的 **AI Coding Agent** 必须具备以下核心能力：  
 
@@ -87,7 +87,7 @@ ollama run qwen3-coder:30b
 # 下载备用模型及向量索引模型
 ollama pull deepseek-coder-v2:16b
 ollama pull nomic-embed-text  
-```  
+```
   
 ## (2) 安装 VS Code Continue 插件并配置
 安装Continue插件后，修改配置文件 `~/.continue/config.yaml` 如下：  
@@ -141,7 +141,7 @@ context:
       onlyPinned: false
   - provider: code        
   - provider: terminal    
-```  
+```
 
 ## (3) 开启 Vibe Coding：实战演练
 配置完成后，你可以通过Continue的侧边栏或快捷键进入“氛围编程”模式。核心技巧在于利用 **@ 符号** 精确喂给 AI 上下文，以及让它跨越当前文件去创造新内容。  
