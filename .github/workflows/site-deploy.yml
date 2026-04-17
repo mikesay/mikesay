@@ -15,20 +15,19 @@ jobs:
 
     steps:
     - name: Checkout blog code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
 
     - name: Checkout blog site
-      uses: actions/checkout@v2
+      uses: actions/checkout@v6
       with:
         repository: mikesay/mikesay.github.io
         token: ${{ secrets.GIT_TOKEN }}
         path: mikesay
 
-    - name: Use Node.js 16
-      uses: actions/setup-node@v4
+    - name: Use Node.js 25
+      uses: actions/setup-node@v6
       with:
-        node-version: '16'
-        cache: 'npm'
+        node-version: '25'
 
     - name: Install Dependencies and setup
       run: ./setup.sh
