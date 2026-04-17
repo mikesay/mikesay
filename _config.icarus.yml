@@ -1,13 +1,14 @@
 # Version of the configuration file
 version: 5.1.0
 # Icarus theme variant, can be "default" or "cyberpunk"
-variant: default
+variant: cyberpunk
 # Path or URL to the website's logo
-logo: /img/logo-taiji1.png
+#logo: /img/xsigeo-gray-600x600.jpg
+text: X-Sigeo Notes
 # Page metadata configurations
 head:
     # URL or path to the website's icon
-    favicon: /img/favicon-taiji.png
+    favicon: /img/xsigeo-gray-600x600.jpg
     # Web application manifests configuration
     # https://developer.mozilla.org/en-US/docs/Web/Manifest
     manifest:
@@ -19,10 +20,10 @@ head:
         # The start URL of the web application
         start_url: 
         # The default theme color for the application
-        theme_color: 
+        theme_color: ""
         # A placeholder background color for the application page to display
         # before its stylesheet is loaded
-        background_color: 
+        background_color: ""
         # The preferred display mode for the website
         display: standalone
         # Image files that can serve as application icons for different contexts
@@ -139,7 +140,7 @@ article:
     highlight:
         # Code highlight themes
         # https://github.com/highlightjs/highlight.js/tree/master/src/styles
-        theme: atom-one-light
+        theme: atom-one-dark
         # Show copy code button
         clipboard: true
         # Default folding status of the code blocks. Can be "", "folded", "unfolded"
@@ -235,7 +236,7 @@ widgets:
         # Author's current location
         location: Shanghai
         # URL or path to the avatar image
-        avatar: /img/avatar-dao.jpg
+        avatar: /img/xsigeo-gray-600x600.jpg
         # Whether show the rounded avatar image
         avatar_rounded: true
         # Email address for the Gravatar
@@ -425,6 +426,6 @@ providers:
     # Name or URL template of the JavaScript and/or stylesheet CDN provider
     cdn: jsdelivr
     # Name or URL template of the webfont CDN provider
-    fontcdn: google
+    fontcdn: loli
     # Name or URL of the fontawesome icon font CDN provider
     iconcdn: fontawesome

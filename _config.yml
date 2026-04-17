@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 守希的随笔
-subtitle: 守希的随笔，
+title: 守希随笔
+subtitle: 守希随笔，
 description:
 keywords: Cloud, DevOps
 author: 守希
@@ -40,7 +40,7 @@ external_link:
   field: site # Apply to the whole site
   exclude: ''
 filename_case: 0
-render_drafts: true
+render_drafts: false
 post_asset_folder: true
 marked:
   prependRoot: true
