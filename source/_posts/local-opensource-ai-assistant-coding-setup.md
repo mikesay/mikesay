@@ -1,5 +1,5 @@
 ---
-title: 从订阅到自由：基于VSCode+Continue+Ollama手搓本地开源AI辅助编程工作台
+title: 基于VSCode+Continue+Ollama手搓本地开源AI辅助编程工作台
 tags:
   - LLM
   - AI Coding Agent
@@ -9,8 +9,6 @@ categories:
   - AICoding
 date: 2026-04-09 21:53:00
 ---
-
-# 引言：从“复制粘贴”到“氛围编程 (Vibe Coding)”
 
 在上一篇文章[《AI辅助编程：从“复制粘贴”到“氛围编程 (Vibe Coding)”》](https://www.mikesay.com/2026/04/08/vibe-coding/#more?t=1775724599864)中，我们探讨了AI如何改变开发者的心智模型。所谓的 **氛围编程 (Vibe Coding)**，本质上是让开发者从繁琐的语法细节中抽离，通过自然语言驱动 AI 完成复杂的逻辑构建。  
 <!-- more -->
@@ -146,29 +144,44 @@ context:
 ## (3) 开启 Vibe Coding：实战演练
 配置完成后，你可以通过Continue的侧边栏或快捷键进入“氛围编程”模式。核心技巧在于利用 **@ 符号** 精确喂给 AI 上下文，以及让它跨越当前文件去创造新内容。  
 
-**实战场景示例：快速构建一个天气预报 CLI 工具**  
-假设你正在开发一个 Python 项目，现在需要增加一个处理 API 请求的模块。  
+**实战场景示例：使用 Vibe Coding 创建一个 uv 管理依赖的 Python 项目**
+假设你希望使用 Continue 来完全自动化地构建一个基于 `uv` 的 Python 项目，包括创建目录结构、生成 `pyproject.toml`、编写主程序和测试文件。
 
-*   **第一步：利用 @ 精确注入上下文 (Context)**
+*   **第一步：启动项目**
     在 Continue 侧边栏（`Cmd + L`）中输入：
-    > “使用 **@currentFile** 作为参考，参考其中定义的错误处理逻辑，帮我写一个新的工具类。需求是：调用 OpenWeather API 获取天气，需要包含单元测试。”
-    **技巧点**：通过输入 `@`，你会看到一个下拉菜单。选择 `@file` 可以指定特定文件，选择 `@folder` 可以让 AI 了解整个目录结构。这比手动复制粘贴代码块高效得多。  
+    > “请使用 `uv init --no-workspace weather_cli` 命令初始化一个 Python 项目，项目名为 `weather_cli`，并使用 `uv` 管理依赖。先不要创建代码文件”
 
-*   **第二步：生成新的代码文件**
-    AI 生成代码后，你不需要手动创建文件。在 Continue 的对话框上方通常有一个 **"Insert into new file"** 或 **"Create file"** 的图标（或者你直接要求它：`"Generate the code and save to weather_service.py"`）。
-    **动作**：Qwen3 会写出完整的 `weather_service.py` 逻辑。你只需点击代码块右上角的“应用”按钮，系统会自动弹出保存对话框或直接创建文件。  
+    AI 会自动在当前目录中运行 `uv init weather_cli` 命令，并创建项目结构和 `pyproject.toml` 文件。
+*   **第二步：生成主程序文件**
+    在 Continue 侧边栏中输入：
+    > “@weather_cli，请编辑 `main.py` 生成一个 CLI 程序，使用 `click` 库，程序入口为 `main`，功能是打印当前天气信息。”
 
-*   **第三步：多文件协同与内联编辑 (Inline Edit)**
-    现在你需要将这个新服务集成到主程序 `main.py` 中：
-    1.  打开 `main.py`。
-    2.  按下 `Cmd + I` (MacOS) 唤起内联编辑框。
-    3.  输入：`“导入并调用 @weather_service.py 中的类，在程序启动时打印伦敦的天气”`。
-    **观察**：AI 会自动在 `main.py` 顶部添加 `import` 语句，并在合适的位置插入调用逻辑。你会看到一个类似 Git Diff 的界面，绿色为新增代码，红色为删除代码。  
+    AI 将自动编辑 `main.py` 文件，并生成完整的代码。你可以点击右上角的“应用”按钮，或者手动保存文件。
 
-*   **第四步：通过 @terminal 闭环调试**
-    如果在运行 `python main.py` 时报错（例如缺少 `requests` 库）：
-    在侧边栏输入：`@terminal 帮我分析这个报错`。
-    **结果**：AI 会读取终端最后几行的错误日志，告诉你 `ModuleNotFoundError`，并直接给出 `pip install requests` 的指令。  
+*   **第三步：生成测试文件**
+    在 Continue 侧边栏中输入：
+    > “@weather_cli，请在 `test_main.py` 中生成一个单元测试文件，测试 `main` 函数的执行逻辑。”
+
+    AI 会生成一个完整的 `test_main.py` 文件，包含测试用例，使用 `unittest` 模块进行测试。
+
+*   **第四步：内联编辑与集成**
+    打开 `main.py`，按下 `Cmd + I` 唤起内联编辑框。
+    在 `main` 函数内部，将光标放在 `click.command()` 装饰器之后，例如：
+    > “在 `main` 函数中加入 `@click.option('--city', default='Beijing')` 参数，并将 `city` 作为参数传入 `get_weather`。”
+    AI 会自动在函数中插入新逻辑，并显示 Diff 对比界面，绿色为新增，红色为修改。
+
+*   **第五步：使用 @terminal 进行调试**
+    如果在运行 `uv run python -m weather_cli.main` 时报错：
+    在 Continue 侧边栏输入：
+    > “@Terminal 帮我分析这个报错。”
+
+    AI 会读取终端输出的错误日志，并提示你如何解决，比如提示缺少依赖或模块路径问题。
+
+*   **第六步：自动依赖安装**
+    在 Continue 侧边栏输入：
+    > “请在 `pyproject.toml` 中添加 `requests` 和 `click` 依赖，并使用 uv 安装它们。”
+
+    AI 会自动更新 `pyproject.toml` 文件，并提示你使用 `uv sync` 或 `uv pip install` 来安装依赖。
 
 # 总结
 通过 **VS Code + Continue + Ollama** 的组合，我们成功在本地 Mac M3 上构建了一个完全属于自己的 AI 编程大脑。这不仅省去了每月的订阅费，更重要的是它实现了代码资产的100%隐私安全，并将 AI 的响应速度提升到了极致。  
