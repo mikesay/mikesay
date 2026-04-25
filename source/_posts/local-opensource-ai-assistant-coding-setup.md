@@ -1,5 +1,7 @@
 ---
 title: VS Code + Continue + Ollama：全栈私有化 AI 辅助编程环境搭建指南
+cover: /gallery/local-opensource-ai-assistant-coding-setup/vibecoding-os1.jpg
+thumbnail: /gallery/local-opensource-ai-assistant-coding-setup/vibecoding-os1.jpg
 tags:
   - LLM
   - AI Coding Agent

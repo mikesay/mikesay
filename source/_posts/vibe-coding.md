@@ -1,5 +1,7 @@
 ---
 title: AI辅助编程：从“复制粘贴”到“氛围编程 (Vibe Coding)”
+cover: /gallery/vibe-coding/vibecoding1.jpg
+thumbnail: /gallery/vibe-coding/vibecoding1.jpg
 tags:
   - LLM
   - AI Coding Agent
@@ -13,9 +15,9 @@ date: 2026-04-08 21:53:00
 
 
 大语言模型 (LLM) 的迅速崛起从根本上改变了软件工程的格局。随着这些模型变得越来越强大（特别是针对大规模代码库进行的微调），它们已从简单的聊天机器人转变为强大的**编程助手**。如今，AI 不再仅仅是一个参考工具，它已成为 IDE 中不可或缺的参与者。
+<!-- more -->
 
 与此同时，随着 LLM 技术的发展，AI Agent 技术也迅速兴起。AI Agent 是能够自主执行任务、做出决策并与其他系统交互的智能程序。在编程领域，AI Coding Agent 被广泛应用于代码生成、代码编辑、调试、测试等环节。这些 AI Agent 工具普遍支持 **创建新文件**、**内联编辑（inline-editing）`Cmd+I`（在 macOS 上）或 `Ctrl+I`（在 Windows 上）** 等功能，极大地提升了开发效率。开发者可以通过自然语言指令，让 AI 生成、修改、重构代码，从而将注意力从语法细节中解放出来，专注于更高层次的逻辑与用户体验。
-<!-- more -->
 
 目前市场上出现了大量 AI Coding Agent，它们可以分为多种类型：
 
