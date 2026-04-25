@@ -6,7 +6,7 @@ tags:
 toc: true
 category_bar: true
 categories:
-  - AICoding
+  - AI辅助编程
 order: 1
 date: 2026-04-08 21:53:00
 ---

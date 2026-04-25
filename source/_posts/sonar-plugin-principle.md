@@ -2,8 +2,10 @@
 title: 浅析SonarQube插件的运行原理
 toc: true
 tags:
-  - SonarQube
   - Code Quality
+  - SonarQube
+categories:
+  - DevOps
 date: 2021-01-17 23:39:00
 ---
 

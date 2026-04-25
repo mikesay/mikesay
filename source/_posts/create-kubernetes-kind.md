@@ -7,7 +7,7 @@ tags:
   - Kind
 category_bar: true
 categories:
-  - ["Kubernetes"]
+  - Kubernetes
 order: 2
 ---
 

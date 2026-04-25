@@ -2,18 +2,14 @@
 title: Jenkins构建Bitbucket合并请求(Pull Request)
 toc: true
 tags:
-  - DevOps
   - CI/CD
   - Jenkins
-  - Git
   - Bitbucket
 category_bar: true
 categories:
-  - ["Jenkins"]
-order: 5
+  - DevOps
 date: 2020-02-23 18:46:00
 ---
-
 
 在["Jenkins随笔(3)  Jenkins构建Github合并请求(Pull Request)"][1]中介绍了用Jenkins构建Github合并请求(Pull Request)的方法以及preflight流水线的意义。本文将继续介绍如何配置Jenkins和Bitbucket来构建Bitbucket合并请求(Pull Request)。
 <!-- more -->

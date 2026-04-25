@@ -2,15 +2,12 @@
 title: Jenkins构建GitLab合并请求(Merge Request)
 toc: true
 tags:
-  - DevOps
   - CI/CD
   - Jenkins
-  - Git
   - GitLab
 category_bar: true
 categories:
-  - ["Jenkins"]
-order: 4
+  - DevOps
 date: 2020-03-09 18:00:00
 ---
 

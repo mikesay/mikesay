@@ -2,11 +2,10 @@
 title: 阿里云通过RAM角色管理多云账号下的资源
 toc: true
 tags:
-  - Aliyun
-  - RAM
+  - AliCloud
 category_bar: true
 categories:
-  - ["Aliyun", "RAM"]
+  - 阿里云
 date: 2021-01-05 22:45:00
 ---
 

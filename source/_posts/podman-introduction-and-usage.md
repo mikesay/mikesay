@@ -3,9 +3,11 @@ title: Podman介绍和使用
 toc: true
 date: 2021-10-11 04:58:31
 tags:
-  - Container
-  - Podman
+  - Kubernetes
   - Docker
+  - Podman
+categories:
+  - Kubernetes
 ---
 
 最近Docker公司改变了Docker桌面版（Docker for Mac和Docker for Windows）的商业策略：最晚到2022/1/31号，需要购买付费订阅了，但对于员工人数小于250，且年收入少于1000万美元的公司仍然免费。虽说对于个人使用Docker桌面版没有影响，但在公司里还是要谨慎使用。 作为对Docker桌面版的替换，本文将对Podman及其使用做一简单的介绍。

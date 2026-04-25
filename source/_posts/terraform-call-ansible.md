@@ -2,13 +2,12 @@
 title: Terraform如何调用Ansible配置虚拟机资源
 toc: true
 tags:
-  - DevOps
-  - Infrastructure As Code
   - Terraform
   - Ansible
+categories:
+  - 架构即代码
 date: 2018-11-14 21:00:19
 ---
-
 
 Terraform（[https://www.terraform.io/][1]）是一款开源的基础架构即代码(Infrastructure As Code - IAC)工具，通过代码来构建和变更基础架构，并且能够管理变更的版本。Terraform在构建出虚拟机资源后，往往会调用与其关联的provisoner来配置虚拟机资源，比如变更某个系统配置，设置环境变量或者部署某个应用，但是Terraform目前并没有提供开箱即用的支持Ansible的provisioner（也许随着版本的升级，会提供）。本文基于vSphere数据中心和Ubuntu系统实现一种Terraform调用Ansible配置虚拟机资源的方法。
 <!-- more -->

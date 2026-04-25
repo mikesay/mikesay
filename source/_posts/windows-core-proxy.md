@@ -3,6 +3,8 @@ title: 命令方式设置Windows Server网络代理
 toc: true
 tags:
   - Windows
+categories:
+  - 系统管理
 date: 2020-02-03 20:26:00
 ---
 

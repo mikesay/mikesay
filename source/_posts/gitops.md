@@ -2,9 +2,9 @@
 title: 什么是GitOps?
 toc: true
 tags:
-  - DevOps
-  - CI/CD
   - GitOps
+categories:
+  - DevOps
 date: 2019-07-21 13:57:54
 ---
 

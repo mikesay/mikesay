@@ -2,13 +2,12 @@
 title: 创建容器化的Azure DevOps Agent
 toc: true
 tags:
-  - DevOps
-  - CI/CD
   - Azure DevOps
-  - Docker
+  - CI/CD
+categories:
+  - DevOps
 date: 2019-12-30 20:28:47
 ---
-
 
 在一台虚拟机上安装，配置或删除Azure DevOps Agent是需要花费一些步骤和精力的，具体可以参考文档[https://docs.microsoft.com/en-us/vsts/build-release/actions/agents/v2-linux?view=vsts][1]。好消息是Azure DevOps已经支持容器化的方式运行Agent。本文将详细介绍如何创建和启动一个容器化的Agent。
 <!-- more -->

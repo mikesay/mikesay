@@ -6,7 +6,7 @@ tags:
   - Minikube
 category_bar: true
 categories:
-  - ["Kubernetes"]
+  - Kubernetes
 order: 1
 date: 2021-10-06 18:40:49
 ---

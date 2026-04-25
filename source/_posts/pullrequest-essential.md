@@ -2,15 +2,11 @@
 title: Git合并请求(Pull/Merge request)的本质
 toc: true
 tags:
-  - DevOps
   - Git
-  - Github
-  - Gitlab
-  - Bitbucket
-  - TFS Git
+categories:
+  - DevOps
 date: 2020-01-29 22:37:10
 ---
-
 
 Git以及基于Git的各代码开发协作平台，比如Github, Gitlab, Bitbucket, TFS Git等正逐渐成为首选的代码版本管理工具，而基于Git的基本开发流程则是开发者创建个人的私有分支并在个人的私有分支上提交代码，代码完成后创建合并请求(pull/merge request)到主分支让相关人员做代码评审，评审通过后将合并请求(pull/merge request)合并到主分支上。合并请求(pull/merge request)不是Git本身的特性，而是各代码协作平台提供的特性，它提供的代码评审功能几乎取代了独立的代码评审工具，同时它也方便了分布于世界各地的开源代码贡献者合并自己的代码。那么合并请求(pull/merge request)到底是什么东西？它看的见摸得着吗？本文将通过目前比较流行的代码开发协作平台(Github, Gitlab, Bitbucket, TFS Git)对合并请求(pull/merget request)的实现来阐明合并请求(pull/merge request)的本质。<!-- more -->
 

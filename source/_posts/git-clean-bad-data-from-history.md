@@ -3,6 +3,8 @@ title: 从Git仓库中永久清理脏数据
 toc: true
 tags:
   - Git
+categories:
+  - DevOps
 date: 2020-09-26 09:37:00
 ---
 

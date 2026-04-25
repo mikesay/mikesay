@@ -2,13 +2,11 @@
 title: Jenkins Job的并发执行
 toc: true
 tags:
-  - DevOps
   - CI/CD
   - Jenkins
 category_bar: true
 categories:
-  - ["Jenkins"]
-order: 1
+  - DevOps
 date: 2019-07-08 17:15:01
 ---
 

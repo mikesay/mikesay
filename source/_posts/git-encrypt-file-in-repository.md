@@ -3,6 +3,8 @@ title: Git加密存储文件
 toc: true
 tags:
   - Git
+categories:
+  - DevOps
 date: 2020-12-16 08:50:00
 ---
 

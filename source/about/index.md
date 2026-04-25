@@ -6,5 +6,6 @@ layout: about
 ---
 
 <p align="center">
-IT一白丁, 读书不多，意之所之，随即纪录，因其先后，无复全次，故目之曰随笔。
+守万物之希，行无极之玄。<br/>
+(Silence Governs, Execution Originates.)  
 </p>

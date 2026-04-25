@@ -2,15 +2,12 @@
 title: Jenkins构建GitHub合并请求(Pull Request)
 toc: true
 tags:
-  - DevOps
   - CI/CD
   - Jenkins
-  - Git
   - Github
 category_bar: true
 categories:
-  - ["Jenkins"]
-order: 3
+  - DevOps
 date: 2020-01-30 22:17:00
 ---
 

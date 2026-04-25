@@ -2,12 +2,9 @@
 title: 在Kubernetes中创建自托管GitHub Actions Runner
 toc: true
 tags:
-  - DevOps
   - CI/CD
-  - Git
-  - Github
-  - Kubernetes
-  - K8s
+categories:
+  - DevOps
 date: 2022-04-11 02:21:47
 ---
 

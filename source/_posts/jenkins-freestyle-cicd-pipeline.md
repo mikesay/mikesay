@@ -2,13 +2,11 @@
 title: 基于Jenkins Freestyle Job构建CI/CD流水线
 toc: true
 tags:
-  - DevOps
   - CI/CD
   - Jenkins
 category_bar: true
 categories:
-  - ["Jenkins"]
-order: 2
+  - DevOps
 date: 2018-10-07 22:07:44
 ---
 
