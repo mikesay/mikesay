@@ -1,5 +1,7 @@
 ---
 title: 创建容器化的Azure DevOps Agent
+cover: /gallery/docker-agent-for-azure-devops/cover.jpg
+thumbnail: /gallery/docker-agent-for-azure-devops/cover.jpg
 toc: true
 tags:
   - Azure DevOps

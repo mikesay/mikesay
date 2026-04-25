@@ -1,5 +1,7 @@
 ---
 title: Git安装与配置
+cover: /gallery/git-install-configure/cover.jpg
+thumbnail: /gallery/git-install-configure/cover.jpg
 toc: true
 tags:
   - Git

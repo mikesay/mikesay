@@ -1,5 +1,7 @@
 ---
 title: Jenkins Job的并发执行
+cover: /gallery/jenkins-concurrent-builds/cover.jpg
+thumbnail: /gallery/jenkins-concurrent-builds/cover.jpg
 toc: true
 tags:
   - CI/CD

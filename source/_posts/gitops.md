@@ -1,5 +1,7 @@
 ---
 title: 什么是GitOps?
+cover: /gallery/gitops/cover.jpg
+thumbnail: /gallery/gitops/cover.jpg
 toc: true
 tags:
   - GitOps

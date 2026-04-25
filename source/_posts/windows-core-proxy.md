@@ -1,5 +1,7 @@
 ---
 title: 命令方式设置Windows Server网络代理
+cover: /gallery/windows-core-proxy/cover.jpg
+thumbnail: /gallery/windows-core-proxy/cover.jpg
 toc: true
 tags:
   - Windows

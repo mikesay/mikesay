@@ -1,5 +1,7 @@
 ---
 title: Jenkins构建Bitbucket合并请求(Pull Request)
+cover: /gallery/jenkins-bibucket-pullrequest/cover.jpg
+thumbnail: /gallery/jenkins-bibucket-pullrequest/cover.jpg
 toc: true
 tags:
   - CI/CD

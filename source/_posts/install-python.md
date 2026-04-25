@@ -1,5 +1,7 @@
 ---
 title: 安装Python并搭建Python的虚拟开发环境
+cover: /gallery/install-python/cover.jpg
+thumbnail: /gallery/install-python/cover.jpg
 toc: true
 tags:
   - Python

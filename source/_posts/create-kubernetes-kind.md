@@ -1,5 +1,7 @@
 ---
 title: Kind创建本地Kubernetes集群
+cover: /gallery/create-kubernetes-kind/cover.jpg
+thumbnail: /gallery/create-kubernetes-kind/cover.jpg
 toc: true
 date: 2021-10-10 18:23:20
 tags:

@@ -1,5 +1,7 @@
 ---
 title: 基于Jenkins Freestyle Job构建CI/CD流水线
+cover: /gallery/jenkins-freestyle-cicd-pipeline/cover.jpg
+thumbnail: /gallery/jenkins-freestyle-cicd-pipeline/cover.jpg
 toc: true
 tags:
   - CI/CD

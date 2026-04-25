@@ -1,5 +1,7 @@
 ---
 title: Git合并请求(Pull/Merge request)的本质
+cover: /gallery/pullrequest-essential/cover.jpg
+thumbnail: /gallery/pullrequest-essential/cover.jpg
 toc: true
 tags:
   - Git

@@ -1,5 +1,7 @@
 ---
 title: 创建自签名TLS/SSL证书和私钥
+cover: /gallery/create-self-signed-ssl/cover.jpg
+thumbnail: /gallery/create-self-signed-ssl/cover.jpg
 toc: true
 tags:
   - System Management

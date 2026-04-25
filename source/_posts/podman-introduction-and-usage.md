@@ -1,5 +1,7 @@
 ---
 title: Podman介绍和使用
+cover: /gallery/podman-introduction-and-usage/cover.jpg
+thumbnail: /gallery/podman-introduction-and-usage/cover.jpg
 toc: true
 date: 2021-10-11 04:58:31
 tags:

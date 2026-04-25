@@ -1,5 +1,7 @@
 ---
 title: 阿里云通过RAM角色管理多云账号下的资源
+cover: /gallery/aliyun-ram-role-multi-accounts/cover.jpg
+thumbnail: /gallery/aliyun-ram-role-multi-accounts/cover.jpg
 toc: true
 tags:
   - AliCloud

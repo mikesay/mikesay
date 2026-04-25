@@ -1,5 +1,7 @@
 ---
 title: 从Git仓库中永久清理脏数据
+cover: /gallery/git-clean-bad-data-from-history/cover.jpg
+thumbnail: /gallery/git-clean-bad-data-from-history/cover.jpg
 toc: true
 tags:
   - Git

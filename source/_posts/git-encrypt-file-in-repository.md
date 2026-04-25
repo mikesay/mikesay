@@ -1,5 +1,7 @@
 ---
 title: Git加密存储文件
+cover: /gallery/git-encrypt-file-in-repository/cover.jpg
+thumbnail: /gallery/git-encrypt-file-in-repository/cover.jpg
 toc: true
 tags:
   - Git

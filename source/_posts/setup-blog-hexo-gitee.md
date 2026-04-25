@@ -1,5 +1,7 @@
 ---
 title: Hexo+Gitee(码云)搭建静态博客网站
+cover: /gallery/setup-blog-hexo-gitee/cover.jpg
+thumbnail: /gallery/setup-blog-hexo-gitee/cover.jpg
 toc: true
 date: 2018-08-17 21:06:58
 comments: true

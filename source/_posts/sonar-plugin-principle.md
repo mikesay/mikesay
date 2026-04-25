@@ -1,5 +1,7 @@
 ---
 title: 浅析SonarQube插件的运行原理
+cover: /gallery/sonar-plugin-principle/cover.jpg
+thumbnail: /gallery/sonar-plugin-principle/cover.jpg
 toc: true
 tags:
   - Code Quality

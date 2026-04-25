@@ -1,5 +1,7 @@
 ---
 title: Terraform如何调用Ansible配置虚拟机资源
+cover: /gallery/terraform-call-ansible/cover.jpg
+thumbnail: /gallery/terraform-call-ansible/cover.jpg
 toc: true
 tags:
   - Terraform

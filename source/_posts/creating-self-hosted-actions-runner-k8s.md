@@ -1,5 +1,7 @@
 ---
 title: 在Kubernetes中创建自托管GitHub Actions Runner
+cover: /gallery/creating-self-hosted-actions-runner-k8s/cover.jpg
+thumbnail: /gallery/creating-self-hosted-actions-runner-k8s/cover.jpg
 toc: true
 tags:
   - CI/CD

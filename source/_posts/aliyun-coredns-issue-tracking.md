@@ -1,5 +1,7 @@
 ---
 title: 记一次阿里云Kubernetes集群内部服务域名解析不稳定的排查
+cover: /gallery/aliyun-coredns-issue-tracking/cover.jpg
+thumbnail: /gallery/aliyun-coredns-issue-tracking/cover.jpg
 toc: true
 tags:
   - Kubernetes

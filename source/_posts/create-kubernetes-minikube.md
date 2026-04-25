@@ -1,5 +1,7 @@
 ---
 title: Minikube创建本地Kubernetes集群
+cover: /gallery/create-kubernetes-minikube/cover.jpg
+thumbnail: /gallery/create-kubernetes-minikube/cover.jpg
 toc: true
 tags:
   - Kubernetes

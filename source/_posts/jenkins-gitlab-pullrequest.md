@@ -1,5 +1,7 @@
 ---
 title: Jenkins构建GitLab合并请求(Merge Request)
+cover: /gallery/jenkins-gitlab-pullrequest/cover.jpg
+thumbnail: /gallery/jenkins-gitlab-pullrequest/cover.jpg
 toc: true
 tags:
   - CI/CD

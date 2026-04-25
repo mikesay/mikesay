@@ -1,5 +1,7 @@
 ---
 title: Jenkins构建GitHub合并请求(Pull Request)
+cover: /gallery/jenkins-github-pullrequest/cover.jpg
+thumbnail: /gallery/jenkins-github-pullrequest/cover.jpg
 toc: true
 tags:
   - CI/CD
