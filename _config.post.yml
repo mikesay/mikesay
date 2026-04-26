@@ -11,7 +11,7 @@ widgets:
         # Author's current location
         location: Shanghai
         # URL or path to the avatar image
-        avatar: /img/xsigeo-tech3-600x600.jpg
+        avatar: /img/xsigeo-tech5-600x600.jpg
         # Whether show the rounded avatar image
         avatar_rounded: true
         # Email address for the Gravatar

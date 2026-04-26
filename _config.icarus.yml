@@ -3,12 +3,12 @@ version: 5.1.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
-logo: /img/xsigeo-tech3-600x600.jpg
+logo: /img/xsigeo-tech5-600x600.jpg
 text: X-Sigeo Notes
 # Page metadata configurations
 head:
     # URL or path to the website's icon
-    favicon: /img/xsigeo-tech3-600x600.jpg
+    favicon: /img/xsigeo-tech5-600x600.jpg
     # Web application manifests configuration
     # https://developer.mozilla.org/en-US/docs/Web/Manifest
     manifest:
@@ -236,7 +236,7 @@ widgets:
         # Author's current location
         location: Shanghai
         # URL or path to the avatar image
-        avatar: /img/xsigeo-tech3-600x600.jpg
+        avatar: /img/xsigeo-tech5-600x600.jpg
         # Whether show the rounded avatar image
         avatar_rounded: true
         # Email address for the Gravatar
