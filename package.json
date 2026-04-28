@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "build": "hexo generate",
-    "dev": "hexo server"
+    "dev": "hexo server",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "hexo": {
     "version": "8.1.1"
@@ -30,5 +32,8 @@
     "hexo-server": "^3.0.0",
     "hexo-symbols-count-time": "^0.6.2",
     "hexo-theme-icarus": "^6.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "^4.86.0"
   }
 }
