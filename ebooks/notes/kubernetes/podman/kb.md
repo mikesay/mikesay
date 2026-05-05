@@ -54,6 +54,13 @@
     ```  
     > On macOS ARM64, libkrun enables GPU acceleration for containers, allowing AI and other GPU-intensive workloads to leverage the host's GPU resources within the containerized environment.  
 
++ Enable the podman-restart Service  
+    ```sh
+    podman machine ssh
+    systemctl enable podman-restart.service
+    exit
+    ```  
+    > By default, Podman's restart policy requires a background service inside the VM to monitor container exits. If this service isn't active, --restart always will not work after the VM restarts.  
 
 ## Issues
 #### Fail to start podman machine of "libkrun" provider
